@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/group/login/login'
+import Error404 from '@/pages/error404/error404'
 import User from '@/group/user/user'
 import AnnouncementUser from "../pages/user/announcement_user/announcementUser";
 import OppointConference from "@/pages/user/Oppconference/Oppconference"
@@ -16,6 +17,11 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path: '*',
+      component: Error404,
+      name: 'error404'
+    },
     {
       path: '/',
       redirect: {name: 'login'}
