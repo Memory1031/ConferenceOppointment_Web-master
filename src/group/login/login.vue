@@ -5,10 +5,10 @@
         会议室预约系统
         <div class="login-box">
           <Input v-model="UserId" style="margin-bottom: 10px" size="large" prefix='md-person' placeholder="学/工号"/>
-          <Input v-model="Password" type="password" style="margin-bottom: 7px" prefix="md-lock" size="large" placeholder="密码"/>
+          <Input v-model="Password" type="password" style="margin-bottom: 7px" prefix="md-lock" size="large" placeholder="密码" v-on:keyup.enter.native="login"/>
           <ButtonGroup size="large">
             <div style="display: flex;">
-              <Button size="large" type="primary" :loading="loading" @click="login" v-on:keyup.13="login">
+              <Button size="large" type="primary" :loading="loading" @click="login">
                 登录
               </Button>
             </div>

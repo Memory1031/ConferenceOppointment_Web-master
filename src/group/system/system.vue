@@ -8,25 +8,21 @@
         <Menu :active-name="activeName"
               width="251px"
               @on-select="push">
-          <MenuItem name="announcementUser">
+          <MenuItem name="announceSystem">
             <Icon type="ios-mail"></Icon>
-            <span>查看公告</span>
+            <span>管理公告</span>
           </MenuItem>
-          <MenuItem name="OppointConference">
-            <Icon type="ios-create-outline"></Icon>
-            <span>预约会议室</span>
-          </MenuItem>
-          <MenuItem name="myInfo">
-            <Icon type="ios-person"></Icon>
-            <span>我的信息</span>
-          </MenuItem>
+<!--          <MenuItem name="myInfo">-->
+<!--            <Icon type="ios-person"></Icon>-->
+<!--            <span>我的信息</span>-->
+<!--          </MenuItem>-->
         </Menu>
       </Sider>
       <Layout>
         <Header :style="{background: '#fff', height: '80px',boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"
                 class="layout-header-bar">
           <div class="layout-header-title"
-            id="layout-header-title">
+               id="layout-header-title">
           </div>
           <div class="select">
             <Avatar style="background-color: #87d068" icon="ios-person" />
@@ -63,7 +59,7 @@
 </template>
 <script>
     export default {
-        name: 'user',
+        name: 'system',
         data () {
             return {
                 isCollapsed: false,
@@ -91,45 +87,45 @@
             this.initIdentity();
         },
         methods:{
-          initMenuActive(){
-              this.activeName = this.$route.name;
-              this.$nextTick(() => {
-                  document.querySelector(
-                      "#layout-header-title"
-                  ).innerHTML = document.querySelector(
-                      ".ivu-menu-item-selected"
-                  ).innerHTML;
-              });
-              this.UserName = localStorage.getItem("username");
-          },
-          push(name){
-              this.$router.push(name);
-          },
-          initIdentity(){
-              this.identityString = localStorage.getItem("identity");
-              if(!this.identityString){
-                  this.$router.push('/login');
-                  localStorage.clear();
-              }
-              if(this.identityString.indexOf("student")!= -1){
-                  this.identity.student = true;
-              }
-              if(this.identityString.indexOf("teacher")!= -1){
-                  this.identity.teacher = true;
-              }
-              if(this.identityString.indexOf("manager")!= -1){
-                  this.identity.manager = true;
-                  this.identity.show = true;
-              }
-              if(this.identityString.indexOf("system")!= -1){
-                  this.identity.system = true;
-                  this.identity.show = true;
-              }
-          },
-          logout(){
-              this.$router.push("/login");
-              localStorage.clear();
-          }
+            initMenuActive(){
+                this.activeName = this.$route.name;
+                this.$nextTick(() => {
+                    document.querySelector(
+                        "#layout-header-title"
+                    ).innerHTML = document.querySelector(
+                        ".ivu-menu-item-selected"
+                    ).innerHTML;
+                });
+                this.UserName = localStorage.getItem("username");
+            },
+            push(name){
+                this.$router.push(name);
+            },
+            initIdentity(){
+                this.identityString = localStorage.getItem("identity");
+                if(!this.identityString){
+                    this.$router.push('/login');
+                    localStorage.clear();
+                }
+                if(this.identityString.indexOf("student")!= -1){
+                    this.identity.student = true;
+                }
+                if(this.identityString.indexOf("teacher")!= -1){
+                    this.identity.teacher = true;
+                }
+                if(this.identityString.indexOf("manager")!= -1){
+                    this.identity.manager = true;
+                    this.identity.show = true;
+                }
+                if(this.identityString.indexOf("system")!= -1){
+                    this.identity.system = true;
+                    this.identity.show = true;
+                }
+            },
+            logout(){
+                this.$router.push("/login");
+                localStorage.clear();
+            }
         }
     }
 </script>
