@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Router from 'router'
+import Router from '../router'
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
@@ -7,7 +7,8 @@ axios.interceptors.request.use((config) => {
     config.headers.Authorization = localStorage.getItem('token')
   }
   return config;
-}, (error) => {
+},
+  (error) => {
   // console.error('request interceptor: ', error)
   if (error.response) {
     switch (error.response.status) {
@@ -47,7 +48,7 @@ axios.interceptors.response.use((res) => {
     switch (error.response.status) {
       case 401:
         localStorage.clear()
-        Router.replace('/login');
+        Router.replace({ path: '/login'});
         setTimeout(() => {
           this.$Notice.error({
             title: "您没有访问权限",

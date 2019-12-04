@@ -12,6 +12,10 @@
             <Icon type="ios-mail"></Icon>
             <span>管理公告</span>
           </MenuItem>
+          <MenuItem name="manageConference">
+            <Icon type="ios-book-outline"></Icon>
+            <span>管理会议室</span>
+          </MenuItem>
 <!--          <MenuItem name="myInfo">-->
 <!--            <Icon type="ios-person"></Icon>-->
 <!--            <span>我的信息</span>-->
