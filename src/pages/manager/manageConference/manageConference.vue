@@ -191,10 +191,10 @@
           <Row>
             <Col span="8">
               <FormItem label="房间号">
-                <Input v-model="updatedconference_info.name" :disabled="disable_imple" placeholder="例:D602(必填)"></Input>
+                <Input v-model="updatedconference_info.name" disabled placeholder="例:D602(必填)"></Input>
               </FormItem>
               <FormItem label="所属大楼">
-                <Input v-model="updatedconference_info.building"  :disabled="disable_imple" placeholder="例:D楼(必填)"></Input>
+                <Input v-model="updatedconference_info.building"  disabled placeholder="例:D楼(必填)"></Input>
               </FormItem>
               <FormItem label="联系电话">
                 <Input v-model="updatedconference_info.phone" :disabled="disable_imple" placeholder="例:13xxxxxxxxx(必填)"></Input>
