@@ -15,7 +15,7 @@
         </Dropdown>
         <Modal
           v-model="modal_create"
-          title="创建会议室" draggable
+          title="创建会议室"
           :loading="loading"
           width="1000" ok-text="提交" @on-ok="createConference">
           <Form :model="conference_info" :label-width="80">
@@ -23,6 +23,9 @@
               <Col span="8">
                 <FormItem label="房间号">
                   <Input v-model="conference_info.name" placeholder="例:D602(必填)"></Input>
+                </FormItem>
+                <FormItem label="所属校区">
+                  <Input v-model="conference_info.campus" placeholder="例:宝山校区(必填)"></Input>
                 </FormItem>
                 <FormItem label="所属大楼">
                   <Input v-model="conference_info.building" placeholder="例:D楼(必填)"></Input>
@@ -170,7 +173,7 @@
           :loading="loading2"
           height="700"
           :columns="columns" :data="data"></Table>
-        <Modal v-model="modal_delete" draggable width="360">
+        <Modal v-model="modal_delete"  width="360">
           <p slot="header" style="color:#f60;text-align:center">
             <Icon type="ios-information-circle"></Icon>
             <span>删除确认</span>
@@ -185,7 +188,7 @@
         </Modal>
       <Modal
         v-model="modal_info"
-        title="会议室详情" draggable
+        title="会议室详情"
         width="1000">
         <Form :model="updatedconference_info" :label-width="80">
           <Row>
@@ -312,7 +315,7 @@
               </FormItem>
               <div>
                 <span>会议室图片：</span> <span v-if="!picture_exit">无</span><br/>
-                <img :src="picture_url" style="margin-left: 30px" v-if="picture_exit" max-width="280">
+                <img :src="picture_url" style="margin-left: 30px; max-width: 300px" v-if="picture_exit" max-width="280">
               </div>
               <br/>
               <div v-if="!disable_imple">上传会议室照片(可不传)</div>
@@ -378,7 +381,8 @@
                     hasspeaker : 0,//有话筒
                     haswater : 0,//有茶水
                     microphonecondition: '',
-                    otherdevicecondition: ''
+                    otherdevicecondition: '',
+                    campus: ''
                 },
                 updatedconference_info:{
                     id: '',
@@ -527,7 +531,8 @@
                             haswater: this.conference_info.haswater,
                             microphonecondition: this.conference_info.microphonecondition,
                             otherdevicecondition: this.conference_info.otherdevicecondition,
-                            picture: this.pictureAddress
+                            picture: this.pictureAddress,
+                            campus: this.conference_info.campus
                         }
                     }).then((res) => {
                         if(res.data.code == 200){
