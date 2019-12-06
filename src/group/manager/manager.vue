@@ -35,9 +35,9 @@
             <MenuItem name="managerInfo">
               <span>我的信息</span>
             </MenuItem>
-<!--            <MenuItem name="managerInformation">-->
-<!--              <span>部门信息</span>-->
-<!--            </MenuItem>-->
+            <MenuItem name="departmentInfo">
+              <span>部门信息</span>
+            </MenuItem>
           </Submenu>
 
         </Menu>
