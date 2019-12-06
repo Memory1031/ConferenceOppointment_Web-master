@@ -10,6 +10,7 @@ import MyInfo from '@/pages/user/myInfo/myInfo'
 import Manager from '@/group/manager/manager'
 import AnnounceManager from '@/pages/manager/announce_Manager/announceManager'
 import ManageConference from '@/pages/manager/manageConference/manageConference'
+import ManagerInformation from '@/pages/manager/managerInformation/managerInfo'
 import System from '@/group/system/system'
 import AnnounceSystem from '@/pages/system/announce_System/announceSystem'
 
@@ -68,6 +69,11 @@ export default new Router({
           path: 'manageConference',
           component: ManageConference,
           name: 'manageConference'
+        },
+        {
+          path: 'managerInfo',
+          component: ManagerInformation,
+          name: 'managerInfo'
         }
       ]
     },

@@ -18,7 +18,7 @@
           title="创建会议室"
           :loading="loading"
           width="1000" ok-text="提交" @on-ok="createConference">
-          <Form :model="conference_info" :label-width="80">
+          <Form :model="conference_info" :label-width="100" >
             <Row>
               <Col span="8">
                 <FormItem label="房间号">
@@ -190,7 +190,7 @@
         v-model="modal_info"
         title="会议室详情"
         width="1000">
-        <Form :model="updatedconference_info" :label-width="80">
+        <Form :model="updatedconference_info" :label-width="100">
           <Row>
             <Col span="8">
               <FormItem label="房间号">
@@ -314,7 +314,7 @@
                 <Input v-model="updatedconference_info.otherdevicecondition" :disabled="disable_imple" placeholder="选填"></Input>
               </FormItem>
               <div>
-                <span>会议室图片：</span> <span v-if="!picture_exit">无</span><br/>
+                <span>&nbsp&nbsp&nbsp&nbsp会议室图片：</span> <span v-if="!picture_exit">无</span><br/>
                 <img :src="picture_url" style="margin-left: 30px; max-width: 300px" v-if="picture_exit" max-width="280">
               </div>
               <br/>
@@ -689,6 +689,6 @@
     }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   @import 'manageConference';
 </style>

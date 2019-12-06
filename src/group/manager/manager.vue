@@ -12,14 +12,34 @@
             <Icon type="ios-mail"></Icon>
             <span>管理公告</span>
           </MenuItem>
-          <MenuItem name="manageConference">
-            <Icon type="ios-book-outline"></Icon>
-            <span>管理会议室</span>
-          </MenuItem>
-<!--          <MenuItem name="myInfo">-->
-<!--            <Icon type="ios-person"></Icon>-->
-<!--            <span>我的信息</span>-->
-<!--          </MenuItem>-->
+          <Submenu name="1">
+            <template slot="title">
+              <Icon type="ios-book-outline" />
+              会议室
+            </template>
+            <MenuItem name="manageConference">
+              <span>管理会议室</span>
+            </MenuItem>
+          </Submenu>
+<!--          <Submenu name="2">-->
+<!--            <template slot="title">-->
+<!--              <Icon type="ios-people" />-->
+<!--              预约审核-->
+<!--            </template>-->
+<!--          </Submenu>-->
+          <Submenu name="3">
+            <template slot="title">
+              <Icon type="ios-people" />
+              信息
+            </template>
+            <MenuItem name="managerInfo">
+              <span>我的信息</span>
+            </MenuItem>
+<!--            <MenuItem name="managerInformation">-->
+<!--              <span>部门信息</span>-->
+<!--            </MenuItem>-->
+          </Submenu>
+
         </Menu>
       </Sider>
       <Layout>
@@ -47,7 +67,7 @@
                     <DropdownItem v-if="this.identity.system" @click.native="$router.push('/system')">系统管理员</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
-                <DropdownItem @click.native="$router.push('myInfo')">我的信息</DropdownItem>
+                <DropdownItem @click.native="$router.push('managerInfo')">我的信息</DropdownItem>
                 <DropdownItem divided @click.native="logout">登出</DropdownItem>
               </DropdownMenu>
             </Dropdown>
