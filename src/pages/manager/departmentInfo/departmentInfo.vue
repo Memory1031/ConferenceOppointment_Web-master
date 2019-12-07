@@ -6,7 +6,7 @@
           <Input v-model="department_info.departmentName" disabled ></Input>
         </FormItem>
         <br/>
-        <FormItem label="手机:">
+        <FormItem label="联系电话:">
           <Input v-model="department_info.telphone" :disabled="disable_impl"></Input>
         </FormItem>
         <br/>
@@ -16,6 +16,7 @@
         <br/>
         <div>
           <Button type="primary" size="large" style="margin-left: 45px" v-if="disable_impl" @click="disable_impl=!disable_impl">修改</Button>
+          <Button size="large" style="margin-left: 45px" v-if="!disable_impl" @click="cancel">取消</Button>
           <Button type="success" size="large" style="margin-left: 45px" :loading="loading" v-if="!disable_impl" @click="updatePersonInfo">保存</Button>
         </div>
       </Form>
@@ -82,6 +83,10 @@
                 })
                 this.disable_impl = true;
                 this.loading = false;
+            },
+            cancel(){
+                this.disable_impl = true;
+                this.init("");
             }
         }
     }

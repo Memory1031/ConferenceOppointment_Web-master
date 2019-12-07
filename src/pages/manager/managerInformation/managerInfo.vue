@@ -24,6 +24,7 @@
         <br/>
         <div>
           <Button type="primary" size="large" style="margin-left: 45px" v-if="disable_impl" @click="disable_impl=!disable_impl">修改</Button>
+          <Button size="large" style="margin-left: 45px" v-if="!disable_impl" @click="cancel">取消</Button>
           <Button type="success" size="large" style="margin-left: 45px" :loading="loading" v-if="!disable_impl" @click="updatePersonInfo">保存</Button>
         </div>
       </Form>
@@ -90,6 +91,10 @@
               })
               this.disable_impl = true;
               this.loading = false;
+          },
+          cancel(){
+              this.disable_impl = true;
+              this.init("");
           }
       }
   }
