@@ -183,7 +183,7 @@
               :on-format-error="handleFormatError2"
               :on-success="uploadSuccess2"
               :on-error="uploadError2"
-              action="http://www.songcm.cn:8888/api/manager/departmentUpdate">
+              action="http://www.songcm.cn:8888/api/manager/confCreationByExcel">
               <div style="padding: 20px 0">
                 <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                 <p>Click or drag files here to upload</p>
@@ -593,6 +593,7 @@
             },
             uploadSuccess2(response) {
                 this.$Message.success("创建会议室成功！")
+                this.init("刷新成功")
             },
             uploadError(){
                 this.$Message.error("上传失败！");
