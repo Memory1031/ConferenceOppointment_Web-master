@@ -24,7 +24,7 @@
         <br/>
         <div>
           <Button type="primary" size="large" style="margin-left: 45px" v-if="disable_impl" @click="disable_impl=!disable_impl">修改</Button>
-          <Button type="success" size="large" style="margin-left: 45px" v-if="!disable_impl" @click="updatePersonInfo">保存</Button>
+          <Button type="success" size="large" style="margin-left: 45px" :loading="loading" v-if="!disable_impl" @click="updatePersonInfo">保存</Button>
         </div>
       </Form>
     </div>
@@ -38,6 +38,7 @@
       data(){
           return{
               disable_impl: true,
+              loading: false,
               person_info:{
               },
 
@@ -67,6 +68,7 @@
               })
           },
           updatePersonInfo(){
+              this.loading = true;
               axios({
                   url: apiRoot + '/user/userInfoUpdate',
                   method: 'post',
@@ -87,6 +89,7 @@
                   this.init('')
               })
               this.disable_impl = true;
+              this.loading = false;
           }
       }
   }

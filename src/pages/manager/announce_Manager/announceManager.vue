@@ -225,7 +225,7 @@
             },
             updateAnnouncement(index){
                 this.notice_update_number = index;
-                this.modal_create = true;
+                this.modal_update = true;
             },
             updateNotice(){
                 this.update_loading = true;
