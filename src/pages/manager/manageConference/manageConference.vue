@@ -10,7 +10,7 @@
           </Button>
           <DropdownMenu slot="list">
             <DropdownItem @click.native="modal_create=true">直接创建</DropdownItem>
-            <!--          <DropdownItem>导入excel表格</DropdownItem>-->
+            <DropdownItem @click.native="modal_create2=true,xlsxAddress=''">导入excel表格</DropdownItem>
           </DropdownMenu>
         </Dropdown>
         <Modal
@@ -162,6 +162,37 @@
               </Col>
             </Row>
           </Form>
+        </Modal>
+        <Modal
+          v-model="modal_create2"
+          title="批量创建会议室"
+          width="500">
+          <Button type="primary" size="large" @click="downloadXlxs">下载模板</Button>
+          <br/>
+          <br/>
+          <Card style="width:450px">
+            <p slot="title">
+              <Icon type="ios-film-outline"></Icon>
+              上传表格
+            </p>
+            <Upload
+              multiple
+              type="drag"
+              :headers="uploadHeaders"
+              :format="['xlsx','xls']"
+              :on-format-error="handleFormatError2"
+              :on-success="uploadSuccess2"
+              :on-error="uploadError2"
+              action="http://www.songcm.cn:8888/api/manager/departmentUpdate">
+              <div style="padding: 20px 0">
+                <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                <p>Click or drag files here to upload</p>
+              </div>
+            </Upload>
+          </Card>
+          <div slot="footer">
+            <Button type="primary" size="large"  @click="modal_create2=false">确定</Button>
+          </div>
         </Modal>
       </div>
     </Row>
@@ -350,6 +381,8 @@
 
 <script>
     import axios from 'axios'
+    import download from '../../../assets/js/download'
+
     export default{
         name: 'manageConference',
         data(){
@@ -357,7 +390,9 @@
                 loading: false,
                 loading2: false,
                 loading_change: false,
+                loading_upload: false,
                 modal_create: false,//直接创建会议室的对话框
+                modal_create2: false,
                 modal_delete: false,
                 modal_info: false,
                 disable_imple: true,
@@ -409,6 +444,7 @@
                     Authorization: localStorage.getItem('token')
                 },
                 pictureAddress: "",
+                xlsxAddress: '',
                 deleteNumber: 0,
                 columns: [
                     {
@@ -555,11 +591,20 @@
             uploadSuccess(response) {
                 this.pictureAddress = response.data;
             },
+            uploadSuccess2(response) {
+                this.$Message.success("创建会议室成功！")
+            },
             uploadError(){
                 this.$Message.error("上传失败！");
             },
+            uploadError2(){
+                this.$Message.error("上传失败，请检查文件内容是否符合格式")
+            },
             handleFormatError(file){
                 this.$Message.error("请确定您上传的文件为图片!")
+            },
+            handleFormatError2(file){
+                this.$Message.error("请确定您上传的文件为xlsx/xls文件!")
             },
             refresh(){
                 this.init("刷新成功!");
@@ -693,6 +738,24 @@
                     this.loading_change = false;
                     this.modal_info = false;
                 }
+            },
+            downloadXlxs() {
+                var filename = '会议室创建模板.xlsx'
+                axios({
+                    url: apiRoot + '/file/download?fileAddress=/home/ConferenceRoomBackend/files/8487a0f9-1125-4f2b-92a1-47d156201ab3---会议室创建模板.xlsx',
+                    method: 'get',
+                    responseType: 'blob'
+                }).then((res) => {
+                    if (res.status == 200) {
+                        // console.log(res.data)
+                        download(res.data, filename, 'text/plain')
+                        this.$Message.success("下载成功！")
+                    } else {
+                        this.$Message.error("下载失败！")
+                    }
+                }).catch((err) => {
+                    this.$Message.error("下载失败，请检查网络连接！")
+                })
             }
         }
     }

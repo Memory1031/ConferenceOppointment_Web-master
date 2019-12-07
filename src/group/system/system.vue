@@ -44,7 +44,23 @@
                   </DropdownMenu>
                 </Dropdown>
                 <DropdownItem @click.native="$router.push('systemInfo')">我的信息</DropdownItem>
+                <DropdownItem @click.native="modal=true">设置</DropdownItem>
                 <DropdownItem divided @click.native="logout">登出</DropdownItem>
+                <Modal v-model="modal" title="修改字段">
+                  <Form :model="time" :label-width="250">
+                    <FormItem label="学生可提前多少天预约会议室？">
+                      <InputNumber :max="30" :min="1" :disabled="!isAble_impl" v-model="time.student"></InputNumber>
+                    </FormItem>
+                    <FormItem label="老师可提前多少天预约会议室？">
+                      <InputNumber :max="30" :min="1" :disabled="!isAble_impl" v-model="time.teacher"></InputNumber>
+                    </FormItem>
+                  </Form>
+                  <div slot="footer">
+                    <Button size="large" @click="modal=false">取消</Button>
+                    <Button size="large" type="primary" v-if="!isAble_impl" @click="isAble_impl=true">修改</Button>
+                    <Button size="large" :loading="loading" v-if="isAble_impl" type="success" @click="update">保存</Button>
+                  </div>
+                </Modal>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -72,7 +88,14 @@
                     manager: false,
                     system: false,
                     show: false,
-                }
+                },
+                modal: false,
+                time: {
+                    student: 1,
+                    teacher: 1
+                },
+                isAble_impl: false,
+                loading: false
             };
         },
         watch: {
@@ -125,6 +148,9 @@
             logout(){
                 this.$router.push("/login");
                 localStorage.clear();
+            },
+            update(){
+
             }
         }
     }
