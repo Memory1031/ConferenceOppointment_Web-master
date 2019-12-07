@@ -107,14 +107,18 @@
                             else this.data2.push(item)
                         })
                         this.$Message.success(index);
+                        this.loading1 = false;
+                        this.loading2 = false;
                     }else{
                         this.$Message.error(res.data.message);
+                        this.loading1 = false;
+                        this.loading2 = false;
                     }
                 }).catch((err) => {
                     this.$Message.error("获取公告列表失败，请检查网络连接！");
+                    this.loading1 = false;
+                    this.loading2 = false;
                 })
-                this.loading1 = false;
-                this.loading2 = false;
             },
             refresh(){
                 this.init("刷新成功!")

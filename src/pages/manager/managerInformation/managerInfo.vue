@@ -81,16 +81,20 @@
               }).then((res) => {
                   if(res.data.code == 200){
                       this.init("更新成功！");
+                      this.disable_impl = true;
+                      this.loading = false;
                   }else{
                       this.$Message.error(res.data.message)
                       this.init('')
+                      this.disable_impl = true;
+                      this.loading = false;
                   }
               }).catch((err) => {
                   this.$Message.error("个人信息更新失败，请检查网络连接！");
                   this.init('')
+                  this.disable_impl = true;
+                  this.loading = false;
               })
-              this.disable_impl = true;
-              this.loading = false;
           },
           cancel(){
               this.disable_impl = true;

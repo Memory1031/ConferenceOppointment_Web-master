@@ -14,6 +14,7 @@ import ManagerInformation from '@/pages/manager/managerInformation/managerInfo'
 import DepartmentInfo from '@/pages/manager/departmentInfo/departmentInfo'
 import System from '@/group/system/system'
 import AnnounceSystem from '@/pages/system/announce_System/announceSystem'
+import SystemInfo from '@/pages/system/systemInfo/systemInfo'
 
 Vue.use(Router)
 
@@ -92,6 +93,11 @@ export default new Router({
           path: 'announceSystem',
           component: AnnounceSystem,
           name: 'announceSystem'
+        },
+        {
+          path: 'systemInfo',
+          component: SystemInfo,
+          name: 'systemInfo'
         }
       ]
     }

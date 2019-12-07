@@ -579,13 +579,15 @@
                     if(res.data.code == 200){
                         this.$Message.success("删除成功!");
                         this.init("刷新成功!");
+                        this.modal_delete = false;
                     }else{
                         this.$Message.error(res.data.Message);
+                        this.modal_delete = false;
                     }
                 }).catch((err)=>{
                     this.$Message.error("删除失败，请检查网络连接!")
+                    this.modal_delete = false;
                 })
-                this.modal_delete = false;
             },
             getConference_info(index){
                 this.modal_info = true;
@@ -669,8 +671,16 @@
                         if(res.data.code == 200){
                             this.$Message.success("信息更新成功");
                             this.init("刷新成功");
+
+                            this.disable_imple = true;
+                            this.loading_change = false;
+                            this.modal_info = false;
                         }else{
                             this.$Message.error(res.data.Message);
+
+                            this.disable_imple = true;
+                            this.loading_change = false;
+                            this.modal_info = false;
                         }
                     });
                 }else{
@@ -679,11 +689,10 @@
                     this.$nextTick(() => {
                         this.modal_create = true;
                     });
+                    this.disable_imple = true;
+                    this.loading_change = false;
+                    this.modal_info = false;
                 }
-
-                this.disable_imple = true;
-                this.loading_change = false;
-                this.modal_info = false;
             }
         }
     }
