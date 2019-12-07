@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <Form :model="person_info" :label-width="80" style="width: 500px;" size="large">
+      <Form :model="department_info" :label-width="80" style="width: 500px;" size="large">
         <FormItem label="部门:">
           <Input v-model="department_info.departmentName" disabled ></Input>
         </FormItem>
@@ -17,7 +17,7 @@
         <div>
           <Button type="primary" size="large" style="margin-left: 45px" v-if="disable_impl" @click="disable_impl=!disable_impl">修改</Button>
           <Button size="large" style="margin-left: 45px" v-if="!disable_impl" @click="cancel">取消</Button>
-          <Button type="success" size="large" style="margin-left: 45px" :loading="loading" v-if="!disable_impl" @click="updatePersonInfo">保存</Button>
+          <Button type="success" size="large" style="margin-left: 45px" :loading="loading" v-if="!disable_impl" @click="updateDepartmentInfo">保存</Button>
         </div>
       </Form>
     </div>
@@ -27,7 +27,7 @@
 <script>
     import axios from 'axios'
     export default {
-        name: 'managerInfo',
+        name: 'departmentInfo',
         data(){
             return{
                 disable_impl: true,
@@ -60,7 +60,7 @@
                     this.$Message.error('请检查网络连接!')
                 })
             },
-            updatePersonInfo(){
+            updateDepartmentInfo(){
                 this.loading = true;
                 axios({
                     url: apiRoot + '/manager/departmentUpdate',
