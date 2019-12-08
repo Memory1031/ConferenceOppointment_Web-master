@@ -95,14 +95,14 @@
                 </FormItem>
                 <FormItem label="房间用途">
                   <RadioGroup v-model="conference_info.roomfunction">
-                    <Radio :label='0'>
+                    <Radio label='会议'>
                       <span>会议</span>
                     </Radio>
-                    <Radio :label='1'>
+                    <Radio label='培训'>
                       <span>培训</span>
                     </Radio>
-                    <Radio :label="2">
-                      <span>都可以</span>
+                    <Radio label="兼有">
+                      <span>兼有</span>
                     </Radio>
                   </RadioGroup>
                 </FormItem>
@@ -173,7 +173,7 @@
           <Card style="width:450px">
             <p slot="title">
               <Icon type="ios-film-outline"></Icon>
-              上传表格
+              上传excel表格
             </p>
             <Upload
               multiple
@@ -210,7 +210,7 @@
             <span>删除确认</span>
           </p>
           <div style="text-align:center">
-            <p>在进行此操作后，会议室<span id="conference-name"></span>将会被删除</p>
+            <p>在进行此操作后，会议室&nbsp<span id="conference-name"></span>&nbsp将会被删除</p>
             <p>您确定要删除么</p>
           </div>
           <div slot="footer">
@@ -295,14 +295,14 @@
               </FormItem>
               <FormItem label="房间用途">
                 <RadioGroup v-model="updatedconference_info.roomfunction">
-                  <Radio :label='0' :disabled="disable_imple">
+                  <Radio label="会议" :disabled="disable_imple">
                     <span>会议</span>
                   </Radio>
-                  <Radio :label='1' :disabled="disable_imple">
+                  <Radio label="培训" :disabled="disable_imple">
                     <span>培训</span>
                   </Radio>
-                  <Radio :label="2" :disabled="disable_imple">
-                    <span>都可以</span>
+                  <Radio label="兼有" :disabled="disable_imple">
+                    <span>兼有</span>
                   </Radio>
                 </RadioGroup>
               </FormItem>
@@ -356,7 +356,7 @@
                 :headers="uploadHeaders"
                 :format="['jpg','jpeg','png']"
                 :on-format-error="handleFormatError"
-                :on-success="uploadSuccess"
+                :on-success="uploadSuccess3"
                 :on-error="uploadError"
                 action="http://www.songcm.cn:8888/api/file/upload">
                 <div style="padding: 20px 0">
@@ -411,7 +411,7 @@
                     seatsize : 0,//座位摆放方式
                     screensize : "", //投影仪屏幕大小
                     maintaincost : 0, //维保成本
-                    roomfunction : 0,//房间用途
+                    roomfunction : '',//房间用途
                     ismultifunc : 0,//多功能会议室
                     hasspeaker : 0,//有话筒
                     haswater : 0,//有茶水
@@ -433,7 +433,7 @@
                     seatsize : 0,//座位摆放方式
                     screensize : "", //投影仪屏幕大小
                     maintaincost : 0, //维保成本
-                    roomfunction : 0,//房间用途
+                    roomfunction : '',//房间用途
                     ismultifunc : 0,//多功能会议室
                     hasspeaker : 0,//有话筒
                     haswater : 0,//有茶水
@@ -590,6 +590,9 @@
             },
             uploadSuccess(response) {
                 this.pictureAddress = response.data;
+            },
+            uploadSuccess3(response) {
+                this.updatedconference_info.picture = response.data;
             },
             uploadSuccess2(response) {
                 this.$Message.success("创建会议室成功！")
