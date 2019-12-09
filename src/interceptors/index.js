@@ -10,7 +10,7 @@ axios.interceptors.request.use((config) => {
   return config;
 },
   (error) => {
-  // console.error('request interceptor: ', error)
+  console.error('request interceptor: ', error)
   if (error.response) {
     switch (error.response.status) {
       case 401:

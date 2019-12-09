@@ -10,7 +10,11 @@
               @on-select="push">
           <MenuItem name="announceManager">
             <Icon type="ios-mail"></Icon>
-            <span>管理公告</span>
+            <span>公告管理</span>
+          </MenuItem>
+          <MenuItem name="managerList">
+            <Icon type="ios-body"></Icon>
+            <span>人员管理</span>
           </MenuItem>
           <Submenu name="1">
             <template slot="title">

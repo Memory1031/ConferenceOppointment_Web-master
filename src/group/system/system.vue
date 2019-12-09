@@ -10,8 +10,24 @@
               @on-select="push">
           <MenuItem name="announceSystem">
             <Icon type="ios-mail"></Icon>
-            <span>管理公告</span>
+            <span>公告管理</span>
           </MenuItem>
+          <MenuItem name="tagManage">
+            <Icon type="ios-attach"></Icon>
+            <span>标签管理</span>
+          </MenuItem>
+          <Submenu name="1">
+            <template slot="title">
+              <Icon type="ios-body" />
+              人员管理
+            </template>
+            <MenuItem name="managerListS">
+              <span>普通管理员</span>
+            </MenuItem>
+            <MenuItem name="systemList">
+              <span>系统管理员</span>
+            </MenuItem>
+          </Submenu>
           <MenuItem name="systemInfo">
             <Icon type="ios-person"></Icon>
             <span>我的信息</span>
@@ -44,7 +60,7 @@
                   </DropdownMenu>
                 </Dropdown>
                 <DropdownItem @click.native="$router.push('systemInfo')">我的信息</DropdownItem>
-                <DropdownItem @click.native="modal=true,init('数据获取成功！')">设置</DropdownItem>
+                <DropdownItem @click.native="modal=true,init('数据获取成功！'),isAble_impl=false">设置</DropdownItem>
                 <DropdownItem divided @click.native="logout">登出</DropdownItem>
                 <Modal v-model="modal" title="修改字段">
                   <Form :model="time" :label-width="250">

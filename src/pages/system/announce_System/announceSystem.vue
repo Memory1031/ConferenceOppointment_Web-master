@@ -47,12 +47,14 @@
             <Button size="large" :loading="update_loading" type="primary" @click="updateNotice">提交</Button>
           </div>
         </Modal>
-        <Modal v-model="modal_delete"  width="360">
+        <Modal v-model="modal_delete"  width="550">
           <p slot="header" style="color:#f60;text-align:center">
             <Icon type="ios-information-circle"></Icon>
             <span>删除确认</span>
           </p>
-          <div style="text-align:center">
+          <div style="text-align:center;font-size: 16px;">
+            <img src="../../../assets/img/error.png" width="100">
+            <br/><br/>
             <p>在进行此操作后，该公告将会被删除</p>
             <p>您确定要删除么</p>
           </div>

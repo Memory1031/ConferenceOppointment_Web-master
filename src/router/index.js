@@ -12,9 +12,13 @@ import AnnounceManager from '@/pages/manager/announce_Manager/announceManager'
 import ManageConference from '@/pages/manager/manageConference/manageConference'
 import ManagerInformation from '@/pages/manager/managerInformation/managerInfo'
 import DepartmentInfo from '@/pages/manager/departmentInfo/departmentInfo'
+import ManagerList from '@/pages/manager/managerList/managerList'
 import System from '@/group/system/system'
 import AnnounceSystem from '@/pages/system/announce_System/announceSystem'
 import SystemInfo from '@/pages/system/systemInfo/systemInfo'
+import ManagerList2 from '@/pages/system/managerList/managerList'
+import SystemList from '@/pages/system/systemList/systemList'
+import TagManager from '@/pages/system/tagManage/tagManage'
 
 Vue.use(Router)
 
@@ -81,6 +85,11 @@ export default new Router({
           path: 'departmentInfo',
           component: DepartmentInfo,
           name: 'departmentInfo'
+        },
+        {
+          path: 'managerList',
+          component: ManagerList,
+          name: 'managerList'
         }
       ]
     },
@@ -98,6 +107,21 @@ export default new Router({
           path: 'systemInfo',
           component: SystemInfo,
           name: 'systemInfo'
+        },
+        {
+          path: 'managerListS',
+          component: ManagerList2,
+          name: 'managerListS'
+        },
+        {
+          path: 'systemList',
+          component: SystemList,
+          name: 'systemList'
+        },
+        {
+          path: 'tagManage',
+          component: TagManager,
+          name: 'tagManage'
         }
       ]
     }

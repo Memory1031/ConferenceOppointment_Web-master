@@ -204,12 +204,14 @@
           :loading="loading2"
           height="700"
           :columns="columns" :data="data"></Table>
-        <Modal v-model="modal_delete"  width="360">
+        <Modal v-model="modal_delete"  width="550">
           <p slot="header" style="color:#f60;text-align:center">
             <Icon type="ios-information-circle"></Icon>
             <span>删除确认</span>
           </p>
-          <div style="text-align:center">
+          <div style="text-align:center;font-size: 16px;">
+            <img src="../../../assets/img/error.png" width="100">
+            <br/><br/>
             <p>在进行此操作后，会议室&nbsp<span id="conference-name"></span>&nbsp将会被删除</p>
             <p>您确定要删除么</p>
           </div>
@@ -448,16 +450,22 @@
                 deleteNumber: 0,
                 columns: [
                     {
+                        title: '所属大楼',
+                        key: 'building',
+                        align: 'center',
+                        tooltip: true
+                    },
+                    {
                         title: '会议室房间号',
                         key: 'name',
                         align: 'center',
                         tooltip: true
                     },
                     {
-                        title: '所属大楼',
-                        key: 'building',
-                        align: 'center',
-                        tooltip: true
+                      title: '座位数',
+                      key: 'seatNumber',
+                      align: 'center',
+                      tooltip: true
                     },
                     {
                         title: '是否开放',

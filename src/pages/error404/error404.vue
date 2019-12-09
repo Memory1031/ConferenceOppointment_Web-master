@@ -43,6 +43,6 @@
   }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   @import "error404";
 </style>
