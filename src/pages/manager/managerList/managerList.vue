@@ -175,7 +175,6 @@
                         res.data.data.forEach((item) => {
                             item.phone = item.phone ? item.phone : '未填写';
                             item.email = item.email ? item.email : '未填写';
-                            if(item.userId != userId)
                             this.data.push(item);
                         })
                         this.$Message.success(index);

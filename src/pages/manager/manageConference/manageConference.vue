@@ -37,16 +37,16 @@
                   <Input v-model="conference_info.addressKey" placeholder="(必填)"></Input>
                 </FormItem>
                 <FormItem label="会议室面积">
-                  <Input v-model="conference_info.areasize" placeholder="单位为立方米(必填)"></Input>
+                  <InputNumber v-model="conference_info.areasize" :min="1"></InputNumber>
                 </FormItem>
                 <FormItem label="座位数">
-                  <Input v-model="conference_info.seatnumber" placeholder="(必填)"></Input>
+                  <InputNumber v-model="conference_info.seatnumber" :min="1"></InputNumber>
                 </FormItem>
                 <FormItem label="屏幕尺寸">
                   <Input v-model="conference_info.screensize" placeholder="若没有则不填"></Input>
                 </FormItem>
                 <FormItem label="维保成本">
-                  <Input v-model="conference_info.maintaincost" placeholder="单位为元(必填)"></Input>
+                  <InputNumber v-model="conference_info.maintaincost" :min="1"></InputNumber>
                 </FormItem>
               </Col>
               <Col span="8">
@@ -141,9 +141,21 @@
                 <FormItem label="麦克风情况">
                   <Input v-model="conference_info.microphonecondition" placeholder="选填"></Input>
                 </FormItem>
-                <FormItem label="其他设备">
+                <FormItem label="备注">
                   <Input v-model="conference_info.otherdevicecondition" placeholder="选填"></Input>
                 </FormItem>
+                <div>
+                  <p style="text-align: center; margin-bottom: 10px">最早可提前预约天数：</p>
+                  <FormItem label="学生">
+                    <InputNumber v-model="conference_info.studentDays" :min="1"></InputNumber>
+                  </FormItem>
+                  <FormItem label="同部门教师">
+                    <InputNumber v-model="conference_info.sameTeacherDays" :min="1"></InputNumber>
+                  </FormItem>
+                  <FormItem label="其他部门教师">
+                    <InputNumber v-model="conference_info.diffTeacherDays" :min="1"></InputNumber>
+                  </FormItem>
+                </div>
                 <div>上传会议室照片(可不传)</div>
                 <Upload
                   multiple
@@ -222,10 +234,10 @@
       <Modal
         v-model="modal_info"
         title="会议室详情"
-        width="1000">
+        width="1500">
         <Form :model="updatedconference_info" :label-width="100">
           <Row>
-            <Col span="8">
+            <Col span="6">
               <FormItem label="房间号">
                 <Input v-model="updatedconference_info.name" disabled placeholder="例:D602(必填)"></Input>
               </FormItem>
@@ -239,19 +251,19 @@
                 <Input v-model="updatedconference_info.addressKey" :disabled="disable_imple" placeholder="(必填)"></Input>
               </FormItem>
               <FormItem label="会议室面积">
-                <Input v-model="updatedconference_info.areasize" :disabled="disable_imple" placeholder="单位为立方米(必填)"></Input>
+                <InputNumber v-model="updatedconference_info.areasize" :min='1' :disabled="disable_imple"></InputNumber>
               </FormItem>
               <FormItem label="座位数">
-                <Input v-model="updatedconference_info.seatnumber" :disabled="disable_imple" placeholder="(必填)"></Input>
+                <InputNumber v-model="updatedconference_info.seatnumber" :min='1' :disabled="disable_imple"></InputNumber>
               </FormItem>
               <FormItem label="屏幕尺寸">
                 <Input v-model="updatedconference_info.screensize" :disabled="disable_imple" placeholder="若没有则不填"></Input>
               </FormItem>
               <FormItem label="维保成本">
-                <Input v-model="updatedconference_info.maintaincost" :disabled="disable_imple" placeholder="单位为元(必填)"></Input>
+                <InputNumber v-model="updatedconference_info.maintaincost" :min='1' :disabled="disable_imple"></InputNumber>
               </FormItem>
             </Col>
-            <Col span="8">
+            <Col span="6">
               <FormItem label="对外开放">
                 <RadioGroup v-model="updatedconference_info.isAble">
                   <Radio :label='1' :disabled="disable_imple">
@@ -339,15 +351,31 @@
                 </RadioGroup>
               </FormItem>
             </Col>
-            <Col span="8">
+            <Col span="6">
               <FormItem label="麦克风情况">
                 <Input v-model="updatedconference_info.microphonecondition" :disabled="disable_imple" placeholder="选填"></Input>
               </FormItem>
-              <FormItem label="其他设备">
+              <FormItem label='备注'>
                 <Input v-model="updatedconference_info.otherdevicecondition" :disabled="disable_imple" placeholder="选填"></Input>
               </FormItem>
               <div>
-                <span>&nbsp&nbsp&nbsp&nbsp会议室图片：</span> <span v-if="!picture_exit">无</span><br/>
+                <p style="text-align: center; margin-bottom: 10px">最早可提前预约天数：</p>
+                <FormItem label="学生">
+                  <InputNumber v-model="updatedconference_info.studentDays" :min="1" :disabled="disable_imple"></InputNumber>
+                </FormItem>
+                <FormItem label="同部门教师">
+                  <InputNumber v-model="updatedconference_info.sameTeacherDays" :min="1" :disabled="disable_imple"></InputNumber>
+                </FormItem>
+                <FormItem label="其他部门教师">
+                  <InputNumber v-model="updatedconference_info.diffTeacherDays" :min="1" :disabled="disable_imple"></InputNumber>
+                </FormItem>
+              </div>
+            </Col>
+            <Col span="6">
+              <div>
+                <p style="text-align: center">
+                  <span>会议室图片：</span> <span v-if="!picture_exit">无</span><br/>
+                </p>
                 <img :src="picture_url" style="margin-left: 30px; max-width: 300px" v-if="picture_exit" max-width="280">
               </div>
               <br/>
@@ -408,18 +436,21 @@
                     studentAble : 0,//是否对学生开放，1为开放，以下同
                     teacherAble : 0,//是否对老师开放
                     isAble : 0,//是否开放
-                    areasize : 0,//会议室面积 单位为立方米
-                    seatnumber : 0,//座位数
+                    areasize : 1,//会议室面积 单位为立方米
+                    seatnumber : 1,//座位数
                     seatsize : 0,//座位摆放方式
                     screensize : "", //投影仪屏幕大小
-                    maintaincost : 0, //维保成本
-                    roomfunction : '',//房间用途
+                    maintaincost : 1, //维保成本
+                    roomfunction : '会议',//房间用途
                     ismultifunc : 0,//多功能会议室
                     hasspeaker : 0,//有话筒
                     haswater : 0,//有茶水
                     microphonecondition: '',
                     otherdevicecondition: '',
-                    campus: ''
+                    campus: '',
+                    studentDays: 1,
+                    sameTeacherDays: 1,
+                    diffTeacherDays: 1
                 },
                 updatedconference_info:{
                     id: '',
@@ -430,17 +461,20 @@
                     studentAble : 0,//是否对学生开放，1为开放，以下同
                     teacherAble : 0,//是否对老师开放
                     isAble : 0,//是否开放
-                    areasize : 0,//会议室面积 单位为立方米
-                    seatnumber : 0,//座位数
+                    areasize : 1,//会议室面积 单位为立方米
+                    seatnumber : 1,//座位数
                     seatsize : 0,//座位摆放方式
                     screensize : "", //投影仪屏幕大小
-                    maintaincost : 0, //维保成本
+                    maintaincost : 1, //维保成本
                     roomfunction : '',//房间用途
                     ismultifunc : 0,//多功能会议室
                     hasspeaker : 0,//有话筒
                     haswater : 0,//有茶水
                     microphonecondition: '',
-                    otherdevicecondition: ''
+                    otherdevicecondition: '',
+                    studentDays: 1,
+                    sameTeacherDays: 1,
+                    diffTeacherDays: 1
                 },
                 uploadHeaders: {
                     Authorization: localStorage.getItem('token')
@@ -463,9 +497,10 @@
                     },
                     {
                       title: '座位数',
-                      key: 'seatNumber',
+                      key: 'seatnumber',
                       align: 'center',
-                      tooltip: true
+                      tooltip: true,
+                      sortable: true
                     },
                     {
                         title: '是否开放',
@@ -576,7 +611,10 @@
                             microphonecondition: this.conference_info.microphonecondition,
                             otherdevicecondition: this.conference_info.otherdevicecondition,
                             picture: this.pictureAddress,
-                            campus: this.conference_info.campus
+                            campus: this.conference_info.campus,
+                            studentdays: this.conference_info.studentDays,
+                            sameteacherdays: this.conference_info.sameTeacherDays,
+                            diffteacherdays: this.conference_info.diffTeacherDays
                         }
                     }).then((res) => {
                         if(res.data.code == 200){
@@ -675,6 +713,9 @@
                         this.updatedconference_info.seatsize = res.data.data.seatsize
                         this.updatedconference_info.studentAble = res.data.data.studentAble
                         this.updatedconference_info.teacherAble = res.data.data.teacherAble
+                        this.updatedconference_info.studentDays = res.data.data.studentdays
+                        this.updatedconference_info.sameTeacherDays = res.data.data.sameteacherdays
+                        this.updatedconference_info.diffTeacherDays = res.data.data.diffteacherdays
 
                         if(this.updatedconference_info.picture != ""){
                             this.picture_url = "http://www.songcm.cn" + this.updatedconference_info.picture;
@@ -722,7 +763,10 @@
                             haswater: this.updatedconference_info.haswater,
                             microphonecondition: this.updatedconference_info.microphonecondition,
                             otherdevicecondition: this.updatedconference_info.otherdevicecondition,
-                            picture: this.updatedconference_info.picture
+                            picture: this.updatedconference_info.picture,
+                            studentdays: this.updatedconference_info.studentDays,
+                            sameteacherdays: this.updatedconference_info.sameTeacherDays,
+                            diffteacherdays: this.updatedconference_info.diffTeacherDays
                         }
                     }).then((res) => {
                         if(res.data.code == 200){
@@ -744,7 +788,7 @@
                     this.$Message.error("请完整填写有关字段");
                     this.loading = false;
                     this.$nextTick(() => {
-                        this.modal_create = true;
+                        this.modal_info = true;
                     });
                     this.disable_imple = true;
                     this.loading_change = false;
@@ -754,7 +798,7 @@
             downloadXlxs() {
                 var filename = '会议室创建模板.xlsx'
                 axios({
-                    url: apiRoot + '/file/download?fileAddress=/home/ConferenceRoomBackend/files/8487a0f9-1125-4f2b-92a1-47d156201ab3---会议室创建模板.xlsx',
+                    url: apiRoot + '/file/download?fileAddress=/home/ConferenceRoomBackend/files/3ffd6ddd-890d-45c9-8e0e-85cbfe43d185---会议室创建模板.xlsx',
                     method: 'get',
                     responseType: 'blob'
                 }).then((res) => {

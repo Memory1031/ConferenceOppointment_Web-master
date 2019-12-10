@@ -60,27 +60,10 @@
                   </DropdownMenu>
                 </Dropdown>
                 <DropdownItem @click.native="$router.push('systemInfo')">我的信息</DropdownItem>
-                <DropdownItem @click.native="modal=true,init('数据获取成功！'),isAble_impl=false">设置</DropdownItem>
                 <DropdownItem divided @click.native="logout">登出</DropdownItem>
-                <Modal v-model="modal" title="修改字段">
-                  <Form :model="time" :label-width="250">
-                    <FormItem label="学生可提前多少天预约会议室？">
-                      <InputNumber :max="30" :min="1" :disabled="!isAble_impl" v-model="time.student"></InputNumber>
-                    </FormItem>
-                    <FormItem label="老师可提前多少天预约会议室？">
-                      <InputNumber :max="30" :min="1" :disabled="!isAble_impl" v-model="time.teacher"></InputNumber>
-                    </FormItem>
-                  </Form>
-                  <div slot="footer">
-                    <Button size="large" @click="modal=false">取消</Button>
-                    <Button size="large" type="primary" v-if="!isAble_impl" @click="isAble_impl=true">修改</Button>
-                    <Button size="large" :loading="loading" v-if="isAble_impl" type="success" @click="update">保存</Button>
-                  </div>
-                </Modal>
               </DropdownMenu>
             </Dropdown>
           </div>
-
         </Header>
         <Content :style="{margin: '20px', background: '#fff', minHeight: '220px'}">
           <router-view></router-view>
@@ -106,13 +89,7 @@
                     system: false,
                     show: false,
                 },
-                modal: false,
-                time: {
-                    student: 1,
-                    teacher: 1
-                },
-                isAble_impl: false,
-                loading: false
+                modal: false
             };
         },
         watch: {
@@ -165,49 +142,6 @@
             logout(){
                 this.$router.push("/login");
                 localStorage.clear();
-            },
-            init(index){
-                axios({
-                    url: apiRoot + '/system/getDay',
-                    method: 'get'
-                }).then((res) => {
-                    if(res.data.code == 200){
-                        this.time.student = res.data.data.studentDays;
-                        this.time.teacher = res.data.data.teacherDays;
-                        if(index != ''){
-                            this.$Message.success(index);
-                        }
-
-                    }else{
-                        this.$Message.error(res.data.message)
-                    }
-                }).catch((err) => {
-                    this.$Message.error("获取数据失败，请检查网络连接！")
-                })
-            },
-            update(){
-                this.loading = true;
-                axios({
-                    url: apiRoot + '/system/daysUpdate',
-                    method: 'post',
-                    data: {
-                        studentDays: this.time.student,
-                        teacherDays: this.time.teacher
-                    }
-                }).then((res) => {
-                    if(res.data.code == 200){
-                        this.$Message.success("修改成功！");
-                        this.init("");
-                        this.loading = false;
-                        this.isAble_impl = false;
-                    }else{
-                        this.$Message.error(res.data.message)
-                        this.loading = false;
-                    }
-                }).catch((err) => {
-                    this.$Message.error("修改失败，请检查网络连接！")
-                    this.loading = false;
-                })
             }
         }
     }

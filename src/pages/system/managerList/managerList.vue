@@ -171,7 +171,6 @@
             init(index, name){
                 this.loading = true;
                 this.data = [];
-                let userId = localStorage.getItem('userid');
                 this.data3 = [];
                 this.getDepartment()
                 axios({
@@ -182,16 +181,13 @@
                         res.data.data.forEach((item) => {
                             item.phone = item.phone ? item.phone : '未填写';
                             item.email = item.email ? item.email : '未填写';
-                            if(item.userId != userId){
-                                if(name == ''){
+                            if(name == ''){
+                                this.data.push(item);
+                            }else {
+                                if(this.department_search == item.department){
                                     this.data.push(item);
-                                }else{
-                                    if(this.department_search == item.department){
-                                        this.data.push(item);
-                                    }
                                 }
                             }
-
                         })
                         this.$Message.success(index);
                         this.loading = false;
