@@ -16,41 +16,63 @@
       <Row style="text-align: center">
         <Col span="8">
           <p>{{this.conference_info.campus}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>房间面积：{{this.conference_info.areasize}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>拿钥匙地点：{{this.conference_info.addressKey}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>座位摆放方式：{{this.conference_info.seatsize}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>{{this.conference_info.hasspeaker}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
         </Col>
         <Col span="8">
           <p>{{this.conference_info.building}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>房间用途：{{this.conference_info.roomfunction}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>{{this.conference_info.ismultifunc}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>投影仪尺寸：{{this.conference_info.screensize}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>维保及设备维修成本：{{this.conference_info.maintaincost}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
         </Col>
         <Col span="8">
           <p>房间号：{{this.conference_info.name}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>管理部门：{{this.row.department}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>座位数：{{this.conference_info.seatnumber}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>话筒情况：{{this.conference_info.microphonecondition}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
-          <p>{{this.conference_info.haswater}}</p>
-          <hr class="hr_extend" color="#d7dde4"/>
         </Col>
       </Row>
+      <hr class="hr_extend" color="#d7dde4"/>
+      <Row style="text-align: center">
+        <Col span="8">
+          <p>拿钥匙地点：{{this.conference_info.addressKey}}</p>
+        </Col>
+        <Col span="8">
+          <p>房间用途：{{this.conference_info.roomfunction}}</p>
+        </Col>
+        <Col span="8">
+          <p>管理部门：{{this.row.department}}</p>
+        </Col>
+      </Row>
+      <hr class="hr_extend" color="#d7dde4"/>
+      <Row style="text-align: center">
+        <Col span="8">
+          <p>房间面积：{{this.conference_info.areasize}}</p>
+        </Col>
+        <Col span="8">
+          <p>{{this.conference_info.ismultifunc}}</p>
+        </Col>
+        <Col span="8">
+          <p>座位数：{{this.conference_info.seatnumber}}</p>
+        </Col>
+      </Row>
+      <hr class="hr_extend" color="#d7dde4"/>
+      <Row style="text-align: center">
+        <Col span="8">
+          <p>座位摆放方式：{{this.conference_info.seatsize}}</p>
+        </Col>
+        <Col span="8">
+          <p>投影仪尺寸：{{this.conference_info.screensize}}</p>
+        </Col>
+        <Col span="8">
+          <p>话筒情况：{{this.conference_info.microphonecondition}}</p>
+        </Col>
+      </Row>
+      <hr class="hr_extend" color="#d7dde4"/>
+      <Row style="text-align: center">
+        <Col span="8">
+          {{this.conference_info.hasspeaker}}
+        </Col>
+        <Col span="8">
+          <p>维保及设备维修成本：{{this.conference_info.maintaincost}}</p>
+        </Col>
+        <Col span="8">
+          <p>{{this.conference_info.haswater}}</p>
+        </Col>
+      </Row>
+      <hr class="hr_extend" color="#d7dde4"/>
       <Row style="text-align: center">
         <p>备注：{{this.conference_info.otherdevicecondition}}</p>
         <hr class="hr_extend" color="#d7dde4"/>
