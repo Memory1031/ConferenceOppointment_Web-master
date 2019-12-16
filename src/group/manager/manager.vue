@@ -24,6 +24,9 @@
             <MenuItem name="manageConference">
               <span>管理会议室</span>
             </MenuItem>
+            <MenuItem name="offerCheck">
+              <span>申请审核</span>
+            </MenuItem>
           </Submenu>
 <!--          <Submenu name="2">-->
 <!--            <template slot="title">-->

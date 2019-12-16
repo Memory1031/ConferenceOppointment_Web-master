@@ -449,6 +449,7 @@
             },
             selectTime(chosenDate, type){
                 if(chosenDate != ''){
+                    this.chosenTime = [];
                     this.chosenDate = chosenDate
                     axios({
                         url : apiRoot + '/user/appointmentByDay',
@@ -574,10 +575,10 @@
                             endtime: endtime,
                             requestreason: this.requestReason,
                             phone: this.official.phone,
-                            participatedId: arr
+                            participateId: arr
                         }
                     }).then((res) => {
-                        if(res.data.data == 200){
+                        if(res.data.code == 200){
                             this.$Message.success("会议室申请成功！")
                             this.loading_submit = false
                             this.modal_apply = false

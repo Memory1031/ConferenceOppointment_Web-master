@@ -13,6 +13,7 @@ import ManageConference from '@/pages/manager/manageConference/manageConference'
 import ManagerInformation from '@/pages/manager/managerInformation/managerInfo'
 import DepartmentInfo from '@/pages/manager/departmentInfo/departmentInfo'
 import ManagerList from '@/pages/manager/managerList/managerList'
+import OfferCheck from '@/pages/manager/offerCheck/offerCheck'
 import System from '@/group/system/system'
 import AnnounceSystem from '@/pages/system/announce_System/announceSystem'
 import SystemInfo from '@/pages/system/systemInfo/systemInfo'
@@ -90,6 +91,11 @@ export default new Router({
           path: 'managerList',
           component: ManagerList,
           name: 'managerList'
+        },
+        {
+          path: 'offerCheck',
+          component: OfferCheck,
+          name: 'offerCheck'
         }
       ]
     },
