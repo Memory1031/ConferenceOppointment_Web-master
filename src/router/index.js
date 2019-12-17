@@ -15,6 +15,7 @@ import DepartmentInfo from '@/pages/manager/departmentInfo/departmentInfo'
 import ManagerList from '@/pages/manager/managerList/managerList'
 import OfferCheck from '@/pages/manager/offerCheck/offerCheck'
 import Evaluate from '@/pages/manager/evaluate/evaluate'
+import HistoryManager from '@/pages/manager/historyManager/historyManager'
 import System from '@/group/system/system'
 import AnnounceSystem from '@/pages/system/announce_System/announceSystem'
 import SystemInfo from '@/pages/system/systemInfo/systemInfo'
@@ -102,6 +103,11 @@ export default new Router({
           path: 'evaluate',
           component: Evaluate,
           name: 'evaluate'
+        },
+        {
+          path: 'historyManager',
+          component: HistoryManager,
+          name: 'historyManager'
         }
       ]
     },

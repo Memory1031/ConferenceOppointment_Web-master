@@ -441,8 +441,8 @@
                     url: apiRoot + '/manager/tagUpdate',
                     method: 'post',
                     data: {
-                        name: arr,
-                        id: this.data[this.create_index].id
+                        tagNameList: arr,
+                        applicationId: this.data[this.update_index].id
                     }
                 }).then((res) => {
                     if(res.data.code == 200){

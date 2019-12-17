@@ -30,6 +30,9 @@
             <MenuItem name="evaluate">
               <span>评价</span>
             </MenuItem>
+            <MenuItem name="historyManager">
+              <span>预约历史</span>
+            </MenuItem>
           </Submenu>
 <!--          <Submenu name="2">-->
 <!--            <template slot="title">-->
