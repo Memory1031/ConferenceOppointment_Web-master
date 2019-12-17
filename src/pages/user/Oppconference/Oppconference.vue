@@ -47,7 +47,7 @@
                   <Col span="8">
                     <DatePicker type="date" :options="options" placeholder="选择预约日期"
                                 show-week-numbers size="large"
-                                @on-change="selectTime" style="width: 200px"></DatePicker>
+                                @on-change="selectTime" style="width: 200px" v-model="chosenDate"></DatePicker>
                     <Divider/>
                     <Poptip placement="right" width="400" trigger="hover">
                       <Button>提示</Button>
@@ -296,6 +296,7 @@
                                         click: () => {
                                             this.avaConference = params.index;
                                             this.modal_apply = true;
+                                            this.current = 0
                                         }
                                     }
                                 }, '申请')
