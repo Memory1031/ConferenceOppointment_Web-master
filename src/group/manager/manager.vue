@@ -25,7 +25,10 @@
               <span>管理会议室</span>
             </MenuItem>
             <MenuItem name="offerCheck">
-              <span>申请审核</span>
+              <span>预约审核</span>
+            </MenuItem>
+            <MenuItem name="evaluate">
+              <span>评价</span>
             </MenuItem>
           </Submenu>
 <!--          <Submenu name="2">-->

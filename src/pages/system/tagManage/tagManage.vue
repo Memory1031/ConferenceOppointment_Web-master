@@ -111,7 +111,7 @@
                 this.loading = true;
                 this.data = [];
                 axios({
-                    url: apiRoot + "/system/tagList",
+                    url: apiRoot + "/user/tagList",
                     method: 'get'
                 }).then((res) => {
                     if(res.data.code == 200){

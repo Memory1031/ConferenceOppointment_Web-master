@@ -34,15 +34,15 @@
         <TabPane label="部门信息">
           <Form :model="department_info" :label-width="80" style="width: 500px;" size="large">
             <FormItem label="部门:">
-              <Input v-model="department_info.departmentName" disabled ></Input>
+              <Input :value="department_info.departmentName" readonly></Input>
             </FormItem>
             <br/>
             <FormItem label="联系电话:">
-              <Input v-model="department_info.telphone" disabled></Input>
+              <Input :value="department_info.telphone" readonly></Input>
             </FormItem>
             <br/>
             <FormItem label="邮箱:">
-              <Input v-model="department_info.email" disabled></Input>
+              <Input :value="department_info.email" readonly></Input>
             </FormItem>
             <br/>
           </Form>

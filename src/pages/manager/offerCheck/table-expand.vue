@@ -14,6 +14,16 @@
     <Row style="padding-left: 30px; margin-bottom: 0px">预约详情：</Row>
     <Divider size="small"/>
     <Row>
+      <Col span="16" style="padding-right: 25px">
+        <p>会议参与者（默认第一个人为申请人）</p>
+        <Table
+          size="large"
+          no-data-text="数据异常"
+          stripe border
+          :loading="loading"
+          height="350"
+          :columns="columns" :data="data"></Table>
+      </Col>
       <Col span="8">
         <Row>
           <Card>
@@ -30,16 +40,6 @@
             </div>
           </Card>
         </Row>
-      </Col>
-      <Col span="16" style="padding-left: 25px">
-        <p>会议参与者（默认第一个人为申请人）</p>
-        <Table
-          size="large"
-          no-data-text="数据异常"
-          stripe border
-          :loading="loading"
-          height="350"
-          :columns="columns" :data="data"></Table>
       </Col>
     </Row>
   </Card>
@@ -58,6 +58,8 @@
               info: {},
               loading: false,
               reasonExist: true,
+              tags: [],
+              isEmpty: false,
               columns: [
                   {
                       title: '姓名',
@@ -83,24 +85,40 @@
                       align: 'center',
                       width: 150,
                       render: (h, params) => {
-                          return h('div', [
-                                  h('Button', {
-                                      props: {
-                                          type: 'primary'
-                                      },
-                                      style: {
-                                          height: '30px',
-                                          borderColor: 'white',
-                                          fontSize: '15px'
-                                      },
-                                      on: {
-                                          click: () => {
-
-                                          }
+                          return h('Poptip', {
+                              props: {
+                                  placement: 'left-start',
+                                  width: '300',
+                                  wordWrap: 'true'
+                              }
+                          }, [
+                              h('Button', {
+                                  props: {
+                                      type: 'primary'
+                                  },
+                                  on:{
+                                      click: () => {
+                                          this.getTag(params.index);
                                       }
-                                  }, '查看标签')
-                              ]
-                          )
+                                  }
+                              }, '查看历史评价'),
+                              h('div',{
+                                  slot: 'content'
+                              }, this.tags.map((item) => {
+                                      return h('Tag', {
+                                          props: {
+                                              size: 'large'
+                                          },
+                                          style:{
+                                              float: 'left'
+                                          },
+                                          domProps: {
+                                              innerHTML: item
+                                          }
+                                      })
+                                  })
+                              )
+                          ])
                       }
                   }
               ],
@@ -137,6 +155,24 @@
                     console.log(err)
                     this.$Message.error("获取详细信息失败，请检查网络连接！")
                     this.loading = false;
+                })
+            },
+            getTag(index){
+                this.tags = [];
+                axios({
+                    url: apiRoot + '/user/usersTag?id=' + this.data[index].userId,
+                    method: 'get'
+                }).then((res) => {
+                    if(res.data.code == 200){
+                        let dat = res.data.data;
+                        dat.forEach((item)=> {
+                            this.tags.push(item.tag)
+                        })
+                    }else{
+                        this.$Message.error(res.data.message)
+                    }
+                }).catch((err) => {
+                    this.$Message.error("获取评价标签失败，请检查网络连接")
                 })
             }
         }
