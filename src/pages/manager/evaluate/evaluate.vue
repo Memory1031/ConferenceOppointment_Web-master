@@ -298,6 +298,7 @@
         methods: {
             init(index,type){
                 this.data = []
+                this.loading = true;
                 axios({
                     url: apiRoot + '/manager/appointmentTagList',
                     method: 'get'
@@ -315,12 +316,16 @@
                             }
                         })
                         this.$Message.success(index);
+                        this.loading = false;
                     }else{
                         this.$Message.error(res.data.message)
+                        this.loading = false;
                     }
                 }).catch((err) => {
                     this.$Message.error("获取数据失败，请检查网络连接")
+                    this.loading = false;
                 })
+
             },
             searchForApply(){
                 this.init("检索成功！", this.roomName)

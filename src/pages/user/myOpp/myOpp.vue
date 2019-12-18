@@ -16,52 +16,17 @@
         :loading="loading"
         height="700"
         :columns="columns" :data="data"></Table>
-      <Modal v-model="modal_create" width="600" :closable="false">
-        <div>
-          <Card style="margin-bottom: 25px">
-            <p>
-              <span>您的评价：</span>
-              <Tag v-for="item in tagList"
-                   :key="item.id" :name="item.id"
-                   size="large"  closable @on-close="handleClose">{{item.name}}</Tag>
-            </p>
-          </Card>
-          <Table
-            size="default"
-            no-data-text="没有可供选择的标签"
-            stripe border
-            :loading="loading2"
-            height="300"
-            :columns="columns2" :data="data2">
-          </Table>
+      <Modal v-model="modal_delete" width="600" :closable="false">
+        <div  style="text-align: center" >
+          <img src="../../../assets/img/error.png" width="100">
+          <br/>
+          <br/>
+          <p style="font-size: 200%">确认撤销该申请？</p>
+          <br/>
         </div>
         <div slot="footer">
-          <Button size="large" @click="modal_create=false">取消</Button>
-          <Button size="large" type="primary" :loading="loading_create" @click="create">评价</Button>
-        </div>
-      </Modal>
-      <Modal v-model="modal_update" width="600" :closable="false">
-        <div>
-          <Card style="margin-bottom: 25px">
-            <p>
-              <span>您的评价：</span>
-              <Tag v-for="item in tagList"
-                   :key="item.id" :name="item.id"
-                   size="large"  closable @on-close="handleClose2">{{item.name}}</Tag>
-            </p>
-          </Card>
-          <Table
-            size="default"
-            no-data-text="没有可供选择的标签"
-            stripe border
-            :loading="loading3"
-            height="300"
-            :columns="columns3" :data="data3">
-          </Table>
-        </div>
-        <div slot="footer">
-          <Button size="large" @click="modal_update=false">取消</Button>
-          <Button size="large" type="primary" :loading="loading_update" @click="update">修改评价</Button>
+          <Button size="large" @click="modal_delete=false">取消</Button>
+          <Button size="large" type="error" :loading="loading_delete" @click="cancel">撤销</Button>
         </div>
       </Modal>
     </Row>
@@ -73,12 +38,15 @@
     import expandRow from './table-expand'
 
     export default {
-        name: 'historyManager',
+        name: 'myOpp',
         components: { expandRow },
         data() {
             return{
                 loading: false,
                 roomName: '',
+                modal_delete: false,
+                deleting_index: 0,
+                loading_delete: false,
                 columns: [
                     {
                         type: 'expand',
@@ -112,20 +80,6 @@
                         tooltip: true
                     },
                     {
-                        title: '申请人',
-                        key: 'applicantName',
-                        align: 'center',
-                        width: 150,
-                        tooltip: true,
-                    },
-                    {
-                        title: '身份',
-                        key: 'identity',
-                        align: 'center',
-                        width: 150,
-                        tooltip: true,
-                    },
-                    {
                         title: '使用时间',
                         key: 'needdate',
                         align: 'center',
@@ -150,7 +104,7 @@
                                         }
                                     }, '已驳回')
                                 ])
-                            }else if(this.data[params.index].progress == '预约过期'){
+                            } else if (this.data[params.index].progress == '预约过期') {
                                 return h('div', {}, [
                                     h('span', {
                                         style: {
@@ -158,7 +112,7 @@
                                         }
                                     }, '预约过期')
                                 ])
-                            }else if(this.data[params.index].progress == '通过审核'){
+                            } else if (this.data[params.index].progress == '通过审核') {
                                 return h('div', {}, [
                                     h('span', {
                                         style: {
@@ -166,7 +120,31 @@
                                         }
                                     }, this.data[params.index].progress)
                                 ])
-                            }else if(this.data[params.index].progress == '已评价'){
+                            } else if (this.data[params.index].progress == '已评价') {
+                                return h('div', {}, [
+                                    h('span', {
+                                        style: {
+                                            color: 'deepskyblue'
+                                        }
+                                    }, this.data[params.index].progress)
+                                ])
+                            } else if (this.data[params.index].progress == '未审核') {
+                                return h('div', {}, [
+                                    h('span', {
+                                        style: {
+                                            color: '#0000FF'
+                                        }
+                                    }, '申请中')
+                                ])
+                            } else if (this.data[params.index].progress == '用户取消') {
+                                return h('div', {}, [
+                                    h('span', {
+                                        style: {
+                                            color: 'grey'
+                                        }
+                                    }, '已取消')
+                                ])
+                            }  else {
                                 return h('div', {}, [
                                     h('span', {
                                         style: {
@@ -174,14 +152,29 @@
                                         }
                                     }, this.data[params.index].progress)
                                 ])
-                            }else{
-                                    return h('div', {}, [
-                                        h('span', {
-                                            style: {
-                                                color: 'grey'
+                            }
+                        }
+                    },
+                    {
+                        title: '操作',
+                        key: 'operation',
+                        align: 'center',
+                        render: (h, params) => {
+                            if(this.data[params.index].progress == '未审核'){
+                                return h('div', {}, [
+                                    h('Button', {
+                                        props:{
+                                            type: 'error',
+                                            size: 'large'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.modal_delete = true;
+                                                this.deleting_index = params.index;
                                             }
-                                        }, this.data[params.index].progress)
-                                    ])
+                                        }
+                                    }, '取消')
+                                ])
                             }
                         }
                     }
@@ -197,7 +190,7 @@
                 this.data = []
                 this.loading = true;
                 axios({
-                    url: apiRoot + '/manager/departmentHistory',
+                    url: apiRoot + '/user/myAppointment',
                     method: 'get'
                 }).then((res) => {
                     if(res.data.code == 200){
@@ -225,11 +218,31 @@
             },
             searchForApply() {
                 this.init("检索成功！", this.roomName)
+            },
+            cancel(){
+                this.loading_delete = true;
+                axios({
+                    url: apiRoot + '/user/cancelAppointment?id=' + this.data[this.deleting_index].id,
+                    method: 'get'
+                }).then((res) => {
+                    if(res.data.code == 200){
+                        this.$Message.success("取消申请成功！");
+                        this.loading_delete = false;
+                        this.modal_delete = false
+                        this.init("刷新成功！", '')
+                    }else{
+                        this.$Message.error(res.data.message)
+                        this.loading_delete = false;
+                    }
+                }).catch((err) => {
+                    this.$Message.error("取消申请失败，请检查网络连接！")
+                    this.loading_delete = false;
+                })
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-  @import 'historyManager';
+  @import 'myOpp';
 </style>

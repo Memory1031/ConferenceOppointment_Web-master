@@ -16,9 +16,13 @@
             <Icon type="ios-create-outline"></Icon>
             <span>预约会议室</span>
           </MenuItem>
+          <MenuItem name="myOpp">
+            <Icon type="md-attach" />
+            <span>我的预约</span>
+          </MenuItem>
           <MenuItem name="myInfo">
             <Icon type="ios-person"></Icon>
-            <span>我的信息</span>
+            <span>个人信息</span>
           </MenuItem>
         </Menu>
       </Sider>

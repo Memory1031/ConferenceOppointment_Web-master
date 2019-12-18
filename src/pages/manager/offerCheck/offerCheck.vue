@@ -175,6 +175,7 @@
       },
       methods: {
           init(index,type){
+              this.loading = true;
               this.data = []
               axios({
                   url: apiRoot + '/manager/appointmentList',
@@ -193,11 +194,14 @@
                           }
                       })
                       this.$Message.success(index);
+                      this.loading = false;
                   }else{
                       this.$Message.error(res.data.message)
+                      this.loading = false;
                   }
               }).catch((err) => {
                   this.$Message.error("获取数据失败，请检查网络连接")
+                  this.loading = false;
               })
           },
           searchForApply(){

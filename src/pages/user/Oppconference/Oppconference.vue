@@ -56,6 +56,8 @@
                           <br/>
                           <p style="text-align: center;font-size: 130%">注意：您只能选择连续的时间段进行预约</p>
                           <br/>
+                          <p style="text-align: center;font-size: 110%">由于周末值班老师不在，只能一次预约整个周末</p>
+                          <br/>
                           <p >
                             <span style="color:orange">橘色指该时间段已有人预约，成功概率会下降</span>
                           </p>
@@ -67,10 +69,18 @@
                         </div>
                       </div>
                     </Poptip>
+                    <br/>
+                    <br/>
+                    <Spin v-if="spinexist"></Spin>
                     <br/><br/><br/><br/>
                     <p style="font-size: 150%; text-align: center;color: blue" v-if="!isConstant">请选择连续的时间段!</p>
                   </Col>
-                  <Col span="16" style="text-align: center">
+                  <Col span="2" style="text-align: center; font-size: 200%;" class="icon-color">
+                    <span @click="beforeDate">
+                      <Icon type="ios-arrow-back"/>
+                    </span>
+                  </Col>
+                  <Col span="12" style="text-align: center">
                     <CheckboxGroup v-model="chosenTime" size="large">
                       <Checkbox :label="8" border style="margin-bottom:5px;"
                                 :style="{'background-color': (manyAva[0] == true ? 'orange':'white'), 'color' : (manyAva[0] == true) ? 'white': 'black'}"
@@ -115,6 +125,11 @@
                                 :style="{'background-color': (manyAva[13] == true ? 'orange':'white'), 'color' : (manyAva[13] == true) ? 'white': 'black'}"
                                 :disabled="timePd[13]"><span>21:00-21:50</span></Checkbox>
                     </CheckboxGroup>
+                  </Col>
+                  <Col span="2" style="text-align: center;  font-size: 200%"  class="icon-color">
+                    <span @click="nextDate">
+                      <Icon type="ios-arrow-forward"/>
+                    </span>
                   </Col>
                 </Row>
               </Card>
@@ -201,6 +216,7 @@
                 current: 0,
                 chosenDate: '',
                 chosenTime: [],
+                spinexist: false,
                 //0表示可以预约 1表示不能预约 2表示已有人预约，但还没通过
                 timePd: [true, true, true, true, true,
                     true, true, true, true, true,
@@ -330,7 +346,6 @@
                     return a - b
                 });
                 let begintime = newnew[0], endtime = newnew[newnew.length - 1] + 1;
-                console.log(begintime + ' ' + endtime)
                 if(newnew.length >= 2){
                     for(let i = 0; i < newnew.length - 1; i++)
                     {
@@ -379,7 +394,6 @@
                         this.loading = false
                     })
                 }else{
-                    console.log(name)
                     var data_search2 = {
                         campus: name.campus, //校区,宝山|嘉定|延长  不可以为空
                         building: name.building,//可以为空
@@ -449,6 +463,7 @@
                 console.log(this.data_search)
             },
             selectTime(chosenDate, type){
+                this.spinexist = true;
                 if(chosenDate != ''){
                     this.chosenTime = [];
                     this.chosenDate = chosenDate
@@ -471,11 +486,14 @@
                                 }else this.$set(this.manyAva, i, false)
                                 i++;
                             })
+                            this.spinexist = false
                         }else{
                             this.$Message.error(res.data.message)
+                            this.spinexist = false
                         }
                     }).catch((err) => {
                         this.$Message.error("获取预约时间失败，请检查网络连接！")
+                        this.spinexist = false
                     })
                 }else{
                     this.chosenTime = [];
@@ -483,6 +501,7 @@
                         this.$set(this.timePd, i, true)
                         this.$set(this.manyAva, i, false)
                     }
+                    this.spinexist = false
                 }
             },
             nextStep(){
@@ -600,6 +619,34 @@
             filterMethod (value, option) {
                 if(value == '')return false
                 return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
+            },
+            nextDate(){
+                if(this.chosenDate == '')
+                {
+                    this.$Message.error("请选择日期！")
+                    return
+                }
+                var datetime = new Date(this.chosenDate);
+                datetime = new Date(datetime.setDate(datetime.getDate() + 1))
+                datetime = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
+                this.chosenDate = datetime
+                this.selectTime(this.chosenDate, 'date')
+            },
+            beforeDate(){
+                if(this.chosenDate == '')
+                {
+                    this.$Message.error("请选择日期！")
+                    return
+                }
+                var today = new Date()
+                var datetime = new Date(this.chosenDate);
+                datetime = new Date(datetime.setDate(datetime.getDate() - 1))
+                if(datetime.getFullYear() == today.getFullYear() && datetime.getMonth() == today.getMonth() && datetime.getDay() == today.getDay()){
+                    this.$Message.error("请不要选择过期时间！")
+                }else{
+                    this.chosenDate = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
+                    this.selectTime(this.chosenDate, 'date')
+                }
             }
         }
     }
@@ -607,5 +654,15 @@
 
 <style scoped lang="scss">
   @import 'Oppconference';
+</style>
+
+<style scoped lang="scss">
+  .icon-color{
+    color: deepskyblue !important;
+  }
+
+  .icon-color:hover{
+    color: dodgerblue !important;
+  }
 </style>
 

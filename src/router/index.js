@@ -6,6 +6,7 @@ import Error404 from '@/pages/error404/error404'
 import User from '@/group/user/user'
 import AnnouncementUser from "../pages/user/announcement_user/announcementUser";
 import OppointConference from "@/pages/user/Oppconference/Oppconference"
+import MyOpp from '@/pages/user/myOpp/myOpp'
 import MyInfo from '@/pages/user/myInfo/myInfo'
 import Manager from '@/group/manager/manager'
 import AnnounceManager from '@/pages/manager/announce_Manager/announceManager'
@@ -56,6 +57,11 @@ export default new Router({
           path: 'OppointConference',
           component: OppointConference,
           name: 'OppointConference'
+        },
+        {
+          path: 'myOpp',
+          component: MyOpp,
+          name: 'myOpp'
         },
         {
           path: 'myInfo',
