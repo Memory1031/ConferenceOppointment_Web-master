@@ -196,7 +196,7 @@
                     if(res.data.code == 200){
                         res.data.data.forEach((item) => {
                             item.newParam = 'time'
-                            item.time = item.begintime + '-' + item.endtime
+                            item.time = item.isweekend==0 ? (item.begintime + '-' + item.endtime) : '周末全天'
                             if(type == ''){
                                 this.data.push(item)
                             }else{

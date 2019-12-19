@@ -42,21 +42,21 @@
           </Col>
           <Col span="16">
             <div v-if="!current">
-              <Card>
+              <Card style="height: 400px">
                 <Row>
                   <Col span="8">
                     <DatePicker type="date" :options="options" placeholder="选择预约日期"
                                 show-week-numbers size="large"
                                 @on-change="selectTime" style="width: 200px" v-model="chosenDate"></DatePicker>
                     <Divider/>
-                    <Poptip placement="right" width="400" trigger="hover">
+                    <Poptip placement="right" width="450" trigger="hover">
                       <Button>提示</Button>
                       <div slot="content">
                         <div style="text-align: center">
                           <br/>
                           <p style="text-align: center;font-size: 130%">注意：您只能选择连续的时间段进行预约</p>
                           <br/>
-                          <p style="text-align: center;font-size: 110%">由于周末值班老师不在，只能一次预约整个周末</p>
+                          <p style="text-align: center;font-size: 100%">由于周末值班老师不在，预约周六/周日任意一天即预约整个周末</p>
                           <br/>
                           <p >
                             <span style="color:orange">橘色指该时间段已有人预约，成功概率会下降</span>
@@ -75,13 +75,21 @@
                     <br/><br/><br/><br/>
                     <p style="font-size: 150%; text-align: center;color: blue" v-if="!isConstant">请选择连续的时间段!</p>
                   </Col>
-                  <Col span="2" style="text-align: center; font-size: 200%;" class="icon-color">
-                    <span @click="beforeDate">
-                      <Icon type="ios-arrow-back"/>
-                    </span>
-                  </Col>
-                  <Col span="12" style="text-align: center">
-                    <CheckboxGroup v-model="chosenTime" size="large">
+                  <Col span="16" style="text-align: center">
+                    <p style="text-align: center">
+                      <span style="font-size: 200%;" class="icon-color">
+                        <span @click="beforeDate">
+                          <Icon type="ios-arrow-back"/>
+                        </span>
+                      </span>
+                      <span style="user-select: none">&nbsp</span>
+                      <span style="font-size: 200%"  class="icon-color">
+                        <span @click="nextDate">
+                          <Icon type="ios-arrow-forward"/>
+                        </span>
+                      </span>
+                    </p>
+                    <CheckboxGroup v-model="chosenTime" v-if="!isweekend" size="large">
                       <Checkbox :label="8" border style="margin-bottom:5px;"
                                 :style="{'background-color': (manyAva[0] == true ? 'orange':'white'), 'color' : (manyAva[0] == true) ? 'white': 'black'}"
                                 :disabled="timePd[0]"><span>08:00-08:50</span></Checkbox>
@@ -125,11 +133,11 @@
                                 :style="{'background-color': (manyAva[13] == true ? 'orange':'white'), 'color' : (manyAva[13] == true) ? 'white': 'black'}"
                                 :disabled="timePd[13]"><span>21:00-21:50</span></Checkbox>
                     </CheckboxGroup>
-                  </Col>
-                  <Col span="2" style="text-align: center;  font-size: 200%"  class="icon-color">
-                    <span @click="nextDate">
-                      <Icon type="ios-arrow-forward"/>
-                    </span>
+                    <CheckboxGroup v-model="chosenTime" v-if="isweekend" size="large">
+                      <Checkbox :label="8" border style="margin-bottom:5px;"
+                                :style="{'background-color': (manyAva2 == true ? 'orange':'white'), 'color' : (manyAva2 == true) ? 'white': 'black'}"
+                                :disabled="timePd2"><span>周末两天</span></Checkbox>
+                    </CheckboxGroup>
                   </Col>
                 </Row>
               </Card>
@@ -217,13 +225,16 @@
                 chosenDate: '',
                 chosenTime: [],
                 spinexist: false,
+                isweekend: false,
                 //0表示可以预约 1表示不能预约 2表示已有人预约，但还没通过
                 timePd: [true, true, true, true, true,
                     true, true, true, true, true,
                     true, true, true, true],
+                timePd2 : true,
                 manyAva: [false, false, false, false, false,
                     false, false, false, false, false,
                     false, false, false, false],
+                manyAva2 : false,
                 requestReason: '',
                 items: [ ],
                 official: {
@@ -467,6 +478,10 @@
                 if(chosenDate != ''){
                     this.chosenTime = [];
                     this.chosenDate = chosenDate
+                    let days = new Date(this.chosenDate).getDay()
+                    if(days == 0 || days == 6){
+                        this.isweekend = true
+                    }else this.isweekend = false
                     axios({
                         url : apiRoot + '/user/appointmentByDay',
                         method: 'post',
@@ -476,22 +491,32 @@
                         }
                     }).then((res) => {
                         if(res.data.code == 200){
-                            let i = 0;
-                            res.data.data.forEach((item) => {
-                                if(item == 0 || item == 2){
-                                    this.$set(this.timePd, i, false)
-                                }else this.$set(this.timePd, i, true)
-                                if(item == 2){
-                                    this.$set(this.manyAva, i, true)
-                                }else this.$set(this.manyAva, i, false)
-                                i++;
-                            })
+                            if(this.isweekend == false){
+                                let i = 0;
+                                res.data.data.forEach((item) => {
+                                    if(item == 0 || item == 2){
+                                        this.$set(this.timePd, i, false)
+                                    }else this.$set(this.timePd, i, true)
+                                    if(item == 2){
+                                        this.$set(this.manyAva, i, true)
+                                    }else this.$set(this.manyAva, i, false)
+                                    i++;
+                                })
+                            }else{
+                                if(res.data.data[0] == 0 || res.data.data[0] == 2){
+                                    this.timePd2 = false;
+                                }else this.timePd2 = true
+                                if(res.data.data[0] == 2){
+                                    this.manyAva2 = true
+                                }else this.manyAva2 = false
+                            }
                             this.spinexist = false
                         }else{
                             this.$Message.error(res.data.message)
                             this.spinexist = false
                         }
                     }).catch((err) => {
+                        console.log(err)
                         this.$Message.error("获取预约时间失败，请检查网络连接！")
                         this.spinexist = false
                     })
@@ -591,8 +616,8 @@
                         data: {
                             id: this.data[this.avaConference].id,
                             needdate: this.chosenDate,
-                            begintime: begintime,
-                            endtime: endtime,
+                            begintime: this.isweekend==true ? 8 : begintime,
+                            endtime: this.isweekend==true ? 9 : endtime,
                             requestreason: this.requestReason,
                             phone: this.official.phone,
                             participateId: arr
@@ -626,6 +651,12 @@
                     this.$Message.error("请选择日期！")
                     return
                 }
+                this.timePd = [true, true, true, true, true,
+                    true, true, true, true, true,
+                    true, true, true, true]
+                this.manyAva = [false, false, false, false, false,
+                    false, false, false, false, false,
+                    false, false, false, false]
                 var datetime = new Date(this.chosenDate);
                 datetime = new Date(datetime.setDate(datetime.getDate() + 1))
                 datetime = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
@@ -638,10 +669,16 @@
                     this.$Message.error("请选择日期！")
                     return
                 }
+                this.timePd = [true, true, true, true, true,
+                    true, true, true, true, true,
+                    true, true, true, true]
+                this.manyAva = [false, false, false, false, false,
+                    false, false, false, false, false,
+                    false, false, false, false]
                 var today = new Date()
                 var datetime = new Date(this.chosenDate);
                 datetime = new Date(datetime.setDate(datetime.getDate() - 1))
-                if(datetime.getFullYear() == today.getFullYear() && datetime.getMonth() == today.getMonth() && datetime.getDay() == today.getDay()){
+                if(datetime.getFullYear() == today.getFullYear() && datetime.getMonth() == today.getMonth() && datetime.getDate() == today.getDate()){
                     this.$Message.error("请不要选择过期时间！")
                 }else{
                     this.chosenDate = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
