@@ -42,7 +42,7 @@
           </Col>
           <Col span="16">
             <div v-if="!current">
-              <Card style="height: 400px">
+              <Card style="height: 400px;user-select: none">
                 <Row>
                   <Col span="8">
                     <DatePicker type="date" :options="options" placeholder="选择预约日期"
@@ -657,7 +657,9 @@
                 this.manyAva = [false, false, false, false, false,
                     false, false, false, false, false,
                     false, false, false, false]
-                var datetime = new Date(this.chosenDate);
+                this.timePd2 = true;
+                this.manyAva2 = false;
+                let datetime = new Date(this.chosenDate);
                 datetime = new Date(datetime.setDate(datetime.getDate() + 1))
                 datetime = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
                 this.chosenDate = datetime
@@ -675,6 +677,8 @@
                 this.manyAva = [false, false, false, false, false,
                     false, false, false, false, false,
                     false, false, false, false]
+                this.timePd2 = true;
+                this.manyAva2 = false;
                 var today = new Date()
                 var datetime = new Date(this.chosenDate);
                 datetime = new Date(datetime.setDate(datetime.getDate() - 1))
