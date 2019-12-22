@@ -20,6 +20,10 @@
             <Icon type="md-attach" />
             <span>我的预约</span>
           </MenuItem>
+          <MenuItem name="myGroup">
+            <Icon type="md-git-network" />
+            <span>我的群组</span>
+          </MenuItem>
           <MenuItem name="myInfo">
             <Icon type="ios-person"></Icon>
             <span>个人信息</span>

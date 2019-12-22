@@ -88,18 +88,5 @@
       color: #f8f8f9ab;
     }
   }
-
-  .ivu-select-selection {
-    background-color: #fff0 !important;
-  }
-
-  .ivu-select-selected-value {
-    background-color: transparent;
-    color: #f8f8f9ab;
-  }
-
-  .ivu-select-arrow {
-    color: #f8f8f9ab;
-  }
 </style>
 

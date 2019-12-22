@@ -147,56 +147,44 @@
                 </Row>
               </Card>
               <Card>
-                <p>请填写申请理由：</p>
-                <Input v-model="requestReason" size="large" type="textarea" :rows="4" maxlength="1024"></Input>
+                <div>
+                  <span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp联系电话：</span>
+                  <Input v-model="phone" size="large" style="width: 300px" clearable></Input>
+                </div>
+                <div style="margin-top: 10px">
+                  <span>请填写申请理由：</span>
+                  <Input v-model="requestReason" style="width: 450px" size="large" type="textarea" :rows="4" maxlength="1024"></Input>
+                </div>
+
+
               </Card>
+
             </div>
             <div v-if="current">
-              <Card>
-                <Button type="dashed" size="large" @click="handleAdd" icon="md-add" style="margin-top: 5px;text-align: center;">添加</Button>
-                <Card style="width: 70%;margin: 20px auto 0 auto">
-                  <p slot="title">
-                    <Icon type="ios-people"/>
-                    会议室申请人
-                  </p>
-                  <Form :label-width="120" style="width: 100%">
-                    <FormItem label="负责人学/工号">
-                      <Input readonly :value="official.userId" disabled></Input>
-                    </FormItem>
-                    <FormItem label="负责人姓名">
-                      <Input readonly :value="official.name" disabled></Input>
-                    </FormItem>
-                    <FormItem label="负责人手机号">
-                      <Input  v-model="official.phone"></Input>
-                    </FormItem>
-                    <FormItem label="负责人单位">
-                      <Input readonly :value="official.department" disabled></Input>
-                    </FormItem>
-                  </Form>
-                </Card>
-                <Card v-for="(item,index) in items" :key="index" style="width: 70%;margin: 20px auto 0 auto">
-                  <p slot="title">
-                    <Icon type="ios-people"/>
-                    其余参与者{{index + 1}}
-                  </p>
-                  <div slot="extra">
-                    <Button type="error" size="small" @click="delPartner(index)">删除</Button>
-                  </div>
-                  <Form :label-width="120" style="width: 100%">
-                    <FormItem label="学/工号" prop="item.userId">
-                      <AutoComplete v-model="item.userId" @on-search='searchUserInfo'
-                                    @on-select="selectUserInfo(index,data2[0])"
-                                    :data="data2"
-                                    clearable placeholder="输入学/工号"></AutoComplete>
-                    </FormItem>
-                    <FormItem label="姓名" prop="item.ame">
-                      <Input v-model="item.name" disabled clearable placeholder="输入姓名"></Input>
-                    </FormItem>
-                    <FormItem label="部门" prop="item.department">
-                      <Input v-model="item.department" disabled clearable placeholder="输入部门"></Input>
-                    </FormItem>
-                  </Form>
-                </Card>
+              <Card style="height: 70px">
+                <div style="float: left">
+                  <Select v-model="groupName" :value='groupName' style="width:200px" size="large">
+                    <Option v-for="(item, index) in groupList" :value="item.id" :key="item.index">{{ item.name }}</Option>
+                  </Select>
+                  <Button type="primary" size="large" @click="handleAdd" icon="md-add" style="text-align: center;">添加</Button>
+                </div>
+              </Card>
+              <Card style="height: 500px; margin-top: 10px">
+                <div style="float:right">
+                  <AutoComplete v-model="userid" @on-search='searchUserInfo'
+                                @on-select="selectUserInfo(data2[0])"
+                                :data="data2" style="width: 200px"
+                                clearable placeholder="输入学/工号"></AutoComplete>
+                  <Button type="success" @click="add2">添加</Button>
+                </div>
+                <div style="margin-top: 45px">
+                  <Table
+                    no-data-text="无法检索到符合条件的会议室"
+                    stripe border
+                    height="400"
+                    :columns="columns2" :data="participate"></Table>
+                </div>
+
               </Card>
             </div>
           </Col>
@@ -226,6 +214,14 @@
                 loading_submit: false,
                 avaConference : false,
                 modal_apply: false,
+                groupName: '',
+                groupList: [],
+                userid: '',
+                userInfo: {
+                    userId: '',
+                    name: '',
+                    department: ''
+                },
                 current: 0,
                 chosenDate: '',
                 chosenTime: [],
@@ -241,14 +237,8 @@
                     false, false, false, false],
                 manyAva2 : false,
                 requestReason: '',
-                items: [ ],
-                official: {
-                    userId: localStorage.getItem('userid'),
-                    name: localStorage.getItem('username'),
-                    department: '',
-                    phone: '',
-                    email: ''
-                },
+                phone: '',
+                participate: [],
                 options: {
                     disabledDate (date) {
                         return date && date.valueOf() < Date.now();
@@ -333,6 +323,52 @@
                                     }
                                 }, '申请')
                             ])
+                        }
+                    }
+                ],
+                columns2: [
+                    {
+                        title: '学/工号',
+                        key: 'userId',
+                        align: 'center',
+                        width: '130',
+                        tooltip: true
+                    },
+                    {
+                        title: '姓名',
+                        key: 'name',
+                        align: 'center',
+                        width: '100',
+                        tooltip: true
+                    },
+                    {
+                        title: '部门',
+                        key: 'department',
+                        align: 'center',
+                        tooltip: true
+                    },
+                    {
+                        title: '操作',
+                        key: 'operation',
+                        align: 'center',
+                        width: 100,
+                        render: (h, params) => {
+                            if(params.index != 0){
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            type: 'error',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.participate.splice(params.index, 1)
+                                            }
+                                        }
+                                    }, '删除')
+                                ])
+                            }
+
                         }
                     }
                 ],
@@ -450,16 +486,35 @@
                 }
             },
             initUserInfo(){
+                this.participate = []
                 axios({
                     url: apiRoot + '/user/info?userId=' + localStorage.getItem('userid'),
                     method: 'get'
                 }).then((res) => {
                     if(res.data.code == 200){
-                        this.official.department = res.data.data.department;
-                        this.official.email = res.data.data.email;
-                        this.official.phone = res.data.data.phone;
+                        this.participate.push({
+                            userId: localStorage.getItem('userid'),
+                            name: localStorage.getItem('username'),
+                            department: res.data.data.department
+                        })
+                        this.phone = res.data.data.phone
                     }
                 })
+            },
+            initGroupList(){
+                this.groupList = [];
+                axios({
+                    url: apiRoot + '/user/myGroupList',
+                    method: 'get'
+                }).then((res) => {
+                    if(res.data.code == 200){
+                        res.data.data.forEach((item) => {
+                            this.groupList.push(item)
+                        })
+                    }else{
+                        this.$Message.error(res.data.message)
+                    }
+                }).catch((err) => {})
             },
             getDepartment(){
                 axios({
@@ -561,6 +616,10 @@
                       this.$Message.error('请选择连续的时间段')
                       pd = false
                   }
+                  if(this.phone == ''){
+                      this.$Message.error("请填写手机号")
+                      pd = false
+                  }
                   if(this.requestReason == ''){
                       this.$Message.error("请填写申请理由")
                       pd = false
@@ -568,14 +627,46 @@
               }
               if(pd == true){
                   this.current = 1;
+                  this.initGroupList()
               }
             },
             handleAdd() {
-                this.items.push({
-                    userId: '',
-                    name: '',
-                    department: '',
+                axios({
+                    url: apiRoot + '/user/groupDetail?id=' + this.groupName,
+                    method: 'get'
+                }).then((res) => {
+                    if(res.data.code == 200){
+                        res.data.data.members.forEach((item) => {
+                            let pd = 0;
+                            this.participate.forEach((item2) => {
+                                if(item2.userId == item.userId){
+                                    pd = 1;
+                                }
+                            })
+                            if(pd == 0){
+                                this.participate.push(item)
+                            }
+                        })
+                        this.$Message.success('添加成功，已自动为您筛选重复人员！')
+                    }
                 })
+            },
+            add2(){
+                let pd = false;
+                if(this.data2[0] == '请输入正确的学号' || this.data2[0] === '查询失败' || this.data2[0] === '暂无此人' || this.data2[0] === '查询中...' || this.data2[0] === undefined){
+                    this.$Message.error("请输入有效的学/工号！")
+                }else{
+                    this.participate.forEach((item) => {
+                        if(item.userId == this.userInfo.userId){
+                            this.$Message.error('该用户已存在！')
+                            pd = true
+                        }
+                    })
+                    if(pd == false){
+                        this.participate.push(this.userInfo)
+                    }
+                }
+                console.log(this.participate)
             },
             delPartner(index) {
                 this.items.splice(index, 1)
@@ -602,30 +693,30 @@
                     this.data2 = ['请输入正确的学号']
                 }
             },
-            selectUserInfo(index, value) {
+            selectUserInfo(value) {
                 if (value === '请输入正确的学号' || value === '查询失败' || value === '暂无此人' || value === '查询中...') {
-                    this.items[index].userId = ''
-                    this.items[index].name = ''
-                    this.items[index].department = ''
+                    this.userid = ''
                 } else {
                     var id = value.split("-")[0]   //用户学/工号
-                    var name = value.split("-")[1] //用户姓名
-                    var dep = value.split("-")[2]  //用户部门
+                    var name = value.split("-")[1]
+                    var department = value.split("-")[2]
+
+                    this.userInfo.userId = id;
+                    this.userInfo.name = name;
+                    this.userInfo.department = department
                     setTimeout(() => {
-                        this.items[index].userId = id
-                        this.items[index].name = name
-                        this.items[index].department = dep
+                        this.userid = id
                     })
                 }
             },
             submit(){
                 this.loading_submit = true;
-                if(this.official.phone == ''){
+                if(this.phone == ''){
                     this.$Message.error("请填写手机号！")
                     this.loading_submit = false;
                 }else{
-                    let arr = [this.official.userId];
-                    this.items.forEach((item) => {
+                    let arr = [];
+                    this.participate.forEach((item) => {
                         arr.push(item.userId)
                     })
                     let arrTime = this.chosenTime.slice(0).sort((a, b) => {
@@ -641,7 +732,7 @@
                             begintime: this.isweekend==true ? 8 : begintime,
                             endtime: this.isweekend==true ? 9 : endtime,
                             requestreason: this.requestReason,
-                            phone: this.official.phone,
+                            phone: this.phone,
                             participateId: arr
                         }
                     }).then((res) => {
@@ -652,7 +743,7 @@
                             this.chosenDate = ''
                             this.chosenTime = []
                             this.requestReason = ''
-                            this.items = []
+                            this.participate = []
                         }else{
                             this.$Message.error(res.data.message)
                             this.loading_submit = false

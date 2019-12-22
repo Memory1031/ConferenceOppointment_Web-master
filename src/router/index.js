@@ -4,9 +4,10 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/group/login/login'
 import Error404 from '@/pages/error404/error404'
 import User from '@/group/user/user'
-import AnnouncementUser from "../pages/user/announcement_user/announcementUser";
+import AnnouncementUser from "@/pages/user/announcement_user/announcementUser";
 import OppointConference from "@/pages/user/Oppconference/Oppconference"
 import MyOpp from '@/pages/user/myOpp/myOpp'
+import MyGroup from '@/pages/user/myGroup/myGroup'
 import MyInfo from '@/pages/user/myInfo/myInfo'
 import Manager from '@/group/manager/manager'
 import AnnounceManager from '@/pages/manager/announce_Manager/announceManager'
@@ -65,6 +66,11 @@ export default new Router({
           path: 'myOpp',
           component: MyOpp,
           name: 'myOpp'
+        },
+        {
+          path: 'myGroup',
+          component: MyGroup,
+          name: 'myGroup'
         },
         {
           path: 'myInfo',

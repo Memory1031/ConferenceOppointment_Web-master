@@ -197,15 +197,6 @@
             },
             searchUserInfo(value) {
                 this.data2 = ['查询中...']
-                let depart = '';
-                axios({
-                    url: apiRoot + '/user/info?userId=' + localStorage.getItem('userId'),
-                    method: 'get'
-                }).then((res) => {
-                    if (res.data.code === 200) {
-                        depart = res.data.data.department
-                    }
-                }).catch((err) => {})
                 if (value.length === 8) {
                     axios({
                         url: apiRoot + '/user/info?userId=' + value,
@@ -216,9 +207,7 @@
                                 this.data2 = !value ? [] : [
                                     res.data.data.userId + '-' + res.data.data.name + '-' + res.data.data.department
                                 ];
-                        } else if(depart != res.data.data.department){
-                            this.data2 = ['权限不足，你无法添加其他部门的用户成为本部门的普通管理员']
-                        } else {
+                        }else {
                             this.data2 = ['暂无此人']
                         }
                     }).catch(() => {
