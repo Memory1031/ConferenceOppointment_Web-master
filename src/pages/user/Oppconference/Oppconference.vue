@@ -77,17 +77,22 @@
                   </Col>
                   <Col span="16" style="text-align: center">
                     <p style="text-align: center">
-                      <span style="font-size: 200%;" class="icon-color">
-                        <span @click="beforeDate">
-                          <Icon type="ios-arrow-back"/>
+                      <Tooltip content="前一天" placement="top-start">
+                        <span>
+                          <span @click="beforeDate"  style="font-size: 200%;" class="icon-color">
+                            <Icon type="ios-arrow-back"/>
+                          </span>
                         </span>
-                      </span>
+                      </Tooltip>
+
                       <span style="user-select: none">&nbsp</span>
-                      <span style="font-size: 200%"  class="icon-color">
-                        <span @click="nextDate">
-                          <Icon type="ios-arrow-forward"/>
+                      <Tooltip content="后一天" placement="top-start">
+                        <span>
+                          <span @click="nextDate"  style="font-size: 200%"  class="icon-color">
+                            <Icon type="ios-arrow-forward"/>
+                          </span>
                         </span>
-                      </span>
+                      </Tooltip>
                     </p>
                     <CheckboxGroup v-model="chosenTime" v-if="!isweekend" size="large">
                       <Checkbox :label="8" border style="margin-bottom:5px;"
@@ -136,7 +141,7 @@
                     <CheckboxGroup v-model="chosenTime" v-if="isweekend" size="large">
                       <Checkbox :label="8" border style="margin-bottom:5px;"
                                 :style="{'background-color': (manyAva2 == true ? 'orange':'white'), 'color' : (manyAva2 == true) ? 'white': 'black'}"
-                                :disabled="timePd2"><span>周末两天</span></Checkbox>
+                                :disabled="timePd2"><span class="date-weekend"></span></Checkbox>
                     </CheckboxGroup>
                   </Col>
                 </Row>
@@ -479,6 +484,23 @@
                     this.chosenTime = [];
                     this.chosenDate = chosenDate
                     let days = new Date(this.chosenDate).getDay()
+                    if(days == 6){
+                        let datetime = new Date(chosenDate);
+                        let DateString = datetime.toLocaleDateString();
+                        let tomorrow = new Date(datetime.setDate(datetime.getDate() + 1))
+                        DateString += '至' + tomorrow.toLocaleDateString() + '两天'
+                        this.$nextTick(() => {
+                            document.querySelector('.date-weekend').innerHTML = DateString
+                        })
+                    }else if(days == 0){
+                        let datetime = new Date(chosenDate);
+                        let DateString = datetime.toLocaleDateString();
+                        let tomorrow = new Date(datetime.setDate(datetime.getDate() - 1))
+                        DateString = tomorrow.toLocaleDateString() + '至' + DateString + '两天'
+                        this.$nextTick(() => {
+                            document.querySelector('.date-weekend').innerHTML = DateString
+                        })
+                    }
                     if(days == 0 || days == 6){
                         this.isweekend = true
                     }else this.isweekend = false

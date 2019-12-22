@@ -31,6 +31,11 @@
                 loading: false,
             }
         },
+        mounted(){
+            if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+                this.$router.push('/mobile')
+            }
+        },
         methods: {
             login() {
                 this.loading = true

@@ -24,6 +24,9 @@ import ManagerList2 from '@/pages/system/managerList/managerList'
 import SystemList from '@/pages/system/systemList/systemList'
 import TagManager from '@/pages/system/tagManage/tagManage'
 
+import LoginMobile from '@/mobile/loginMobile/loginMobile'
+import loginMobile from "../mobile/loginMobile/loginMobile";
+
 Vue.use(Router)
 
 export default new Router({
@@ -148,6 +151,15 @@ export default new Router({
           name: 'tagManage'
         }
       ]
+    },
+    {
+      path: '/mobile',
+      redirect: {name: 'loginMobile'}
+    },
+    {
+      path: '/mobile/loginMobile',
+      component: loginMobile,
+      name: 'loginMobile'
     }
   ]
 })

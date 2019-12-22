@@ -6,6 +6,10 @@ import router from './router'
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 import '@/interceptors'
+import Vant from 'vant';
+import 'vant/lib/index.css';
+
+Vue.use(Vant);
 
 Vue.use(ViewUI);
 
