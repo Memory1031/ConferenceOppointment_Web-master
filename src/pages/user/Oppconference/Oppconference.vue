@@ -163,7 +163,7 @@
             <div v-if="current">
               <Card style="height: 70px">
                 <div style="float: left">
-                  <Select v-model="groupName" :value='groupName' style="width:200px" size="large">
+                  <Select v-model="groupName" :value='groupName' style="width:200px" size="large"  placeholder="请选择群组">
                     <Option v-for="(item, index) in groupList" :value="item.id" :key="item.index">{{ item.name }}</Option>
                   </Select>
                   <Button type="primary" size="large" @click="handleAdd" icon="md-add" style="text-align: center;">添加</Button>
