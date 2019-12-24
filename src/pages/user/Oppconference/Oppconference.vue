@@ -73,7 +73,6 @@
                     <br/>
                     <Spin v-if="spinexist"></Spin>
                     <br/><br/><br/><br/>
-                    <p style="font-size: 150%; text-align: center;color: blue" v-if="!isConstant">请选择连续的时间段!</p>
                   </Col>
                   <Col span="16" style="text-align: center">
                     <p style="text-align: center">
@@ -94,19 +93,17 @@
                         </span>
                       </Tooltip>
                     </p>
-                    <ButtonGroup size="large" v-if="!isweekend" v-model="chosenTime">
-                      <Button :disabled="item.value === 1" :key="item.time"
-                              :type="item.value === 0 ? '' : item.value === 1 ? 'error' : item.value === 2 ? 'warning' : 'success'"
-                              @click="needTime(index)"
-                              v-for="(item, index) in chosenTimeVo">
+                    <span :key="item.time" style="display:inline-block;margin-top:1vh"
+                          v-for="(item, index) in chosenTimeVo">
+                        <Button
+                          :disabled="item.value === 1"
+                          :type="item.value === 2 ? 'warning' : item.value === 3 ? 'success' : 'default'"
+                          @click="needTime(index)"
+                          style="width:150px; height:40px;"
+                        >
                         {{item.time + ":00-" + item.time + ":50"}}
                       </Button>
-                    </ButtonGroup>
-                    <CheckboxGroup v-model="chosenTime" v-if="isweekend" size="large">
-                      <Checkbox :label="8" border style="margin-bottom:5px;"
-                                :style="{'background-color': (manyAva2 == true ? 'orange':'white'), 'color' : (manyAva2 == true) ? 'white': 'black'}"
-                                :disabled="timePd2"><span class="date-weekend"></span></Checkbox>
-                    </CheckboxGroup>
+                      <span style="display: inline-block;margin-right:0.1vw" v-if="index%2 === 0"></span></span>
                   </Col>
                 </Row>
               </Card>
@@ -190,9 +187,7 @@
                 chosenDate: '',
                 chosenTime: [],
                 spinexist: false,
-                isweekend: false,
                 //0表示可以预约 1表示不能预约 2表示已有人预约，但还没通过, 3表示已选择
-                chosenTimeNumber: 0,
                 chosenTimeVo: [{time: "8", value: 1},
                     {time: "9", value: 1},
                     {time: "10", value: 1},
@@ -363,18 +358,18 @@
             this.initUserInfo();
         },
         watch:{
-            chosenTime(newArr, oldArr){
-                if (this.chosenTimeNumber === 2) {
-                    for (let i = 0; i < 15; i++)
+          chosenTime: function (newArr, oldArr) {
+            if (this.chosenTime.length === 2) {
+              for (let i = 0; i < 14; i++)
                     {
-                        this.chosenTimeVo[i].value = i >= this.chosenTime[0] || i <= this.chosenTime[1] ? 3 : this.timeStatus[i];
+                      this.chosenTimeVo[i].value = i >= this.chosenTime[0] && i <= this.chosenTime[1] ? 3 : this.timeStatus[i];
                     }
-                } else if (this.chosenTimeNumber === 1) {
-                    for (let i = 0; i < 15; i++) {
+            } else if (this.chosenTime.length === 1) {
+              for (let i = 0; i < 14; i++) {
                         this.chosenTimeVo[i].value = i === this.chosenTime[0] ? 3 : this.timeStatus[i];
                     }
-                } else if (this.chosenTimeNumber === 0) {
-                    for (let i = 0; i < 15; i++) {
+            } else if (this.chosenTime.length === 0) {
+              for (let i = 0; i < 14; i++) {
                         this.chosenTimeVo[i].value = this.timeStatus[i];
                     }
                 }
@@ -505,30 +500,11 @@
             },
             selectTime(chosenDate, type){
                 this.spinexist = true;
-                if(chosenDate != ''){
+              if (chosenDate !== '') {
                     this.chosenTime = [];
-                    this.chosenDate = chosenDate
-                    let days = new Date(this.chosenDate).getDay()
-                    if(days == 6){
-                        let datetime = new Date(chosenDate);
-                        let DateString = datetime.toLocaleDateString();
-                        let tomorrow = new Date(datetime.setDate(datetime.getDate() + 1))
-                        DateString += '至' + tomorrow.toLocaleDateString() + '两天'
-                        this.$nextTick(() => {
-                            document.querySelector('.date-weekend').innerHTML = DateString
-                        })
-                    }else if(days == 0){
-                        let datetime = new Date(chosenDate);
-                        let DateString = datetime.toLocaleDateString();
-                        let tomorrow = new Date(datetime.setDate(datetime.getDate() - 1))
-                        DateString = tomorrow.toLocaleDateString() + '至' + DateString + '两天'
-                        this.$nextTick(() => {
-                            document.querySelector('.date-weekend').innerHTML = DateString
-                        })
-                    }
-                    if(days == 0 || days == 6){
-                        this.isweekend = true
-                    }else this.isweekend = false
+                this.chosenDate = chosenDate;
+                this.chosenTimeNumber = 0;
+                let days = new Date(this.chosenDate).getDay();
                     axios({
                         url : apiRoot + '/user/appointmentByDay',
                         method: 'post',
@@ -537,42 +513,21 @@
                             conferenceId : this.data[this.avaConference].id
                         }
                     }).then((res) => {
-                        if(res.data.code == 200){
-                            if(this.isweekend == false){
-                                let i = 0;
-                                res.data.data.forEach((item) => {
-                                    if(item == 0 || item == 2){
-                                        this.$set(this.timePd, i, false)
-                                    }else this.$set(this.timePd, i, true)
-                                    if(item == 2){
-                                        this.$set(this.manyAva, i, true)
-                                    }else this.$set(this.manyAva, i, false)
-                                    i++;
-                                })
-                            }else{
-                                if(res.data.data[0] == 0 || res.data.data[0] == 2){
-                                    this.timePd2 = false;
-                                }else this.timePd2 = true
-                                if(res.data.data[0] == 2){
-                                    this.manyAva2 = true
-                                }else this.manyAva2 = false
-                            }
-                            this.spinexist = false
+                      if (res.data.code === 200) {
+                        this.timeStatus = res.data.data;
+                        this.chosenTime = [];
+                        this.spinexist = false;
                         }else{
-                            this.$Message.error(res.data.message)
+                        this.$Message.error(res.data.message);
                             this.spinexist = false
                         }
                     }).catch((err) => {
-                        console.log(err)
-                        this.$Message.error("获取预约时间失败，请检查网络连接！")
-                        this.spinexist = false
+                      console.log(err);
+                      this.$Message.error("获取预约时间失败，请检查网络连接！");
+                      this.spinexist = false;
                     })
                 }else{
                     this.chosenTime = [];
-                    for(let i = 0; i < 14; i++){
-                        this.$set(this.timePd, i, true)
-                        this.$set(this.manyAva, i, false)
-                    }
                     this.spinexist = false
                 }
             },
@@ -582,20 +537,16 @@
                   this.$Message.error("请选择预约时间！")
                   pd = false
               }else{
-                  if(this.isConstant == false){
-                      this.$Message.error('请选择连续的时间段')
-                      pd = false
-                  }
-                  if(this.phone == ''){
+                if (this.phone === '') {
                       this.$Message.error("请填写手机号")
                       pd = false
                   }
-                  if(this.requestReason == ''){
+                if (this.requestReason === '') {
                       this.$Message.error("请填写申请理由")
                       pd = false
                   }
               }
-              if(pd == true){
+              if (pd === true) {
                   this.current = 1;
                   this.initGroupList()
               }
@@ -681,32 +632,28 @@
             },
             submit(){
                 this.loading_submit = true;
-                if(this.phone == ''){
-                    this.$Message.error("请填写手机号！")
+              if (this.phone === '') {
+                this.$Message.error("请填写手机号！");
                     this.loading_submit = false;
                 }else{
                     let arr = [];
                     this.participate.forEach((item) => {
                         arr.push(item.userId)
-                    })
-                    let arrTime = this.chosenTime.slice(0).sort((a, b) => {
-                        return a - b
                     });
-                    let begintime = arrTime[0], endtime = arrTime[arrTime.length - 1] + 1;
                     axios({
                         url: apiRoot + '/user/appointmentCreation',
                         method: 'post',
                         data: {
                             id: this.data[this.avaConference].id,
                             needdate: this.chosenDate,
-                            begintime: this.isweekend==true ? 8 : begintime,
-                            endtime: this.isweekend==true ? 9 : endtime,
+                          begintime: this.chosenTime[0],
+                          endtime: this.chosenTime[1] + 1,
                             requestreason: this.requestReason,
                             phone: this.phone,
                             participateId: arr
                         }
                     }).then((res) => {
-                        if(res.data.code == 200){
+                      if (res.data.code === 200) {
                             this.$Message.success("会议室申请成功！")
                             this.loading_submit = false
                             this.modal_apply = false
@@ -773,18 +720,25 @@
                 }
             },
             needTime(index) {
-                switch (this.chosenTimeNumber) {
+              switch (this.chosenTime.length) {
                     case 0:
                     case 2:
-                        this.chosenTime = [index + 8];
-                        this.chosenTimeNumber = 1;
+                      this.chosenTime = [index];
                         break;
                     case 1:
-                        this.chosenTime.push(index + 8);
-                        this.chosenTime.sort(new function (a, b) {
-                            return a - b;
-                        });
-                        this.chosenTimeNumber = 2;
+                      if (index > this.chosenTime[0]) this.chosenTime.push(index);
+                      else if (index === this.chosenTime[0]) break;
+                      else {
+                        this.chosenTime.push(index);
+                        this.chosenTime.reverse();
+                      }
+                      for (let i = this.chosenTime[0]; i <= this.chosenTime[1]; i++) {
+                        if (this.timeStatus[i] === 1) {
+                          this.$Message.error("您选择的时间包含已被他人成功预约的时间！");
+                          this.chosenTime = [];
+                          break;
+                        }
+                      }
                         break;
                 }
             }
