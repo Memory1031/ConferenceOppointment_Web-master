@@ -94,50 +94,14 @@
                         </span>
                       </Tooltip>
                     </p>
-                    <CheckboxGroup v-model="chosenTime" v-if="!isweekend" size="large">
-                      <Checkbox :label="8" border style="margin-bottom:5px;"
-                                :style="{'background-color': (manyAva[0] == true ? 'orange':'white'), 'color' : (manyAva[0] == true) ? 'white': 'black'}"
-                                :disabled="timePd[0]"><span>08:00-08:50</span></Checkbox>
-                      <Checkbox :label="9" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[1] == true ? 'orange':'white'), 'color' : (manyAva[1] == true) ? 'white': 'black'}"
-                                :disabled="timePd[1]"><span>09:00-09:50</span></Checkbox>
-                      <Checkbox :label="10" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[2] == true ? 'orange':'white'), 'color' : (manyAva[2] == true) ? 'white': 'black'}"
-                                :disabled="timePd[2]"><span>10:00-10:50</span></Checkbox>
-                      <Checkbox :label="11" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[3] == true ? 'orange':'white'), 'color' : (manyAva[3] == true) ? 'white': 'black'}"
-                                :disabled="timePd[3]"><span>11:00-11:50</span></Checkbox>
-                      <Checkbox :label="12" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[4] == true ? 'orange':'white'), 'color' : (manyAva[4] == true) ? 'white': 'black'}"
-                                :disabled="timePd[4]"><span>12:00-12:50</span></Checkbox>
-                      <Checkbox :label="13" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[5] == true ? 'orange':'white'), 'color' : (manyAva[5] == true) ? 'white': 'black'}"
-                                :disabled="timePd[5]"><span>13:00-13:50</span></Checkbox>
-                      <Checkbox :label="14" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[6] == true ? 'orange':'white'), 'color' : (manyAva[6] == true) ? 'white': 'black'}"
-                                :disabled="timePd[6]"><span>14:00-14:50</span></Checkbox>
-                      <Checkbox :label="15" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[7] == true ? 'orange':'white'), 'color' : (manyAva[7] == true) ? 'white': 'black'}"
-                                :disabled="timePd[7]"><span>15:00-15:50</span></Checkbox>
-                      <Checkbox :label="16" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[8] == true ? 'orange':'white'), 'color' : (manyAva[8] == true) ? 'white': 'black'}"
-                                :disabled="timePd[8]"><span>16:00-16:50</span></Checkbox>
-                      <Checkbox :label="17" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[9] == true ? 'orange':'white'), 'color' : (manyAva[9] == true) ? 'white': 'black'}"
-                                :disabled="timePd[9]"><span>17:00-17:50</span></Checkbox>
-                      <Checkbox :label="18" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[10] == true ? 'orange':'white'), 'color' : (manyAva[10] == true) ? 'white': 'black'}"
-                                :disabled="timePd[10]"><span>18:00-18:50</span></Checkbox>
-                      <Checkbox :label="19" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[11] == true ? 'orange':'white'), 'color' : (manyAva[11] == true) ? 'white': 'black'}"
-                                :disabled="timePd[11]"><span>19:00-19:50</span></Checkbox>
-                      <Checkbox :label="20" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[12] == true ? 'orange':'white'), 'color' : (manyAva[12] == true) ? 'white': 'black'}"
-                                :disabled="timePd[12]"><span>20:00-20:50</span></Checkbox>
-                      <Checkbox :label="21" border style="margin-bottom:5px"
-                                :style="{'background-color': (manyAva[13] == true ? 'orange':'white'), 'color' : (manyAva[13] == true) ? 'white': 'black'}"
-                                :disabled="timePd[13]"><span>21:00-21:50</span></Checkbox>
-                    </CheckboxGroup>
+                    <ButtonGroup size="large" v-if="!isweekend" v-model="chosenTime">
+                      <Button :disabled="item.value === 1" :key="item.time"
+                              :type="item.value === 0 ? '' : item.value === 1 ? 'error' : item.value === 2 ? 'warning' : 'success'"
+                              @click="needTime(index)"
+                              v-for="(item, index) in chosenTimeVo">
+                        {{item.time + ":00-" + item.time + ":50"}}
+                      </Button>
+                    </ButtonGroup>
                     <CheckboxGroup v-model="chosenTime" v-if="isweekend" size="large">
                       <Checkbox :label="8" border style="margin-bottom:5px;"
                                 :style="{'background-color': (manyAva2 == true ? 'orange':'white'), 'color' : (manyAva2 == true) ? 'white': 'black'}"
@@ -227,15 +191,23 @@
                 chosenTime: [],
                 spinexist: false,
                 isweekend: false,
-                //0表示可以预约 1表示不能预约 2表示已有人预约，但还没通过
-                timePd: [true, true, true, true, true,
-                    true, true, true, true, true,
-                    true, true, true, true],
-                timePd2 : true,
-                manyAva: [false, false, false, false, false,
-                    false, false, false, false, false,
-                    false, false, false, false],
-                manyAva2 : false,
+                //0表示可以预约 1表示不能预约 2表示已有人预约，但还没通过, 3表示已选择
+                chosenTimeNumber: 0,
+                chosenTimeVo: [{time: "8", value: 1},
+                    {time: "9", value: 1},
+                    {time: "10", value: 1},
+                    {time: "11", value: 1},
+                    {time: "12", value: 1},
+                    {time: "13", value: 1},
+                    {time: "14", value: 1},
+                    {time: "15", value: 1},
+                    {time: "16", value: 1},
+                    {time: "17", value: 1},
+                    {time: "18", value: 1},
+                    {time: "19", value: 1},
+                    {time: "20", value: 1},
+                    {time: "21", value: 1}],
+                timeStatus: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 requestReason: '',
                 phone: '',
                 participate: [],
@@ -384,7 +356,6 @@
                     hasSpeaker: false//有扩音设备
                 },
                 data3: [],
-                isConstant: true
             }
         },
         mounted(){
@@ -393,21 +364,20 @@
         },
         watch:{
             chosenTime(newArr, oldArr){
-                let pd = true;
-                let newnew = newArr.slice(0).sort((a, b) => {
-                    return a - b
-                });
-                let begintime = newnew[0], endtime = newnew[newnew.length - 1] + 1;
-                if(newnew.length >= 2){
-                    for(let i = 0; i < newnew.length - 1; i++)
+                if (this.chosenTimeNumber === 2) {
+                    for (let i = 0; i < 15; i++)
                     {
-                        if(newnew[i] != newnew[i + 1] - 1) {
-                            this.isConstant = false;
-                            pd = false
-                        }
+                        this.chosenTimeVo[i].value = i >= this.chosenTime[0] || i <= this.chosenTime[1] ? 3 : this.timeStatus[i];
+                    }
+                } else if (this.chosenTimeNumber === 1) {
+                    for (let i = 0; i < 15; i++) {
+                        this.chosenTimeVo[i].value = i === this.chosenTime[0] ? 3 : this.timeStatus[i];
+                    }
+                } else if (this.chosenTimeNumber === 0) {
+                    for (let i = 0; i < 15; i++) {
+                        this.chosenTimeVo[i].value = this.timeStatus[i];
                     }
                 }
-                if(pd == true) this.isConstant = true;
             }
         },
         methods:{
@@ -800,6 +770,22 @@
                 }else{
                     this.chosenDate = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
                     this.selectTime(this.chosenDate, 'date')
+                }
+            },
+            needTime(index) {
+                switch (this.chosenTimeNumber) {
+                    case 0:
+                    case 2:
+                        this.chosenTime = [index + 8];
+                        this.chosenTimeNumber = 1;
+                        break;
+                    case 1:
+                        this.chosenTime.push(index + 8);
+                        this.chosenTime.sort(new function (a, b) {
+                            return a - b;
+                        });
+                        this.chosenTimeNumber = 2;
+                        break;
                 }
             }
         }
