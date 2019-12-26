@@ -160,7 +160,7 @@
                         key: 'operation',
                         align: 'center',
                         render: (h, params) => {
-                            if(this.data[params.index].progress == '未审核'){
+                            if (this.data[params.index].progress == '未审核' && this.data[params.index].mainApplicnt === 1) {
                                 return h('div', {}, [
                                     h('Button', {
                                         props:{
@@ -187,7 +187,7 @@
         },
         methods: {
             init(index,type){
-                this.data = []
+                this.data = [];
                 this.loading = true;
                 axios({
                     url: apiRoot + '/user/myAppointment',
@@ -195,8 +195,8 @@
                 }).then((res) => {
                     if(res.data.code == 200){
                         res.data.data.forEach((item) => {
-                            item.newParam = 'time'
-                            item.time = item.isweekend==0 ? (item.begintime + '-' + item.endtime) : '周末全天'
+                            item.newParam = 'time';
+                            item.time = item.begintime + '-' + item.endtime;
                             if(type == ''){
                                 this.data.push(item)
                             }else{
@@ -204,15 +204,15 @@
                                     this.data.push(item)
                                 }
                             }
-                        })
+                        });
                         this.$Message.success(index);
                         this.loading = false;
                     }else{
-                        this.$Message.error(res.data.message)
+                        this.$Message.error(res.data.message);
                         this.loading = false;
                     }
                 }).catch((err) => {
-                    this.$Message.error("获取数据失败，请检查网络连接")
+                    this.$Message.error("获取数据失败，请检查网络连接");
                     this.loading = false;
                 })
             },

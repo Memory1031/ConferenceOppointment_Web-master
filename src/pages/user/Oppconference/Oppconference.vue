@@ -2,16 +2,16 @@
   <div>
     <Row>
       <div class="button">
-        <Select v-model="data_search.campus" style="width:150px" size="large" placeholder="请选择校区" clearable>
+        <Select clearable placeholder="请选择校区" size="large" style="width:6vw" v-model="data_search.campus">
           <Option v-for="item in campusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <AutoComplete v-model="data_search.departmentName" placeholder="请填写部门(选填)"
                       :data="data3" clearable :filter-method="filterMethod"
-                      style="width: 230px" size="large"></AutoComplete>
+                      size="large" style="width: 9vw"></AutoComplete>
         <Input v-model="data_search.building" placeholder="请输入大楼名称(选填)"
-               style="width: 200px" size="large" clearable></Input>
+               clearable size="large" style="width: 9vw"></Input>
         <InputNumber v-model="data_search.minSeats" placeholder="请输入最小座位数(默认0)" :min="0"
-               style="width: 200px" size="large" clearable></InputNumber>
+                     clearable size="large" style="width: 6vw"></InputNumber>
         <Checkbox v-model='data_search.isMultifunc' size="large">
           <span>多功能室</span>
         </Checkbox>
@@ -123,10 +123,12 @@
             <div v-if="current">
               <Card style="height: 70px">
                 <div style="float: left">
-                  <Select v-model="groupName" :value='groupName' style="width:200px" size="large"  placeholder="请选择群组">
+                  <Select :value='groupName' placeholder="请选择群组" size="large" style="width:230px" v-model="groupName">
                     <Option v-for="(item, index) in groupList" :value="item.id" :key="item.index">{{ item.name }}</Option>
                   </Select>
-                  <Button type="primary" size="large" @click="handleAdd" icon="md-add" style="text-align: center;">添加</Button>
+                  <Button @click="handleAdd" icon="md-add" size="large" style="text-align: center;" type="primary">
+                    添加至名单
+                  </Button>
                 </div>
               </Card>
               <Card style="height: 500px; margin-top: 10px">
@@ -139,7 +141,7 @@
                 </div>
                 <div style="margin-top: 45px">
                   <Table
-                    no-data-text="无法检索到符合条件的会议室"
+                    no-data-text="无法检索到符合条件的用户"
                     stripe border
                     height="400"
                     :columns="columns2" :data="participate"></Table>
@@ -284,7 +286,7 @@
                                         click: () => {
                                             this.avaConference = params.index;
                                             this.modal_apply = true;
-                                            this.current = 0
+                                            this.current = 0;
                                         }
                                     }
                                 }, '申请')
@@ -346,7 +348,7 @@
                     building: '',//可以为空
                     departmentName: '',//部门名字，可以为空
                     minSeats: 0,//最小座位数,默认为0
-                    isMultifunc: false,//多功能厅
+                    isMultifunc: false,//多功能厅departmentList
                     hasSpeaker: false//有扩音设备
                 },
                 data3: [],
@@ -372,6 +374,26 @@
                         this.chosenTimeVo[i].value = this.timeStatus[i];
                     }
                 }
+          },
+            avaConference: function (newArr, oldArr) {
+                if (newArr === oldArr) return;
+                this.chosenTime = [];
+                this.chosenTimeVo = [{time: "8", value: 1},
+                    {time: "9", value: 1},
+                    {time: "10", value: 1},
+                    {time: "11", value: 1},
+                    {time: "12", value: 1},
+                    {time: "13", value: 1},
+                    {time: "14", value: 1},
+                    {time: "15", value: 1},
+                    {time: "16", value: 1},
+                    {time: "17", value: 1},
+                    {time: "18", value: 1},
+                    {time: "19", value: 1},
+                    {time: "20", value: 1},
+                    {time: "21", value: 1}];
+                this.timeStatus = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+                this.chosenDate = '';
             }
         },
         methods:{
@@ -646,7 +668,7 @@
                             id: this.data[this.avaConference].id,
                             needdate: this.chosenDate,
                             begintime: this.chosenTime[0] + 8,
-                            endtime: this.chosenTime[1] + 9,
+                            endtime: this.chosenTime.length === 1 ? this.chosenTime[0] + 9 : this.chosenTime[1] + 9,
                             requestreason: this.requestReason,
                             phone: this.phone,
                             participateId: arr
@@ -681,14 +703,6 @@
                     this.$Message.error("请选择日期！")
                     return
                 }
-                this.timePd = [true, true, true, true, true,
-                    true, true, true, true, true,
-                    true, true, true, true]
-                this.manyAva = [false, false, false, false, false,
-                    false, false, false, false, false,
-                    false, false, false, false]
-                this.timePd2 = true;
-                this.manyAva2 = false;
                 let datetime = new Date(this.chosenDate);
                 datetime = new Date(datetime.setDate(datetime.getDate() + 1))
                 datetime = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
@@ -701,17 +715,10 @@
                     this.$Message.error("请选择日期！")
                     return
                 }
-                this.timePd = [true, true, true, true, true,
-                    true, true, true, true, true,
-                    true, true, true, true]
-                this.manyAva = [false, false, false, false, false,
-                    false, false, false, false, false,
-                    false, false, false, false]
-                this.timePd2 = true;
-                this.manyAva2 = false;
-                var today = new Date()
+
+                var today = new Date();
                 var datetime = new Date(this.chosenDate);
-                datetime = new Date(datetime.setDate(datetime.getDate() - 1))
+                datetime = new Date(datetime.setDate(datetime.getDate() - 1));
                 if(datetime.getFullYear() == today.getFullYear() && datetime.getMonth() == today.getMonth() && datetime.getDate() == today.getDate()){
                     this.$Message.error("请不要选择过期时间！")
                 }else{

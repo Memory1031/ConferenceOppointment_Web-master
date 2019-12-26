@@ -17,10 +17,15 @@
         <AutoComplete v-model="add_id" @on-search='searchUserInfo'
                       @on-select="selectUserInfo(index,data2[0])"
                       :data="data2" style="width: 200px"
-                      clearable placeholder="输入学/工号"></AutoComplete>
-        <Button size="default" type="primary" @click="add">新增参与者</Button>
-        <Button v-if="!canWrite" @click="canWrite=!canWrite" size="default" type="info">修改理由</Button>
-        <Button v-if="canWrite" size="default" :loading="loading_check" @click="check" type="success">提交</Button>
+                      clearable placeholder="输入学/工号"
+                      v-if="this.isMainApplicnt"
+        ></AutoComplete>
+        <Button @click="add" size="default" type="primary" v-if="this.isMainApplicnt">新增参与者</Button>
+        <Button @click="canWrite=!canWrite" size="default" type="info" v-if="!canWrite && this.isMainApplicnt">修改理由
+        </Button>
+        <Button :loading="loading_check" @click="check" size="default" type="success"
+                v-if="canWrite && this.isMainApplicnt">提交
+        </Button>
       </div>
     </Row>
     <Divider size="small"/>
@@ -51,7 +56,7 @@
                   申请理由：
                 </Col>
                 <Col span="19" v-if="this.row.progress=='未审核'">
-                  <Input v-model="applicationReason" :disabled="!canWrite" type="textarea" :row="2"></Input>
+                  <Input :readonly="!canWrite" :row="2" type="textarea" v-model="applicationReason"></Input>
                 </Col>
                 <Col span="19" v-else>
                   <span v-if="reasonExist">{{this.info.requestreason}}</span>
@@ -112,6 +117,7 @@
                 tags: [],
                 tagList: [],
                 isEmpty: false,
+                isMainApplicnt: false,
                 columns: [
                     {
                         title: '姓名',
@@ -157,7 +163,7 @@
                         align: 'center',
                         width: 150,
                         render: (h, params) => {
-                            if(params.index != 0){
+                            if (params.index !== 0 && this.isMainApplicnt) {
                                 return h('div', {}, [
                                     h("Button",{
                                         props: {
@@ -218,6 +224,7 @@
                         this.tagList = this.info.tagList
                         this.applicationReason = this.info.requestreason
                         this.loading = false;
+                        this.isMainApplicnt = this.data[0].userId === localStorage.getItem('userid');
                     }else{
                         this.$Message.error(res.data.message)
                         this.loading = false;
