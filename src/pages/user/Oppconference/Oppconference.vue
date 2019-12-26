@@ -93,7 +93,7 @@
                         </span>
                       </Tooltip>
                     </p>
-                    <span :key="item.time" style="display:inline-block;margin-top:1vh"
+                    <span :key="item.time" style="display:inline-block;margin-top:0.1vh;margin-right:0.2vh"
                           v-for="(item, index) in chosenTimeVo">
                         <Button
                           :disabled="item.value === 1"
@@ -102,8 +102,7 @@
                           style="width:150px; height:40px;"
                         >
                         {{item.time + ":00-" + item.time + ":50"}}
-                      </Button>
-                      <span style="display: inline-block;margin-right:0.1vw" v-if="index%2 === 0"></span></span>
+                      </Button></span>
                   </Col>
                 </Row>
               </Card>
@@ -646,8 +645,8 @@
                         data: {
                             id: this.data[this.avaConference].id,
                             needdate: this.chosenDate,
-                          begintime: this.chosenTime[0],
-                          endtime: this.chosenTime[1] + 1,
+                            begintime: this.chosenTime[0] + 8,
+                            endtime: this.chosenTime[1] + 9,
                             requestreason: this.requestReason,
                             phone: this.phone,
                             participateId: arr
@@ -659,6 +658,7 @@
                             this.modal_apply = false
                             this.chosenDate = ''
                             this.chosenTime = []
+                          this.timeStatus.fill(1);
                             this.requestReason = ''
                             this.participate = []
                         }else{
