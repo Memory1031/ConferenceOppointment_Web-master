@@ -31,6 +31,8 @@ import UserMobile from '@/mobile/group/userMobile'
 import AvaMobile from '@/mobile/pages/user/AvaConference/AvaMobile'
 import InfoMobile from '@/mobile/pages/user/myInfo/infoMobile'
 import AvaInfo from '@/mobile/pages/user/AvaInfo/AvaInfo'
+import ManagerMobile from '@/mobile/group/managerMobile'
+import ManagerInfoMobile from '@/mobile/pages/manager/myInfo/ManagerInfoMobile'
 
 Vue.use(Router)
 
@@ -192,6 +194,18 @@ export default new Router({
       path: '/mobile/userMobile/avaInfo',
       component: AvaInfo,
       name: 'avaInfo'
+    },
+    {
+      path: '/mobile/managerMobile',
+      component: ManagerMobile,
+      redirect: {name: 'managerInfoMobile'},
+      children: [
+        {
+          path: 'managerInfoMobile',
+          component: ManagerInfoMobile,
+          name: 'managerInfoMobile'
+        }
+      ]
     }
   ]
 })
