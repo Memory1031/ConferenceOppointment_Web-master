@@ -156,7 +156,7 @@
                         title: '操作',
                         key: 'operation',
                         align: 'center',
-                        width: 250,
+                        width: 150,
                         render: (h, params) => {
                             if(this.data[params.index].progress == '待评价')
                             {

@@ -1,0 +1,63 @@
+.header-ava{
+  background-color: #04499F;
+  height: 10vh;
+  min-height: 10vh;
+  .date-ava{
+    text-align: center !important;
+    padding-top: 4vh;
+    color: white;
+    font-size: 100%;
+  }
+}
+
+.search-part-mobile-for-conference{
+  padding-top: 1vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  text-align: center;
+  .van-field__body{
+    text-align: center
+  }
+}
+
+.conference-list-mobile{
+  margin: 1vh 1vw 1vh 1vw;
+  .van-cell{
+    text-align: center;
+    width: 95%;
+    margin-top: 3vh;
+    margin-bottom: 4vh;
+    margin-left: 2.5vw;
+    box-shadow:0 0 20px #F1F5F9;
+    border-radius: 15px;
+    height: 143px !important;
+    .conference-list-mobile-first{
+      margin-top: 0.5vh;
+      font-size: 130%;
+      .conference-list-mobile-first-name{
+        margin-top: -0.5vh;
+        float: right;
+        font-size: 90%;
+        padding:  0.5vh 4vw 0.5vh 4vw;
+        color: #245BA4;
+        background-color: #E3EEFB;
+        border-radius: 10px;
+      }
+    }
+    .conference-list-mobile-second{
+      margin-top: 2vh;
+      font-size: 80%;
+      .conference-list-mobile-second-push{
+        float: right;
+        font-size: 300%;
+        color: #D7D7D7;
+        margin-top: -1.5vh;
+      }
+    }
+    .conference-list-mobile-third{
+      text-align: center;
+      margin-top: 1vh;
+      font-size: 50% !important;
+    }
+  }
+}

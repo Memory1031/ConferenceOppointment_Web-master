@@ -16,7 +16,7 @@
       <van-field
           v-model="password"
           type="password"
-          label="密码"
+          label="密码" clearable
           left-icon="lock"
           placeholder="请输入密码"
       />
@@ -56,7 +56,7 @@
                               this.loading = false;
                               //登陆成功直接进入普通用户界面
                               this.$Message.success('登录成功！');
-                              // this.$router.push('/user');
+                              this.$router.push('/mobile/userMobile');
                               localStorage.setItem('token', res.data.data.token);
                               localStorage.setItem('userid', res.data.data.userId);
                               localStorage.setItem('username', res.data.data.name);

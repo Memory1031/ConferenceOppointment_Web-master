@@ -1,0 +1,84 @@
+.info-header{
+  width: 100vw;
+  height: 10vh;
+  min-height: 10vh;
+  background-color: #054AA0;
+  position: absolute;
+}
+
+.info-header-image{
+  text-align: center;
+  .info-header-image-first{
+    padding-top: 5vh;
+  }
+  .info-header-image-second{
+    margin-top: 1.5vh;
+    font-size: 130%;
+    font-weight: 600;
+  }
+  .info-header-image-third{
+    color: #868786;
+    margin-top: 0.5vh;
+    font-size: 110%;
+  }
+}
+.info-person-department{
+  margin-top: 3vh;
+  width: 90vw;
+  margin-left: 5vw;
+  .van-cell{
+    height: 50px;
+    margin-top: 0.5vh;
+    .ivu-icon{
+      font-size: 150%
+    }
+    .van-cell__title{
+      font-size: 110%
+    }
+  }
+  .content{
+    margin-left: 5vw;
+    width: 90vw;
+    font-size: 100%;
+    color: black;
+    .change-info{
+      color:#346DB3;
+      font-size: 150%;
+      margin-right: 15vw;
+      float: right;
+    }
+    .phone{
+      color: #676767;
+      font-size: 115%;
+      font-weight: 550;
+    }
+    .phone-info{
+      width: 70vw;
+      background-color: #F2F2F2;
+      border-radius: 5px;
+      height: 30px;
+      margin-top: 1vh;
+      span{
+        font-size: 110%;
+        color: #004498;
+        margin-top: 0.3vh;
+      }
+    }
+  }
+}
+
+.modal-info{
+  margin-left: 5vw;
+  width: 85vw;
+  .title{
+    margin-bottom: 2vw;
+    color: #676767;
+    font-size: 115%;
+    font-weight: 550;
+  }
+  .footer{
+    text-align: center;
+    margin-right: 15vw;
+    margin-top: 4vh;
+  }
+}

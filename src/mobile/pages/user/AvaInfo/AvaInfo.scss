@@ -1,0 +1,97 @@
+.header-avaInfo{
+  .background-img{
+    height: 12vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    background: url("../../../../assets/img/mobile/shu.jpg") no-repeat;
+    background-size: 100% 100%;
+  }
+  .header-avaInfo-card{
+    box-shadow:0 0 20px #F1F5F9;
+    border-radius: 15px;
+    background-color: white;
+    width: 90vw;
+    position: absolute;
+    margin-left: 5vw;
+    margin-top: -5vh;
+    padding: 3vh 4vw 0 4vw;
+    height: 140px;
+    .conference-info-mobile-first{
+      margin-top: 0vh;
+      font-size: 120%;
+      .conference-list-mobile-first-name{
+        margin-top: -0.5vh;
+        float: right;
+        font-size: 90%;
+        padding:  0.5vh 4vw 0.5vh 4vw;
+        color: #245BA4;
+        background-color: #E3EEFB;
+        border-radius: 10px;
+      }
+    }
+    .conference-info-mobile-second{
+      color: #808080;
+      margin-top: 2vh;
+      font-size: 70%;
+    }
+  }
+}
+
+.chosentime-part{
+  margin-left: 5vw;
+  width: 90vw;
+  .title-chosentime-part{
+    margin-top: calc(140px - 2vh);
+    color: #676767;
+    font-size: 115%;
+    font-weight: 550;
+  }
+  .changedate-chosentime-part{
+    background-color: #F2F2F2;
+    border-radius: 5px;
+    height: 30px;
+    margin-top: 1vh;
+    span{
+      font-size: 110%;
+      color: #004498;
+      margin-top: 0.3vh;
+    }
+  }
+  .chosentime-chosentime-part{
+    margin-top: 3vh;
+    .chosentime-info-for{
+      border: solid 0.5px #F2F2F2;
+      height: 32px;
+      padding-top: 6px;
+      color: #484848;
+      font-size: 80%;
+      display: inline-block;
+      border-radius: 5px;
+      text-align: center;
+      margin-left: 1.5vw;
+      margin-right: 1.5vw;
+      margin-bottom: 1.5vh;
+      width: 19.5vw;
+    }
+  }
+}
+
+.phone-reason{
+  margin-left: 5vw;
+  width: 90vw;
+    .phone{
+      margin-bottom: 2vw;
+      color: #676767;
+      font-size: 115%;
+      font-weight: 550;
+    }
+  .reason{
+    margin-bottom: 2vw;
+    color: #676767;
+    font-size: 115%;
+    font-weight: 550;
+  }
+}
+
+
