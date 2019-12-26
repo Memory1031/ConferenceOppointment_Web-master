@@ -25,8 +25,12 @@ import ManagerList2 from '@/pages/system/managerList/managerList'
 import SystemList from '@/pages/system/systemList/systemList'
 import TagManager from '@/pages/system/tagManage/tagManage'
 
-import LoginMobile from '@/mobile/loginMobile/loginMobile'
-import loginMobile from "../mobile/loginMobile/loginMobile";
+
+import loginMobile from "@/mobile/loginMobile/loginMobile";
+import UserMobile from '@/mobile/group/userMobile'
+import AvaMobile from '@/mobile/pages/user/AvaConference/AvaMobile'
+import InfoMobile from '@/mobile/pages/user/myInfo/infoMobile'
+import AvaInfo from '@/mobile/pages/user/AvaInfo/AvaInfo'
 
 Vue.use(Router)
 
@@ -166,6 +170,28 @@ export default new Router({
       path: '/mobile/loginMobile',
       component: loginMobile,
       name: 'loginMobile'
+    },
+    {
+      path: '/mobile/userMobile',
+      component: UserMobile,
+      redirect: {name: 'avaMobile'},
+      children: [
+        {
+          path: 'avaMobile',
+          component: AvaMobile,
+          name: 'avaMobile'
+        },
+        {
+          path: 'infoMobile',
+          component: InfoMobile,
+          name: 'infoMobile'
+        }
+      ]
+    },
+    {
+      path: '/mobile/userMobile/avaInfo',
+      component: AvaInfo,
+      name: 'avaInfo'
     }
   ]
 })
