@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "dev-mobile": "webpack-dev- server --host 192.168.31.89 --progress --config build/webpack.dev.conf.js",
+    "dev-mobile": "webpack-dev-server --host 192.168.31.89 --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js"
   },

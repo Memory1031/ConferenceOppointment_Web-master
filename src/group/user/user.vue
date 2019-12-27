@@ -146,10 +146,6 @@
   @import "../group";
 </style>
 <style scoped>
-  .layout-con{
-    height: 100%;
-    width: 100%;
-  }
   .menu-item span{
     display: inline-block;
     overflow: hidden;

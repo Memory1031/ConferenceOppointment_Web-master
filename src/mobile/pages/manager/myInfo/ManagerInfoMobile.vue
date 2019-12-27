@@ -115,7 +115,7 @@
           <span slot='icon' style="color:#346DB3;foont-size: 150%">
             <Icon type="md-arrow-round-forward" />
           </span>
-          <span slot="title">&nbsp&nbsp&nbsp&nbsp选择身份</span>
+          <span slot="title">&nbsp&nbsp&nbsp&nbsp选择身份 （当前身份：管理员）</span>
           <div>
             <van-radio-group v-model="radio">
               <van-cell-group>

@@ -150,7 +150,7 @@
 <style lang="scss">
   @import "../group";
 </style>
-<style scoped>
+<style scoped lang="scss">
   .layout-con{
     height: 100%;
     width: 100%;
@@ -172,4 +172,22 @@
     font-size: 16px;
   }
 
+  .ivu-menu-submenu-title{
+    display: flex;
+    background-color: #211F1E;
+    font-size: 16px;
+    font-weight: normal;
+    align-content: center !important;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    color: #C6D7F2;
+    width: auto;
+    i {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .ivu-menu-submenu-title:hover{
+    color: #ebf3ff !important;
+  }
 </style>

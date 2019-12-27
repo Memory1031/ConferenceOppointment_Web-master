@@ -102,8 +102,9 @@
     </div>
     <div class="conference-list-mobile">
       <van-list
-        v-model="loading"
-        :error.sync="error"
+        v-model="loading"   :finished="finished"
+        finished-text="没有更多了"
+        :error.sync="error" @load="finished=true"
         error-text="无法检索到符合条件的会议室"
       >
         <van-cell
@@ -154,6 +155,7 @@
       name: 'avaMobile',
       data() {
           return {
+              finished: false,
               minDate: new Date(new Date().setDate(new Date().getDate() + 1)),
               chosenDate: new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString(),
               nowDate: new Date(new Date().setDate(new Date().getDate() + 1)),
@@ -191,6 +193,7 @@
           },
           search:{
               handler: function(newVal, oldVal) {
+                  this.finished = false;
                   this.getConferenceInfo();
               },
               deep: true
