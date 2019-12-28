@@ -1,0 +1,81 @@
+.header-check-manager{
+  width: 100vw;
+  height: 8vh;
+  min-height: 8vh;
+  background-color: #054AA0;
+  text-align: center
+}
+
+.card-check-manager{
+  margin: 1vh 1vw 1vh 1vw;
+  .van-cell{
+    text-align: center;
+    width: 95%;
+    margin-top: 3vh;
+    margin-bottom: 4vh;
+    margin-left: 2.5vw;
+    box-shadow: 0 0 20px #F1F5F9;
+    border-radius: 15px;
+    height: 24vh !important;
+    min-height: 220px;
+    .check-list-mobile-first{
+      margin-top: 0.5vh;
+      font-size: 130%;
+      .check-list-mobile-first-name{
+        margin-top: -0.5vh;
+        float: right;
+        font-size: 90%;
+        padding:  0.5vh 4vw 0.5vh 4vw;
+        color: #245BA4;
+        background-color: #E3EEFB;
+        border-radius: 10px;
+      }
+    }
+    .check-list-mobile-second{
+      margin-top: 2vh;
+      font-size: 80%;
+      .check-list-mobile-second-check{
+        padding-top: 2vh;
+        padding-right: 4vw;
+        float: right;
+        font-size: 130%;
+        color: #D7D7D7;
+        .check-button-one{
+          color: #245BA4;
+          border: solid 0.5px;
+          padding: 0.5vh 2vw 0.5vh 2vw;
+          border-radius: 10px;
+        }
+        .check-button-two{
+          color: #FFC197;
+          border: solid 0.5px;
+          padding: 0.5vh 2vw 0.5vh 2vw;
+          border-radius: 10px;
+        }
+      }
+    }
+    .check-list-mobile-third{
+      text-align: center;
+      .check-list-mobile-third-check{
+        padding-top: 2vh;
+        padding-right: 30vw;
+        float: right;
+        font-size: 120%;
+        color: #D7D7D7;
+        .check-button-one{
+          color: #245BA4;
+          border: solid 0.5px;
+          padding: 0.5vh 2vw 0.5vh 2vw;
+          border-radius: 10px;
+        }
+        .check-button-two{
+          color: #FFC197;
+          border: solid 0.5px;
+          padding: 0.5vh 2vw 0.5vh 2vw;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+}
+
