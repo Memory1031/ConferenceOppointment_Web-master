@@ -204,6 +204,6 @@
   }
 </script>
 
-<style lang="scss">
+<style scope lang="scss">
   @import 'infoMobile';
 </style>

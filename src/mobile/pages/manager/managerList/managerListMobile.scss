@@ -1,4 +1,4 @@
-.header-check-manager{
+.header-managerList-manager{
   width: 100vw;
   height: 8vh;
   min-height: 8vh;
@@ -6,7 +6,7 @@
   text-align: center
 }
 
-.card-check-manager{
+.card-managerList-manager{
   margin: 1vh 1vw 1vh 1vw;
   .van-cell{
     text-align: center;
@@ -16,8 +16,8 @@
     margin-left: 2.5vw;
     box-shadow: 0 0 20px #F1F5F9;
     border-radius: 15px;
-    height: 24vh !important;
-    min-height: 230px;
+    height: 15vh !important;
+    min-height: 150px;
     .check-list-mobile-first{
       margin-top: 0.5vh;
       font-size: 130%;
@@ -79,4 +79,3 @@
     }
   }
 }
-

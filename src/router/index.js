@@ -34,6 +34,7 @@ import AvaInfo from '@/mobile/pages/user/AvaInfo/AvaInfo'
 import ManagerMobile from '@/mobile/group/managerMobile'
 import ManagerInfoMobile from '@/mobile/pages/manager/myInfo/ManagerInfoMobile'
 import CheckAvaMobile from '@/mobile/pages/manager/checkAva/checkAvaMobile'
+import ManagerListMobile from '@/mobile/pages/manager/managerList/managerListMobile'
 
 Vue.use(Router)
 
@@ -210,6 +211,11 @@ export default new Router({
           path: 'checkAvaMobile',
           component: CheckAvaMobile,
           name: 'checkAvaMobile'
+        },
+        {
+          path: 'managerListMobile',
+          component: ManagerListMobile,
+          name: 'managerListMobile'
         }
       ]
     }

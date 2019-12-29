@@ -137,6 +137,7 @@
      mounted(){
          this.init()
          this.initDate()
+         this.initPerson()
      },
      methods:{
          init(){
@@ -160,6 +161,16 @@
                  }
              }).catch((err) => {
                  this.$Message.error("请检查网络连接！")
+             })
+         },
+         initPerson(){
+             axios({
+                 url: apiRoot + '/user/info?userId=' + localStorage.getItem('userid'),
+                 method:'get'
+             }).then((res) => {
+                 if(res.data.code == 200){
+                     this.phone = res.data.data.phone;
+                 }
              })
          },
          initDate(){
