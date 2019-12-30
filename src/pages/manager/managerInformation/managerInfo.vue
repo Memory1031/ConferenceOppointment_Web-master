@@ -28,7 +28,7 @@
           <Button type="success" size="large" style="margin-left: 45px" :loading="loading" v-if="!disable_impl" @click="updatePersonInfo">保存</Button>
         </div>
       </Form>
-    </div>
+    </div><br/>
   </div>
 </template>
 

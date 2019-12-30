@@ -1,38 +1,41 @@
 <template>
-  <Tabs size="default">
-    <TabPane label="部门公告" icon="ios-alert">
-      <Row>
-        <div class="button2">
-          <Button type="success" class="refresh_button" @click="refresh">刷新</Button>
-        </div>
-      </Row>
-      <Row>
-        <Table
-          size="large"
-          no-data-text="当前没有公告"
-          stripe border
-          :loading="loading1"
-          height="650"
-          :columns="columns1" :data="data1"></Table>
-      </Row>
-    </TabPane>
-    <TabPane label="系统公告" icon="md-alert">
-      <Row>
-        <div class="button2">
-          <Button type="success" class="refresh_button" @click="refresh">刷新</Button>
-        </div>
-      </Row>
-      <Row>
-        <Table
-          size="large"
-          no-data-text="当前没有公告"
-          stripe border
-          :loading="loading2"
-          height="650"
-          :columns="columns2" :data="data2"></Table>
-      </Row>
-    </TabPane>
-  </Tabs>
+  <div style="height: 90vh !important;">
+    <Tabs size="default">
+      <TabPane label="部门公告" icon="ios-alert">
+        <Row>
+          <div class="button2">
+            <Button type="success" class="refresh_button" @click="refresh">刷新</Button>
+          </div>
+        </Row>
+        <Row>
+          <Table class="table"
+                 size="large"
+                 no-data-text="当前没有公告"
+                 stripe border
+                 :loading="loading1"
+                 height="650"
+                 :columns="columns1" :data="data1"></Table>
+        </Row>
+      </TabPane>
+      <TabPane label="系统公告" icon="md-alert">
+        <Row>
+          <div class="button2">
+            <Button type="success" class="refresh_button" @click="refresh">刷新</Button>
+          </div>
+        </Row>
+        <Row>
+          <Table
+            size="large"
+            no-data-text="当前没有公告"
+            stripe border
+            :loading="loading2"
+            height="650"
+            :columns="columns2" :data="data2"></Table>
+        </Row>
+      </TabPane>
+    </Tabs>
+  </div>
+
 </template>
 
 <script>

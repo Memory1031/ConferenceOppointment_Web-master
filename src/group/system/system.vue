@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Layout :style="{minHeight: '100vh'}">
+    <Layout style='height: 100vh'>
       <Sider :width="250">
         <div class="layout-logo-left">
           <img src="../../assets/img/font.png">
@@ -65,8 +65,10 @@
             </Dropdown>
           </div>
         </Header>
-        <Content :style="{margin: '20px', background: '#fff', minHeight: '220px'}">
-          <router-view></router-view>
+        <Content :style="{margin: '20px', background: '#fff', minHeight: '220px'}"  style="height:100vh; overflow-y: scroll">
+<!--          <Scroll :height="contentHeight">-->
+            <router-view></router-view>
+<!--          </Scroll>-->
         </Content>
       </Layout>
     </Layout>
@@ -78,6 +80,7 @@
         name: 'system',
         data () {
             return {
+                contentHeight: 450,
                 isCollapsed: false,
                 activeName: "",
                 UserName: "",
@@ -100,6 +103,7 @@
             }
         },
         mounted(){
+            this.contentHeight = document.body.offsetHeight - 130;
             this.initMenuActive();
             this.initIdentity();
         },
