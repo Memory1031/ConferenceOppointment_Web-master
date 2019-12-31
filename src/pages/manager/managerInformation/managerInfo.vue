@@ -110,10 +110,12 @@
 
 <style scoped lang="scss">
   .wrapper {
-    margin-top: calc(15vh - 0px);
-    margin-left: calc(25vw);
     width: 100%;
     text-align: center;
+    .content{
+      display: inline-block;
+      margin: 100px auto;
+    }
   }
   .ivu-form-item-label{
     font-size: 24px
