@@ -1,4 +1,4 @@
-.header-check-manager{
+.header-checkHistory-manager{
   width: 100vw;
   height: 8vh;
   min-height: 8vh;
@@ -8,7 +8,6 @@
 
 .card-check-manager{
   margin: 1vh 1vw 1vh 1vw;
-
   .van-cell{
     text-align: center;
     width: 95%;
@@ -18,7 +17,7 @@
     box-shadow: 0 0 20px #F1F5F9;
     border-radius: 15px;
     height: 24vh !important;
-    min-height: 210px;
+    min-height: 230px;
     .check-list-mobile-first{
       margin-top: 0.5vh;
       font-size: 130%;
@@ -35,12 +34,6 @@
     .check-list-mobile-second{
       margin-top: 2vh;
       font-size: 80%;
-      .check-list-mobile-second-push{
-        float: right;
-        font-size: 300%;
-        color: #D7D7D7;
-        margin-top: 2vh;
-      }
       .check-list-mobile-second-check{
         padding-top: 2vh;
         padding-right: 4vw;

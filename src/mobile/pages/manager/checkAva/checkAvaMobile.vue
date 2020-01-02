@@ -22,6 +22,9 @@
             <span class="check-list-mobile-first-name">{{item.conferenceName}}</span>
           </div>
           <div class="check-list-mobile-second">
+            <span class="check-list-mobile-second-push" @click="toCheckInfo(index)">
+              <van-icon name="arrow" />
+            </span>
             <span>
               <span style="color: #BFBFBF">申请人：</span>
               <span style="color: #1B55A1">{{item.applicantName}}</span><br/>
@@ -29,8 +32,6 @@
               <span style="color: #1B55A1">{{item.participateNum}}</span><br/>
               <span style="color: #BFBFBF">预约时间：</span>
               <span style="color: #1B55A1">{{item.needdate + '    ' + item.begintime + '-' + item.endtime}}</span><br/>
-              <span style="color: #BFBFBF">申请理由：</span>
-              <span style="color: #1B55A1">{{item.requestreason}}</span>
             </span>
           </div>
           <div class="check-list-mobile-third" style="margin-left: 30vw;margin-top: 0vh;position: relative">
@@ -183,6 +184,15 @@
                   this.$Message.error("请检查网络连接！")
                   this.loading_cancel = false;
               })
+          },
+          toCheckInfo(index){
+              this.$router.push({
+                  name: 'checkInfo',
+                  params: {
+                      id: this.offerInfo[index].id,
+                      departmentName: this.offerInfo[index].departmentName
+                  }
+              });
           }
       }
   }
