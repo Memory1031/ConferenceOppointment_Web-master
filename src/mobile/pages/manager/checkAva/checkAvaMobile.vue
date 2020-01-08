@@ -34,12 +34,12 @@
               <span style="color: #1B55A1">{{item.needdate + '    ' + item.begintime + '-' + item.endtime}}</span><br/>
             </span>
           </div>
-          <div class="check-list-mobile-third" style="margin-left: 30vw;margin-top: 0vh;position: relative">
-            <span class="check-list-mobile-third-check">
-              <van-button class="check-button-one" style="margin-right: 2vw" @click="agree_pop=true,approvalNum(index)">同意</van-button>
-              <van-button class="check-button-two" @click="cancel_pop=true,cancelId=offerInfo[index].id">驳回</van-button>
-            </span>
-          </div>
+<!--          <div class="check-list-mobile-third" style="margin-left: 30vw;margin-top: 0vh;position: relative">-->
+<!--            <span class="check-list-mobile-third-check">-->
+<!--              <van-button class="check-button-one" style="margin-right: 2vw" @click="agree_pop=true,approvalNum(index)">同意</van-button>-->
+<!--              <van-button class="check-button-two" @click="cancel_pop=true,cancelId=offerInfo[index].id">驳回</van-button>-->
+<!--            </span>-->
+<!--          </div>-->
         </van-cell>
       </van-list>
       <div class="check-manager-modal">

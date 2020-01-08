@@ -133,13 +133,14 @@
               <span style="float: right; color:#2C63A8">21:00&nbsp</span>
             </van-row>
             <van-row type="flex" justify="center" style="margin-top: -1.5vh">
-              &nbsp
+              &nbsp&nbsp
               <span v-for="(pd, index2) in item.appointmentSymbol"
                       :key="index2">
                 &nbsp<span v-if="pd==1" style="background-color: #CC5358;padding-left:2.5vw;padding-right: 2.5vw"></span>
                 <span v-else-if="pd==0" style="background-color: #80DB60;padding-left:2.5vw;padding-right: 2.5vw"></span>
                 <span v-else style="background-color: #F9B705;padding-left:2.5vw;padding-right: 2.5vw"></span>&nbsp
               </span>
+
             </van-row>
           </div>
         </van-cell>
@@ -174,8 +175,8 @@
                   building: '',//可以为空
                   departmentName: '',//部门名字，可以为空
                   minSeats: '',//最小座位数,默认为0
-                  isMultifunc: false,//多功能厅
-                  hasSpeaker: false,
+                  isMultifunc: 0,//多功能厅
+                  hasSpeaker: 0,
                   needDate: new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString().replace('/', '-').replace('/', '-'),
               },
               campus: ['宝山','嘉定', '延长'],
@@ -220,8 +221,8 @@
                       building: this.search.building,
                       departmentName: this.search.departmentName==='不限' ? '' : this.search.departmentName,
                       minSeats: this.search.minSeats,
-                      isMultifunc: '',
-                      hasSpeaker: '',
+                      isMultifunc: 0,
+                      hasSpeaker: 0,
                       needDate: this.search.needDate
                   }
               }).then((res) => {
