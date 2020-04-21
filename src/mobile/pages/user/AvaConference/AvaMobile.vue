@@ -27,13 +27,13 @@
             readonly
             clickable style="width:15vw;border:1px solid #E8E8E8;margin-right: 1vw;border-radius:5%"
             :value="search.campus"
-            placeholder="选择城市"
+            placeholder="选择校区"
             @click="showCampus=true"
           />
           <van-popup v-model="showCampus" position="bottom">
             <van-picker
               show-toolbar
-              :columns="campus" title="选择城市" clearable
+              :columns="campus" title="选择校区" clearable
               @cancel="showCampus=false"
               @confirm="onConfirm"
             />
@@ -108,7 +108,7 @@
         error-text="无法检索到符合条件的会议室"
       >
         <van-cell
-          v-for="(item, index) in conferenceInfo"
+          v-for="(item, index) in conferenceInfo" class="van-cell-list"
           :key="item.id"
         >
           <div class="conference-list-mobile-first">
@@ -128,19 +128,18 @@
           </div>
           <div class="conference-list-mobile-third">
             <van-row>
-              <span style="float: left; color:#2C63A8">&nbsp8:00</span>
+              <span style="float: left; color:#2C63A8">&nbsp&nbsp8:00</span>
               <span style="text-align: center;padding-right:6vw; color:#2C63A8">14:00</span>
-              <span style="float: right; color:#2C63A8">21:00&nbsp</span>
+              <span style="float: right; color:#2C63A8">21:00&nbsp&nbsp</span>
             </van-row>
-            <van-row type="flex" justify="center" style="margin-top: -1.5vh">
+            <van-row type="flex" justify="center" style="margin-top: -1.5vh;display: flex; flex-direction: row;">
               &nbsp&nbsp
               <span v-for="(pd, index2) in item.appointmentSymbol"
                       :key="index2">
-                &nbsp<span v-if="pd==1" style="background-color: #CC5358;padding-left:2.5vw;padding-right: 2.5vw"></span>
-                <span v-else-if="pd==0" style="background-color: #80DB60;padding-left:2.5vw;padding-right: 2.5vw"></span>
-                <span v-else style="background-color: #F9B705;padding-left:2.5vw;padding-right: 2.5vw"></span>&nbsp
+                &nbsp<span v-if="pd==1" style="background-color: #CC5358;padding-left:2.2vw;padding-right: 2.2vw"></span>
+                <span v-else-if="pd==0" style="background-color: #80DB60;padding-left:2.2vw;padding-right: 2.2vw"></span>
+                <span v-else style="background-color: #F9B705;padding-left:2.2vw;padding-right: 2.2vw"></span>&nbsp
               </span>
-
             </van-row>
           </div>
         </van-cell>
@@ -228,8 +227,9 @@
               }).then((res) => {
                   if(res.data.code == 200){
                       this.conferenceNumber = res.data.data.length;
-                      res.data.data.forEach((item) => {
-                          this.conferenceInfo.push(item)
+                      res.data.data.forEach((item, index) => {
+                          // this.conferenceInfo.push(item)
+                          this.$set(this.conferenceInfo, index, item)
                       })
                       this.loading = false;
                       this.error = false;
@@ -321,6 +321,6 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   @import 'AvaMobile';
 </style>

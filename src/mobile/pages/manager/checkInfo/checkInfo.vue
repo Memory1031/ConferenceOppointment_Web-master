@@ -51,7 +51,7 @@
       <hr style="margin-top: 2vh;margin-bottom: 1vh" color="#F8F8F8">
       <div style="color: #676767;font-size: 115%; margin-left: 5vw;
           font-weight: 550;">
-        会议成员
+        会议成员(第一位默认为申请人)
       </div>
       <div class="checkmembers">
         <van-list
