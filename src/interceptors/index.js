@@ -15,6 +15,12 @@ axios.interceptors.request.use((config) => {
     switch (error.response.status) {
       case 401:
         localStorage.clear()
+        let url = document.location.toString();
+        let arr = url.split("//");
+        let last = arr[1].substring(arr[1].indexOf("/"));
+        if(last != '/login' && last != '/mobile/loginMobile'){
+          localStorage.setItem('last', last)
+        }
         Router.replace('/login');
         setTimeout(() => {
           $Notice.error({
@@ -26,6 +32,12 @@ axios.interceptors.request.use((config) => {
         break;
       case 403:
         localStorage.clear()
+        url = document.location.toString();
+        arr = url.split("//");
+        last = arr[1].substring(arr[1].indexOf("/"));
+        if(last != '/login' && last != '/mobile/loginMobile'){
+          localStorage.setItem('last', last)
+        }
         Router.replace('/login');
         setTimeout(() => {
           $Notice.error({
@@ -49,6 +61,12 @@ axios.interceptors.response.use((res) => {
     switch (error.response.status) {
       case 401:
         localStorage.clear()
+        let url = document.location.toString();
+        let arr = url.split("//");
+        let last = arr[1].substring(arr[1].indexOf("/"));
+        if(last != '/login' && last != '/mobile/loginMobile'){
+          localStorage.setItem('last', last)
+        }
         Router.replace({ path: '/login'});
         setTimeout(() => {
           Notice.error({
@@ -60,6 +78,13 @@ axios.interceptors.response.use((res) => {
         break;
       case 403:
         localStorage.clear()
+        url = document.location.toString();
+        arr = url.split("//");
+        last = arr[1].substring(arr[1].indexOf("/"));
+        console.log(last)
+        if(last != '/login' && last != '/mobile/loginMobile'){
+          localStorage.setItem('last', last)
+        }
         Router.replace('/login');
         setTimeout(() => {
           console.log('!!!')
@@ -73,6 +98,12 @@ axios.interceptors.response.use((res) => {
     }
   } else {
     localStorage.clear();
+    let url = document.location.toString();
+    let arr = url.split("//");
+    let last = '/' + arr[1].substring(arr[1].indexOf("/"));
+    if(last != '/login' && last != '/mobile/loginMobile'){
+      localStorage.setItem('last', last)
+    }
     Router.replace("/login");
     setTimeout(() => {
       console.log('!!!')

@@ -86,16 +86,16 @@
                 notice_delete_number: 0,
                 columns2: [
                     {
-                        title: '系统公告',
-                        key: 'content',
+                        title: '最近修改时间',
+                        key: 'date',
                         align: 'center',
+                        width: 350,
                         tooltip: true
                     },
                     {
-                        title: '最近修改时间',
-                        key: 'time',
+                        title: '系统公告',
+                        key: 'content',
                         align: 'center',
-                        width: 350,
                         tooltip: true
                     },
                     {
@@ -145,16 +145,16 @@
                 ],
                 columns1: [
                     {
-                        title: '部门公告',
-                        key: 'content',
+                        title: '发布时间',
+                        key: 'date',
                         align: 'center',
+                        width: 350,
                         tooltip: true
                     },
                     {
-                        title: '发布时间',
-                        key: 'time',
+                        title: '部门公告',
+                        key: 'content',
                         align: 'center',
-                        width: 350,
                         tooltip: true
                     }
                 ],
@@ -179,8 +179,20 @@
                 }).then((res) => {
                     if(res.data.code == 200){
                         res.data.data.forEach((item) => {
+                            let date = item.time.replace("年", '/').replace("月", '/').replace("日", '')
+                            item['date'] = date;
                             if(item.kind == 1) this.data1.push(item)
                             else this.data2.push(item)
+                        })
+                        this.data1.forEach((item) => {
+                            item.time.replace('年', '/')
+                            item.time.replace('月', '/')
+                            item.time.replace('日', '')
+                        })
+                        this.data2.forEach((item) => {
+                            item.time.replace('年', '/')
+                            item.time.replace('月', '/')
+                            item.time.replace('日', '')
                         })
                         this.$Message.success(index);
                         this.loading1 = false;

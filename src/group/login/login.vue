@@ -53,11 +53,21 @@
                                 this.loading = false;
                                 //登陆成功直接进入普通用户界面
                                 this.$Message.success('登录成功！');
-                                this.$router.push('/user');
                                 localStorage.setItem('token', res.data.data.token);
                                 localStorage.setItem('userid', res.data.data.userId);
                                 localStorage.setItem('username', res.data.data.name);
                                 localStorage.setItem('identity', res.data.data.identity);
+                                if(localStorage.getItem("last")){
+                                    let lst = localStorage.getItem("last");
+                                    if(lst == '/login'){
+                                        this.$router.push('/user');
+                                    }else if(lst == '/mobile/loginMobile'){
+                                        this.$router.push('/mobile')
+                                    }else{
+                                        this.$router.push(localStorage.getItem("last"))
+                                        localStorage.removeItem("last")
+                                    }
+                                }else this.$router.push('/user');
                             } else {
                                 this.$Message.error(res.data.message);
                                 this.loading = false

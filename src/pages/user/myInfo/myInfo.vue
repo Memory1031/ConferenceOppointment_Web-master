@@ -1,15 +1,15 @@
-<template>
+I<template>
   <div class="wrapper">
     <div class="content">
       <Tabs>
         <TabPane label="个人信息">
           <Form :model="person_info" :label-width="80" style="width: 500px" size="large">
             <FormItem label="姓名:">
-              <Input v-model="person_info.name" disabled ></Input>
+              <Input v-model="person_info.name" readonly ></Input>
             </FormItem>
             <br/>
             <FormItem label="学/工号:">
-              <Input v-model="person_info.userId" disabled></Input>
+              <Input v-model="person_info.userId" readonly></Input>
             </FormItem>
             <br/>
             <FormItem label="手机:">
@@ -17,7 +17,7 @@
             </FormItem>
             <br/>
             <FormItem label="部门:">
-              <Input v-model="person_info.department" disabled></Input>
+              <Input v-model="person_info.department" readonly></Input>
             </FormItem>
             <br/>
             <FormItem label="邮箱:">

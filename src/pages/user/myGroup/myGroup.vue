@@ -311,7 +311,11 @@
                     })
                     console.log(this.data2[0])
                     if(pd == false){
-                        this.data_list.push(this.userInfo)
+                        this.data_list.push({
+                            userId: this.userInfo.userId,
+                            name: this.userInfo.name,
+                            department: this.userInfo.department
+                        })
                     }
                 }
             },

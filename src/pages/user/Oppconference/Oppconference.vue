@@ -708,6 +708,7 @@
                 datetime = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
                 this.chosenDate = datetime
                 this.selectTime(this.chosenDate, 'date')
+                this.$Message.success("成功切换选择日期为 " + this.chosenDate)
             },
             beforeDate(){
                 if(this.chosenDate == '')
@@ -724,6 +725,7 @@
                 }else{
                     this.chosenDate = datetime.toLocaleDateString().replace('/', '-').replace('/', '-')
                     this.selectTime(this.chosenDate, 'date')
+                    this.$Message.success("成功切换选择日期为 " + this.chosenDate)
                 }
             },
             needTime(index) {
@@ -760,10 +762,18 @@
 <style scoped lang="scss">
   .icon-color{
     color: deepskyblue !important;
+    cursor: pointer
   }
 
   .icon-color:hover{
     color: dodgerblue !important;
+    cursor: pointer
+  }
+
+
+  .icon-color:active{
+    color: #0000FF !important;
+    /*box-shadow: 1px 1px 1px 1px #888888*/
   }
 </style>
 
