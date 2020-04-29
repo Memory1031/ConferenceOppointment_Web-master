@@ -90,7 +90,7 @@
       </div>
     </div>
     <div style="bottom: 0; width: 100vw; position: fixed" v-if="checkInfo.progress=='未审核'">
-      <div v-if="fromManage==true">
+      <div v-if="fromManage">
         <van-row>
           <van-col span="12">
             <van-button style="width: 50vw;background-color: #FFC197"
@@ -109,7 +109,7 @@
                   @click="cancel_pop_user=true"><span style="color:white">取消</span></van-button>
           </van-col>
           <van-col span="12">
-            <van-button style="width: 50vw;background-color: #245BA4;"
+            <van-button style="width: 50vw;background-color: #245BA4;" @click="invite_pop=true"
                         ><span style="color:white">邀请</span></van-button>
           </van-col>
         </van-row>
@@ -117,7 +117,7 @@
       <div v-else-if="!fromManage && !isMe">
         <van-row>
           <van-col span="24">
-            <van-button style="width: 100vw;background-color: #245BA4;"
+            <van-button style="width: 100vw;background-color: #245BA4;" @click="invite_pop=true"
             ><span style="color:white">邀请</span></van-button>
           </van-col>
         </van-row>
@@ -152,15 +152,36 @@
           <van-button style="border-radius: 5px" type="danger" :loading="loading_cancel_user" @click="cancel_user">确定取消</van-button>
         </div>
       </van-popup>
+      <van-popup v-model="invite_pop" style="width: 90vw;height: 380px;text-align:center;border-radius: 10px"  v-if="config.href != ''">
+        <div style="margin-top: 2vh">
+<!--          <vue-qr :text="config.href" :logoSrc="config.imgSrc" :size="220"></vue-qr>-->
+          <vue-qr :text="config.href" :size="220"></vue-qr>
+        </div>
+        <van-divider
+          :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }"
+        >
+          {{this.checkInfo.conferenceName}}
+        </van-divider>
+        <div style="font-size: 130%;font-family: 宋体;margin-top: 3vh;color: black">
+          <span v-if="checkInfo">{{this.checkInfo.applicantName.name}}邀请您加入会议</span>
+        </div>
+        <br/>
+<!--        <div class="footer">-->
+<!--          <van-button style="border-radius: 5px" type="danger" :loading="loading_invite" @click="cancel_user">确定取消</van-button>-->
+<!--        </div>-->
+      </van-popup>
     </div>
   </div>
 </template>
 
 <script>
     import axios from 'axios'
-
+    import vueQr from 'vue-qr'
     export default {
         name: 'checkInfo',
+        components: {
+            vueQr
+        },
         data(){
             return{
                 params: this.$route.params,
@@ -174,12 +195,18 @@
                 agree_pop: false,
                 cancel_pop: false,
                 cancel_pop_user: false,
+                invite_pop: false,
                 loading_submit: false,
                 loading_cancel: false,
                 loading_cancel_user: false,
                 refusereason: '',
-                fromManage: localStorage.getItem("fromManager"),
-                isMe: true
+                fromManage: this.$route.params.fromManager,
+                isMe: true,
+                hrefexist: false,
+                config: {
+                    href: '',
+                    imgSrc: require("./../../../../assets/img/shu_logo.jpg")
+                }
             }
         },
         mounted(){
@@ -190,6 +217,8 @@
                 this.loading = true;
                 this.members = [];
                 this.params = this.$route.params
+                let href = document.location.protocol + "//" + document.location.host + "/mobile/invite/" + btoa(this.params.id)
+                this.config.href = href
                 if (this.params.id == undefined) {
                     this.$router.go(-1)
                     return
@@ -362,7 +391,7 @@
                     this.$Message.error("请检查网络连接！")
                     this.loading_cancel_user = false;
                 })
-            }
+            },
         }
     }
 </script>

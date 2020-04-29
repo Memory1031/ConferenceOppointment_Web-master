@@ -6,6 +6,13 @@
         <Icon type="md-refresh" />
       </span></div>
     </div>
+    <div style="text-align: center;margin-top: 2vh;color: #245BA4; font-size: 90%; font-weight: 550;">
+                <span>
+                  共检索到
+                  <span class="history-all-number">{{this.offerInfo.length}}</span>
+                  条待审核预约记录
+                </span>
+    </div>
     <div class="card-check-manager">
       <van-list
         v-model="loading"   :finished="finished"

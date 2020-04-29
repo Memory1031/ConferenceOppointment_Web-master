@@ -14,8 +14,12 @@
         no-data-text="当前没有会议室申请"
         stripe border
         :loading="loading"
-        height="700"
+        height="650"
         :columns="columns" :data="data"></Table>
+      <Page :total="numberOfArr" :page-size="10"
+            @on-change="changepage" :current="pageCurrent"
+            style="text-align: center"
+            show-total show-elevator/>
       <Modal v-model="modal_create" width="600" :closable="false">
         <div>
           <Card style="margin-bottom: 25px">
@@ -82,6 +86,8 @@
                 loading3: false,
                 loading_create: false,
                 loading_update: false,
+                numberOfArr: 0,
+                pageCurrent: 1,
                 roomName: '',
                 create_index: 0,
                 update_index: 0,
@@ -104,7 +110,7 @@
                         title: '大楼名称',
                         key: 'building',
                         align: 'center',
-                        width: 200,
+                        width: 150,
                         tooltip: true
                     },
                     {
@@ -124,14 +130,14 @@
                         title: '申请人',
                         key: 'applicantName',
                         align: 'center',
-                        width: 150,
+                        width: 100,
                         tooltip: true,
                     },
                     {
                         title: '身份',
                         key: 'identity',
                         align: 'center',
-                        width: 150,
+                        width: 80,
                         tooltip: true,
                     },
                     {
@@ -293,18 +299,20 @@
             }
         },
         mounted() {
-            this.init("初始化成功！", '');
+            this.init("初始化成功！", '', 0);
         },
         methods: {
-            init(index,type){
+            init(index,type, page){
                 this.data = []
+                if(index == "初始化成功！" || index == "检索成功！") this.numberOfArr = 0;
+                this.pageCurrent = page + 1
                 this.loading = true;
                 axios({
-                    url: apiRoot + '/manager/appointmentTagList',
+                    url: apiRoot + '/manager/appointmentTagList/' + page + '/10',
                     method: 'get'
                 }).then((res) => {
                     if(res.data.code == 200){
-                        res.data.data.forEach((item) => {
+                        res.data.data.appointmentTagList.forEach((item) => {
                             item.newParam = 'time'
                             item.time = item.isweekend==0 ? (item.begintime + '-' + item.endtime) : '周末全天'
                             if(type == ''){
@@ -315,6 +323,7 @@
                                 }
                             }
                         })
+                        this.numberOfArr = res.data.data.recordNum
                         this.$Message.success(index);
                         this.loading = false;
                     }else{
@@ -328,7 +337,7 @@
 
             },
             searchForApply(){
-                this.init("检索成功！", this.roomName)
+                this.init("检索成功！", this.roomName, 0)
             },
             getTagList(){
                 this.data2 = []
@@ -421,7 +430,7 @@
                         this.$Message.success("评价成功！")
                         this.loading_create = false;
                         this.modal_create = false;
-                        this.init("刷新成功！", '')
+                        this.init("刷新成功！", '', 0)
                     }else{
                         this.$Message.error(res.data.message)
                         this.loading_create = false;
@@ -463,7 +472,13 @@
                     this.$Message.error("提交评价失败，请检查网络连接！")
                     this.loading_update = false;
                 })
-            }
+            },
+            changepage(index) {
+                //需要显示开始数据的index,(因为数据是从0开始的，页码是从1开始的，需要-1)
+                this.init("获取第" + index + "页数据成功", this.roomName, index - 1);
+                //储存当前页
+                this.pageCurrent = index;
+            },
         }
     }
 </script>

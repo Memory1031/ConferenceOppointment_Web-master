@@ -7,6 +7,13 @@
         </span>
       </div>
     </div>
+    <div style="text-align: center;margin-top: 2vh;color: #245BA4; font-size: 90%; font-weight: 550;">
+                <span>
+                  共检索到
+                  <span class="history-all-number">{{this.historyList.length}}</span>
+                  条会议室预约记录
+                </span>
+    </div>
     <div class="card-checkHistory-manager">
       <van-list
         v-model="loading"   :finished="finished"
@@ -80,7 +87,7 @@
                   method: 'get'
               }).then(res => {
                   if(res.data.code === 200){
-                      res.data.data.forEach(item => {
+                      res.data.data.appointmentHistoryList.forEach(item => {
                           this.historyList.push(item)
                       })
                       this.loading = false;

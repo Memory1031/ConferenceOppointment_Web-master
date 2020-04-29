@@ -68,7 +68,7 @@
                         title: '大楼名称',
                         key: 'building',
                         align: 'center',
-                        width: 200,
+                        width: 150,
                         tooltip: true
                     },
                     {
@@ -194,6 +194,8 @@
         methods: {
             init(index,type, page){
                 this.data = [];
+                if(index == "初始化成功！" || index == "检索成功！") this.numberOfArr = 0;
+                this.pageCurrent = page + 1
                 this.loading = true;
                 axios({
                     url: apiRoot + '/user/myAppointment/' + page + '/10',
@@ -212,7 +214,7 @@
                                 }
                             }
                         });
-                        this.num = res.data.data.recordNum
+                        if(this.num != res.data.data.recordNum) this.num = res.data.data.recordNum
                         this.$Message.success(index);
                         this.loading = false;
                     }else{
@@ -226,7 +228,7 @@
             },
             searchForApply() {
                 this.pageCurrent = 1;
-                this.init("检索成功！", this.roomName, 1)
+                this.init("检索成功！", this.roomName, 0)
             },
             cancel(){
                 this.loading_delete = true;

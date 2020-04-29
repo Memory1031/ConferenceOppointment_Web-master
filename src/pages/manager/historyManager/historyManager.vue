@@ -14,56 +14,60 @@
         no-data-text="当前没有会议室申请"
         stripe border
         :loading="loading"
-        height="700"
+        height="650"
         :columns="columns" :data="data"></Table>
-      <Modal v-model="modal_create" width="600" :closable="false">
-        <div>
-          <Card style="margin-bottom: 25px">
-            <p>
-              <span>您的评价：</span>
-              <Tag v-for="item in tagList"
-                   :key="item.id" :name="item.id"
-                   size="large"  closable @on-close="handleClose">{{item.name}}</Tag>
-            </p>
-          </Card>
-          <Table
-            size="default"
-            no-data-text="没有可供选择的标签"
-            stripe border
-            :loading="loading2"
-            height="300"
-            :columns="columns2" :data="data2">
-          </Table>
-        </div>
-        <div slot="footer">
-          <Button size="large" @click="modal_create=false">取消</Button>
-          <Button size="large" type="primary" :loading="loading_create" @click="create">评价</Button>
-        </div>
-      </Modal>
-      <Modal v-model="modal_update" width="600" :closable="false">
-        <div>
-          <Card style="margin-bottom: 25px">
-            <p>
-              <span>您的评价：</span>
-              <Tag v-for="item in tagList"
-                   :key="item.id" :name="item.id"
-                   size="large"  closable @on-close="handleClose2">{{item.name}}</Tag>
-            </p>
-          </Card>
-          <Table
-            size="default"
-            no-data-text="没有可供选择的标签"
-            stripe border
-            :loading="loading3"
-            height="300"
-            :columns="columns3" :data="data3">
-          </Table>
-        </div>
-        <div slot="footer">
-          <Button size="large" @click="modal_update=false">取消</Button>
-          <Button size="large" type="primary" :loading="loading_update" @click="update">修改评价</Button>
-        </div>
-      </Modal>
+      <Page :total="numberOfArr" :page-size="10"
+            @on-change="changepage" :current="pageCurrent"
+            style="text-align: center"
+            show-total show-elevator/>
+<!--      <Modal v-model="modal_create" width="600" :closable="false">-->
+<!--        <div>-->
+<!--          <Card style="margin-bottom: 25px">-->
+<!--            <p>-->
+<!--              <span>您的评价：</span>-->
+<!--              <Tag v-for="item in tagList"-->
+<!--                   :key="item.id" :name="item.id"-->
+<!--                   size="large"  closable @on-close="handleClose">{{item.name}}</Tag>-->
+<!--            </p>-->
+<!--          </Card>-->
+<!--          <Table-->
+<!--            size="default"-->
+<!--            no-data-text="没有可供选择的标签"-->
+<!--            stripe border-->
+<!--            :loading="loading2"-->
+<!--            height="300"-->
+<!--            :columns="columns2" :data="data2">-->
+<!--          </Table>-->
+<!--        </div>-->
+<!--        <div slot="footer">-->
+<!--          <Button size="large" @click="modal_create=false">取消</Button>-->
+<!--          <Button size="large" type="primary" :loading="loading_create" @click="create">评价</Button>-->
+<!--        </div>-->
+<!--      </Modal>-->
+<!--      <Modal v-model="modal_update" width="600" :closable="false">-->
+<!--        <div>-->
+<!--          <Card style="margin-bottom: 25px">-->
+<!--            <p>-->
+<!--              <span>您的评价：</span>-->
+<!--              <Tag v-for="item in tagList"-->
+<!--                   :key="item.id" :name="item.id"-->
+<!--                   size="large"  closable @on-close="handleClose2">{{item.name}}</Tag>-->
+<!--            </p>-->
+<!--          </Card>-->
+<!--          <Table-->
+<!--            size="default"-->
+<!--            no-data-text="没有可供选择的标签"-->
+<!--            stripe border-->
+<!--            :loading="loading3"-->
+<!--            height="300"-->
+<!--            :columns="columns3" :data="data3">-->
+<!--          </Table>-->
+<!--        </div>-->
+<!--        <div slot="footer">-->
+<!--          <Button size="large" @click="modal_update=false">取消</Button>-->
+<!--          <Button size="large" type="primary" :loading="loading_update" @click="update">修改评价</Button>-->
+<!--        </div>-->
+<!--      </Modal>-->
     </Row>
   </div>
 </template>
@@ -79,6 +83,9 @@
             return{
                 loading: false,
                 roomName: '',
+                numberOfArr: 0,
+                pageCurrent: 1,
+                nowData: [],
                 columns: [
                     {
                         type: 'expand',
@@ -190,18 +197,20 @@
             }
         },
         mounted() {
-            this.init("初始化成功！", '');
+            this.init("初始化成功！", '', 0);
         },
         methods: {
-            init(index,type){
+            init(index,type, page){
                 this.data = []
+                if(index == "初始化成功！" || index == "检索成功！") this.numberOfArr = 0;
+                this.pageCurrent = page + 1;
                 this.loading = true;
                 axios({
-                    url: apiRoot + '/manager/departmentHistory',
+                    url: apiRoot + '/manager/departmentHistory/' + page + '/10',
                     method: 'get'
                 }).then((res) => {
                     if(res.data.code == 200){
-                        res.data.data.forEach((item) => {
+                        res.data.data.appointmentHistoryList.forEach((item) => {
                             item.newParam = 'time'
                             item.time = item.isweekend==0 ? (item.begintime + '-' + item.endtime) : '周末全天'
                             if(type == ''){
@@ -212,6 +221,8 @@
                                 }
                             }
                         })
+                        console.log(this.numberOfArr != res.data.data.recordNum)
+                        if(this.numberOfArr != res.data.data.recordNum) this.numberOfArr = res.data.data.recordNum
                         this.$Message.success(index);
                         this.loading = false;
                     }else{
@@ -224,8 +235,14 @@
                 })
             },
             searchForApply() {
-                this.init("检索成功！", this.roomName)
-            }
+                this.init("检索成功！", this.roomName, 0)
+            },
+            changepage(index) {
+                //需要显示开始数据的index,(因为数据是从0开始的，页码是从1开始的，需要-1)
+                this.init("获取第" + index + "页数据成功", this.roomName, index - 1);
+                //储存当前页
+                this.pageCurrent = index;
+            },
         }
     }
 </script>

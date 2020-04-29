@@ -14,8 +14,12 @@
         no-data-text="当前没有会议室申请"
         stripe border
         :loading="loading"
-        height="700"
+        height="650"
         :columns="columns" :data="data"></Table>
+      <Page :total="numberOfArr" :page-size="10"
+            @on-change="changepage" :current="pageCurrent"
+            style="text-align: center"
+            show-total show-elevator/>
       <Modal v-model="modal_pass" width="600" :closable="false">
         <div  style="text-align: center" >
           <img src="../../../assets/img/error.png" width="100">
@@ -63,6 +67,9 @@
               loading_pass: false,
               loading_cancel: false,
               refuseReason: '',
+              numberOfArr: '',
+              nowData: [],
+              pageCurrent: 1,
               columns: [
                   {
                       type: 'expand',
@@ -79,14 +86,14 @@
                       title: '大楼名称',
                       key: 'building',
                       align: 'center',
-                      width: 200,
+                      width: 150,
                       tooltip: true
                   },
                   {
                       title: '房间号',
                       key: 'conferenceName',
                       align: 'center',
-                      width: 150,
+                      width: 120,
                       tooltip: true
                   },
                   {
@@ -99,14 +106,14 @@
                       title: '申请人',
                       key: 'applicantName',
                       align: 'center',
-                      width: 150,
+                      width: 100,
                       tooltip: true,
                   },
                   {
                       title: '身份',
                       key: 'identity',
                       align: 'center',
-                      width: 150,
+                      width: 80,
                       tooltip: true,
                   },
                   {
@@ -176,6 +183,9 @@
       methods: {
           init(index,type){
               this.loading = true;
+              this.nowData  = [];
+              this.pageCurrent = 1;
+              this.numberOfArr = 0;
               this.data = []
               axios({
                   url: apiRoot + '/manager/appointmentList',
@@ -192,6 +202,7 @@
                                   this.data.push(item)
                               }
                           }
+                          this.numberOfArr = this.data.length
                       })
                       this.$Message.success(index);
                       this.loading = false;
@@ -273,6 +284,15 @@
                   this.$Message.error("提交请求失败，请检查网络连接！")
                   this.loading_cancel = false;
               })
+          },
+          changepage(index){
+              let _start = (index - 1) * 10;
+              //需要显示结束数据的index
+              let _end = index * 10;
+              //截取需要显示的数据
+              this.nowData = this.data.slice(_start, _end);
+              //储存当前页
+              this.pageCurrent = index;
           }
       }
   }

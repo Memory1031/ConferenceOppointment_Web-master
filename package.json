@@ -17,6 +17,7 @@
     "vant": "^2.3.3",
     "view-design": "^4.0.2",
     "vue": "^2.5.2",
+    "vue-qr": "^2.2.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
@@ -55,9 +56,7 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0",
-    "weixin-js-sdk": "^1.4.0-test",
-    "weixin-jsapi": "^1.1.0"
+    "webpack-merge": "^4.1.0"
   },
   "engines": {
     "node": ">= 6.0.0",

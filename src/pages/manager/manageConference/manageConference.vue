@@ -214,8 +214,12 @@
           no-data-text="您当前没有可供管理的会议室"
           stripe border
           :loading="loading2"
-          height="700"
+          height="650"
           :columns="columns" :data="data"></Table>
+      <Page :total="numberOfArr" :page-size="10"
+            @on-change="changepage" :current="pageCurrent"
+            style="text-align: center"
+            show-total show-elevator/>
         <Modal v-model="modal_delete"  width="550">
           <p slot="header" style="color:#f60;text-align:center">
             <Icon type="ios-information-circle"></Icon>
@@ -552,6 +556,10 @@
                     }
                 ],
                 data: [],
+                numberOfArr : 0,
+                pageCurrent: 1,
+                nowData: [],
+
             }
         },
         mounted(){
@@ -560,6 +568,9 @@
         methods:{
             init(index){
                 this.loading2 = true;
+                this.pageCurrent = 1;
+                this.nowData = [];
+                this.numberOfArr = 0;
                 this.data = [];
                 axios({
                     url: apiRoot + "/manager/list",
@@ -570,6 +581,7 @@
                             item.isAble = item.isAble == 1 ? '是' : '否'
                             this.data.push(item);
                         })
+                        this.numberOfArr = this.data.length
                         this.$Message.success(index);
                         this.loading2 = false;
                     } else {
@@ -812,6 +824,15 @@
                 }).catch((err) => {
                     this.$Message.error("下载失败，请检查网络连接！")
                 })
+            },
+            changepage(index){
+                let _start = (index - 1) * 10;
+                //需要显示结束数据的index
+                let _end = index * 10;
+                //截取需要显示的数据
+                this.nowData = this.data.slice(_start, _end);
+                //储存当前页
+                this.pageCurrent = index;
             }
         }
     }
