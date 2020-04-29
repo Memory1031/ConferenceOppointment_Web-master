@@ -14,8 +14,12 @@
         no-data-text="当前没有会议室申请"
         stripe border
         :loading="loading"
-        height="700"
+        height="650"
         :columns="columns" :data="data"></Table>
+      <Page :total="num" :page-size="10"
+            @on-change="changepage" :current="pageCurrent"
+            style="text-align: center"
+            show-total show-elevator/>
       <Modal v-model="modal_delete" width="600" :closable="false">
         <div  style="text-align: center" >
           <img src="../../../assets/img/error.png" width="100">
@@ -46,6 +50,7 @@
                 roomName: '',
                 modal_delete: false,
                 deleting_index: 0,
+                pageCurrent: 1,
                 loading_delete: false,
                 columns: [
                     {
@@ -180,21 +185,23 @@
                     }
                 ],
                 data: [],
+                num: 0,
             }
         },
         mounted() {
-            this.init("初始化成功！", '');
+            this.init("初始化成功！", '', 0);
         },
         methods: {
-            init(index,type){
+            init(index,type, page){
                 this.data = [];
                 this.loading = true;
                 axios({
-                    url: apiRoot + '/user/myAppointment',
+                    url: apiRoot + '/user/myAppointment/' + page + '/10',
                     method: 'get'
                 }).then((res) => {
                     if(res.data.code == 200){
-                        res.data.data.forEach((item) => {
+                        console.log(res.data.data)
+                        res.data.data.myAppointmentVOList.forEach((item) => {
                             item.newParam = 'time';
                             item.time = item.begintime + '-' + item.endtime;
                             if(type == ''){
@@ -205,6 +212,7 @@
                                 }
                             }
                         });
+                        this.num = res.data.data.recordNum
                         this.$Message.success(index);
                         this.loading = false;
                     }else{
@@ -217,7 +225,8 @@
                 })
             },
             searchForApply() {
-                this.init("检索成功！", this.roomName)
+                this.pageCurrent = 1;
+                this.init("检索成功！", this.roomName, 1)
             },
             cancel(){
                 this.loading_delete = true;
@@ -238,7 +247,13 @@
                     this.$Message.error("取消申请失败，请检查网络连接！")
                     this.loading_delete = false;
                 })
-            }
+            },
+            changepage(index) {
+                //需要显示开始数据的index,(因为数据是从0开始的，页码是从1开始的，需要-1)
+                this.init("获取第" + index + "页数据成功", this.roomName, index - 1);
+                //储存当前页
+                this.pageCurrent = index;
+            },
         }
     }
 </script>

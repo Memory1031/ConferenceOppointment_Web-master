@@ -32,6 +32,7 @@ import AvaMobile from '@/mobile/pages/user/AvaConference/AvaMobile'
 import InfoMobile from '@/mobile/pages/user/myInfo/infoMobile'
 import AvaInfo from '@/mobile/pages/user/AvaInfo/AvaInfo'
 import myHistoryMobile from '@/mobile/pages/user/myHistory/myHistory'
+import InVitePage from '@/mobile/pages/user/invitePage/invitePage'
 import ManagerMobile from '@/mobile/group/managerMobile'
 import ManagerInfoMobile from '@/mobile/pages/manager/myInfo/ManagerInfoMobile'
 import CheckAvaMobile from '@/mobile/pages/manager/checkAva/checkAvaMobile'
@@ -177,6 +178,11 @@ export default new Router({
       path: '/mobile/loginMobile',
       component: loginMobile,
       name: 'loginMobile'
+    },
+    {
+      path: '/mobile/invite/:id',
+      component: InVitePage,
+      name: 'invitePage'
     },
     {
       path: '/mobile/userMobile',

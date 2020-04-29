@@ -108,7 +108,7 @@
           </span>
           <span slot="title">&nbsp&nbsp&nbsp&nbsp注销</span>
           <div style="text-align: center">
-            <van-button type="danger" @click="logout">危险按钮</van-button>
+            <van-button type="danger" @click="logout" style="width: 60vw" round>注销</van-button>
           </div>
         </van-collapse-item>
       </van-collapse>

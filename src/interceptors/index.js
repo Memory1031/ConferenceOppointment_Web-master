@@ -26,7 +26,7 @@ axios.interceptors.request.use((config) => {
         Router.replace('/login');
         setTimeout(() => {
           $Notice.error({
-            title: "您没有访问权限",
+            title: "请先登录",
             content: "您没有访问该页面的权限，或许是因为您的用户身份与该页面不一致，请重新登录，系统会自动跳转到相应页面。",
             duration: 5
           })
@@ -45,7 +45,7 @@ axios.interceptors.request.use((config) => {
         Router.replace('/login');
         setTimeout(() => {
           $Notice.error({
-            title: "您没有访问权限",
+            title: "请先登录",
             content: "您没有访问该页面的权限，或许是因为您的用户身份与该页面不一致，请重新登录，系统会自动跳转到相应页面。",
             duration: 5
           })
@@ -76,7 +76,7 @@ axios.interceptors.response.use((res) => {
         Router.replace({ path: '/login'});
         setTimeout(() => {
           Notice.error({
-            title: "您没有访问权限",
+            title: "请先登录",
             content: "您没有访问该页面的权限，或许是因为您的用户身份与该页面不一致，请重新登录，系统会自动跳转到相应页面。",
             duration: 5
           })
@@ -97,7 +97,7 @@ axios.interceptors.response.use((res) => {
         setTimeout(() => {
           console.log('!!!')
           Notice.error({
-            title: "您没有访问权限",
+            title: "请先登录",
             content: "您没有访问该页面的权限，或许是因为您的用户身份与该页面不一致，请重新登录，系统会自动跳转到相应页面。",
             duration: 5
           })
@@ -118,7 +118,7 @@ axios.interceptors.response.use((res) => {
     setTimeout(() => {
       console.log('!!!')
       this.$Notice.error({
-        title: "您没有访问权限",
+        title: "请先登录",
         content: "您没有访问该页面的权限，或许是因为您的用户身份与该页面不一致，请重新登录，系统会自动跳转到相应页面。",
         duration: 5
       })

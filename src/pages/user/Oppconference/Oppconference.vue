@@ -27,9 +27,10 @@
         no-data-text="无法检索到符合条件的会议室"
         stripe border
         :loading="loading"
-        height="700"
+        height="650"
         :columns="columns" :data="data"></Table>
-
+      <Page :total="data.length" :page-size="10" @on-change="changepage" style="text-align: center"
+            show-total show-elevator/>
       <Modal v-model="modal_apply"  width="1000" :closable="false">
         <Row>
           <Col span="8">
@@ -352,6 +353,8 @@
                     hasSpeaker: false//有扩音设备
                 },
                 data3: [],
+                nowData: [],
+                pageCurrent: 1,
             }
         },
         mounted(){
@@ -400,8 +403,10 @@
             init(index, name){
                 this.loading = true;
                 this.data = [];
+                this.nowData = []
                 this.data3 = [];
                 this.getDepartment()
+                this.pageCurrent = 1;
                 if(name == null){
                     var data_search2 = {
                         campus: '', //校区,宝山|嘉定|延长  不可以为空
@@ -750,7 +755,17 @@
                       }
                         break;
                 }
-            }
+            },
+            changepage(index) {
+                //需要显示开始数据的index,(因为数据是从0开始的，页码是从1开始的，需要-1)
+                let _start = (index - 1) * 10;
+                //需要显示结束数据的index
+                let _end = index * 10;
+                //截取需要显示的数据
+                this.nowData = this.data.slice(_start, _end);
+                //储存当前页
+                this.pageCurrent = index;
+            },
         }
     }
 </script>

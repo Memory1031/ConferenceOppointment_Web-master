@@ -165,7 +165,7 @@
                   :on-format-error="handleFormatError"
                   :on-success="uploadSuccess"
                   :on-error="uploadError"
-                  action="http://www.songcm.cn:8888/api/file/upload">
+                  action="http://conference.songcm.cn/api/file/upload">
                   <div style="padding: 20px 0">
                     <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                     <p>Click or drag files here to upload</p>
@@ -195,7 +195,7 @@
               :on-format-error="handleFormatError2"
               :on-success="uploadSuccess2"
               :on-error="uploadError2"
-              action="http://www.songcm.cn:8888/api/manager/confCreationByExcel">
+              action="http://conferencce.songcm.cn/api/manager/confCreationByExcel">
               <div style="padding: 20px 0">
                 <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                 <p>Click or drag files here to upload</p>
@@ -388,7 +388,7 @@
                 :on-format-error="handleFormatError"
                 :on-success="uploadSuccess3"
                 :on-error="uploadError"
-                action="http://www.songcm.cn:8888/api/file/upload">
+                action="http://conference.songcm.cn/api/file/upload">
                 <div style="padding: 20px 0">
                   <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                   <p>Click or drag files here to upload</p>

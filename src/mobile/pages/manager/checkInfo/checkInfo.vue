@@ -90,16 +90,38 @@
       </div>
     </div>
     <div style="bottom: 0; width: 100vw; position: fixed" v-if="checkInfo.progress=='未审核'">
-      <van-row>
-        <van-col span="12">
-          <van-button style="width: 50vw;background-color: #FFC197"
-                      @click="cancel_pop=true"><span style="color:white">驳回</span></van-button>
-        </van-col>
-        <van-col span="12">
-          <van-button style="width: 50vw;background-color: #245BA4;"
-                      @click="agree_pop=true,approvalNum()"><span style="color:white">同意</span></van-button>
-        </van-col>
-      </van-row>
+      <div v-if="fromManage==true">
+        <van-row>
+          <van-col span="12">
+            <van-button style="width: 50vw;background-color: #FFC197"
+                        @click="cancel_pop=true"><span style="color:white">驳回</span></van-button>
+          </van-col>
+          <van-col span="12">
+            <van-button style="width: 50vw;background-color: #245BA4;"
+                        @click="agree_pop=true,approvalNum()"><span style="color:white">同意</span></van-button>
+          </van-col>
+        </van-row>
+      </div>
+      <div v-else-if="!fromManage && isMe">
+        <van-row>
+          <van-col span="12">
+            <van-button style="width: 50vw;background-color: grey"
+                  @click="cancel_pop_user=true"><span style="color:white">取消</span></van-button>
+          </van-col>
+          <van-col span="12">
+            <van-button style="width: 50vw;background-color: #245BA4;"
+                        ><span style="color:white">邀请</span></van-button>
+          </van-col>
+        </van-row>
+      </div>
+      <div v-else-if="!fromManage && !isMe">
+        <van-row>
+          <van-col span="24">
+            <van-button style="width: 100vw;background-color: #245BA4;"
+            ><span style="color:white">邀请</span></van-button>
+          </van-col>
+        </van-row>
+      </div>
     </div>
     <div class="check-manager-modal">
       <van-popup v-model="agree_pop" style="width: 90vw;height: 300px;text-align:center;border-radius: 10px">
@@ -119,6 +141,15 @@
         <div class="footer">
           <van-button @click="cancel_pop=false" style="border-radius: 5px;margin-right: 4vw">取消</van-button>
           <van-button style="border-radius: 5px" type="danger" :loading="loading_cancel" @click="cancel">驳回</van-button>
+        </div>
+      </van-popup>
+      <van-popup v-model="cancel_pop_user" style="width: 90vw;height: 300px;text-align:center;border-radius: 10px">
+        <img src="../../../../assets/img/error.png" style='margin-top: 2vh;' width="100">
+        <div style="font-size:150%;margin-top: 1vh;">友情提醒</div><br/>
+        <div style="margin-left: 4vw; margin-right: 4vw">您确定要取消该预约申请么？</div>
+        <br/>
+        <div class="footer">
+          <van-button style="border-radius: 5px" type="danger" :loading="loading_cancel_user" @click="cancel_user">确定取消</van-button>
         </div>
       </van-popup>
     </div>
@@ -142,9 +173,13 @@
                 tagExist: [],
                 agree_pop: false,
                 cancel_pop: false,
+                cancel_pop_user: false,
                 loading_submit: false,
                 loading_cancel: false,
+                loading_cancel_user: false,
                 refusereason: '',
+                fromManage: localStorage.getItem("fromManager"),
+                isMe: true
             }
         },
         mounted(){
@@ -181,6 +216,8 @@
                             refusereason: res.data.data.refusereason,
                             progress: res.data.data.progress,
                         }
+                        if(res.data.data.applicantName.userId == localStorage.getItem("userid")) this.isMe = true
+                        else this.isMe = false;
                         this.checkInfo = res.data.data
                         this.members.push({
                             userId: res.data.data.applicantName.userId,
@@ -305,6 +342,27 @@
                     this.loading_cancel = false;
                 })
             },
+            cancel_user(){
+                this.loading_cancel_user = true;
+                axios({
+                    url: apiRoot + '/user/cancelAppointment?id=' + this.params.id,
+                    method: 'get'
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        this.loading_cancel_user = false;
+                        this.cancel_pop_user = false;
+                        // this.$router.push('/mobile/managerMobile/checkAvaMobile');
+                        this.$Message.success("成功取消该预约！")
+                        this.init();
+                    } else {
+                        this.$Message.error(res.data.message)
+                        this.loading_cancel_user = false;
+                    }
+                }).catch(err => {
+                    this.$Message.error("请检查网络连接！")
+                    this.loading_cancel_user = false;
+                })
+            }
         }
     }
 </script>

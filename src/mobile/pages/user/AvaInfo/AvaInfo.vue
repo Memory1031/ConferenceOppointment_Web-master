@@ -251,7 +251,7 @@
                          id: this.params.id,
                          needdate: this.chosenDate,
                          begintime: arr[0] + 8,
-                         endtime: arr[arr.length - 1] + 8,
+                         endtime: arr[arr.length - 1] + 9,
                          requestreason: this.reason,
                          phone: this.phone,
                          participateId: [localStorage.getItem('userid')]

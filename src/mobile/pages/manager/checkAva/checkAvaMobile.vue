@@ -190,7 +190,8 @@
                   name: 'checkInfo',
                   params: {
                       id: this.offerInfo[index].id,
-                      departmentName: this.offerInfo[index].departmentName
+                      departmentName: this.offerInfo[index].departmentName,
+                      fromManager: true,
                   }
               });
           }

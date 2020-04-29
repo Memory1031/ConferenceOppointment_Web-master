@@ -99,7 +99,8 @@
                   name: 'checkInfo',
                   params: {
                       id: this.historyList[index].id,
-                      departmentName: this.historyList[index].departmentName
+                      departmentName: this.historyList[index].departmentName,
+                      fromManager: true,
                   }
               });
           }

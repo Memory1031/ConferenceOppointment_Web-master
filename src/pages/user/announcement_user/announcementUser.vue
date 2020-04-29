@@ -1,7 +1,7 @@
 <template>
   <div style="height: 90vh !important;">
     <Tabs size="default">
-      <TabPane label="部门公告" icon="ios-alert">
+      <TabPane label="部门公告">
         <Row>
           <div class="button2">
             <Button type="success" class="refresh_button" @click="refresh">刷新</Button>
@@ -17,7 +17,7 @@
                  :columns="columns1" :data="data1"></Table>
         </Row>
       </TabPane>
-      <TabPane label="系统公告" icon="md-alert">
+      <TabPane label="系统公告">
         <Row>
           <div class="button2">
             <Button type="success" class="refresh_button" @click="refresh">刷新</Button>
