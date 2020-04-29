@@ -259,7 +259,7 @@
                  }).then((res) => {
                          if(res.data.code == 200){
                              this.loading = false;
-                             this.$router.push("/mobile/userMobile")
+                             this.$router.push("/mobile/userMobile/myHistoryMobile")
                              this.$Message.success("申请成功")
                          }else{
                              this.$Message.error(res.data.message)

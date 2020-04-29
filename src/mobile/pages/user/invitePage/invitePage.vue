@@ -77,8 +77,8 @@
     <div style="bottom: 0; width: 100vw; position: fixed" v-if="checkInfo.progress=='未审核'">
       <van-row>
         <van-col span="24">
-          <van-button style="width: 100vw;background-color: #245BA4;"
-                      @click="attend_pop=true"><span style="color:white">参与会议</span></van-button>
+          <van-button style="width: 100vw;background-color: #245BA4;" :loading="attend"
+                      @click="attendTheConference"><span style="color:white">参与会议</span></van-button>
         </van-col>
       </van-row>
     </div>
@@ -98,6 +98,7 @@
                 finished: false,
                 error: false,
                 attend_pop: false,
+                attend: false
             }
         },
         mounted(){
@@ -108,14 +109,13 @@
                 this.members = [];
                 this.loading = true;
                 //btoa("190")
-                this.id = atob(this.$route.params.id)
+                this.id = this.$route.params.id
                 axios({
-                    url: apiRoot + '/user/appointmentDetail?id=' + this.id,
+                    url: apiRoot + '/user/appointmentDetail?id=' + atob(this.id),
                     method: 'get'
                 }).then((res) => {
                     if(res.data.code == 200){
                         this.checkInfo = {
-                            id: res.data.data.id,
                             campus: res.data.data.campus,
                             building: res.data.data.building,
                             departmentName: res.data.data.departmentName,
@@ -147,6 +147,27 @@
                     // console.log(this.checkInfo)
                 }).catch(err => {
                     this.$Message.error("请检查网络连接！")
+                })
+            },
+            attendTheConference(){
+                this.attend = true;
+                axios({
+                    url: apiRoot + '/user/invitation?id=' + this.id,
+                    method: 'get'
+                }).then((res) => {
+                    if(res.data.code == 200){
+                        this.$route.push({
+                            name: 'myHistoryMobile'
+                        })
+                        this.$Message.success("成功参与该会议！")
+                        this.attend = false
+                    }else{
+                        this.$Message.error(res.data.message)
+                        this.attend = false
+                    }
+                }).catch(err=> {
+                    this.$Message.error("请检查网络连接！")
+                    this.attend = false
                 })
             }
         }

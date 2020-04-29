@@ -6,7 +6,7 @@
       <van-datetime-picker
         v-model="nowDate"
         type="date"
-        @confirm="showTime=false,chosenDate=nowDate.toLocaleDateString(),search.needDate=nowDate.toLocaleDateString().replace('/', '-').replace('/', '-')"
+        @confirm="confirmTime"
         @cancel="showTime=false,nowDate=new Date(new Date().setDate(new Date().getDate() + 1))"
         :min-date="minDate" title="选择预约时间"
       />
@@ -157,7 +157,15 @@
           return {
               finished: false,
               minDate: new Date(new Date().setDate(new Date().getDate() + 1)),
-              chosenDate: new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString(),
+              chosenDate: new Date(new Date().setDate(new Date().getDate() + 1)).getFullYear() +
+                  "-" +
+                  (new Date(new Date().setDate(new Date().getDate() + 1)).getMonth() > 9
+                      ? new Date(new Date().setDate(new Date().getDate() + 1)).getMonth() + 1
+                      : "0" + (new Date(new Date().setDate(new Date().getDate() + 1)).getMonth() + 1)) +
+                  "-" +
+                  (new Date(new Date().setDate(new Date().getDate() + 1)).getDate() > 9
+                      ? new Date(new Date().setDate(new Date().getDate() + 1)).getDate()
+                      : "0" + new Date(new Date().setDate(new Date().getDate() + 1)).getDate()),
               nowDate: new Date(new Date().setDate(new Date().getDate() + 1)),
               showTime: false,
               showCampus: false,
@@ -176,7 +184,7 @@
                   minSeats: '',//最小座位数,默认为0
                   isMultifunc: 0,//多功能厅
                   hasSpeaker: 0,
-                  needDate: new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString().replace('/', '-').replace('/', '-'),
+                  nowDate: new Date(new Date().setDate(new Date().getDate() + 1)),
               },
               campus: ['宝山','嘉定', '延长'],
               departmentName: [],
@@ -185,6 +193,11 @@
           }
       },
       watch:{
+          chosenDate(newVal, oldVal){
+              let date = new Date(newVal);
+              this.finished = false;
+              this.getConferenceInfo();
+          },
           multiFun(newD,oldD){
               this.search.isMultifunc = newD == true ? 1 : 0;
           },
@@ -222,7 +235,7 @@
                       minSeats: this.search.minSeats,
                       isMultifunc: 0,
                       hasSpeaker: 0,
-                      needDate: this.search.needDate
+                      needDate: this.chosenDate
                   }
               }).then((res) => {
                   if(res.data.code == 200){
@@ -284,7 +297,7 @@
                       minSeats: this.search.minSeats,
                       isMultifunc: this.search.isMultifunc,
                       hasSpeaker: this.search.hasSpeaker,
-                      needDate: this.search.needDate
+                      needDate: this.chosenDate
                   }
               }).then((res) => {
                   if(res.data.code == 200){
@@ -312,10 +325,22 @@
                   name: 'avaInfo',
                   params: {
                       id: this.conferenceInfo[index].id,
-                      chosenDate: this.search.needDate,
+                      chosenDate: this.chosenDate,
                       departmentName: this.conferenceInfo[index].department
                   }
               });
+          },
+          confirmTime(){
+              this.showTime=false
+              this.chosenDate = this.nowDate.getFullYear() +
+                  "-" +
+                  (this.nowDate.getMonth() > 9
+                      ? this.nowDate.getMonth() + 1
+                      : "0" + (this.nowDate.getMonth() + 1)) +
+                  "-" +
+                  (this.nowDate.getDate() > 9
+                      ? this.nowDate.getDate()
+                      : "0" + this.nowDate.getDate());
           }
       }
   }
