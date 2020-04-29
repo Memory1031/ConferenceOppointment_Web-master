@@ -102,6 +102,15 @@
             </van-radio-group>
           </div>
         </van-collapse-item>
+        <van-collapse-item title="注销" name="4">
+          <span slot='icon' style="color:#346DB3;">
+            <Icon type="md-close" />
+          </span>
+          <span slot="title">&nbsp&nbsp&nbsp&nbsp注销</span>
+          <div style="text-align: center">
+            <van-button type="danger" @click="logout">危险按钮</van-button>
+          </div>
+        </van-collapse-item>
       </van-collapse>
     </div>
   </div>
@@ -199,6 +208,10 @@
                       this.loading = false
                   })
               }
+          },
+          logout(){
+              localStorage.clear();
+              this.$router.push("/login");
           }
       }
   }

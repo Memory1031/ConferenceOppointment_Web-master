@@ -22,7 +22,7 @@
           <br/>
           <p style="font-size: 200%">确认通过申请？</p>
           <br/><br/>
-          <p style="font-size: 120%">有<span class="approvalNumber"></span>人同时申请，通过此申请讲自动驳回该时间段的所有冲突申请</p>
+          <p style="font-size: 120%">有<span class="approvalNumber"></span>人同时申请，通过此申请将自动驳回该时间段的所有冲突申请</p>
         </div>
         <div slot="footer">
           <Button size="large" @click="modal_pass=false">取消</Button>

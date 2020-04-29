@@ -95,14 +95,14 @@
                         title: '大楼名称',
                         key: 'building',
                         align: 'center',
-                        width: 200,
+                        width: 150,
                         tooltip: true
                     },
                     {
                         title: '房间号',
                         key: 'conferenceName',
                         align: 'center',
-                        width: 150,
+                        width: 180,
                         tooltip: true
                     },
                     {
@@ -115,14 +115,14 @@
                         title: '申请人',
                         key: 'applicantName',
                         align: 'center',
-                        width: 150,
+                        width: 100,
                         tooltip: true,
                     },
                     {
                         title: '身份',
                         key: 'identity',
                         align: 'center',
-                        width: 150,
+                        width: 100,
                         tooltip: true,
                     },
                     {

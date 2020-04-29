@@ -14,7 +14,9 @@ axios.interceptors.request.use((config) => {
   if (error.response) {
     switch (error.response.status) {
       case 401:
-        localStorage.clear()
+        if(localStorage.getItem('token')){
+          localStorage.clear()
+        }
         let url = document.location.toString();
         let arr = url.split("//");
         let last = arr[1].substring(arr[1].indexOf("/"));
@@ -31,7 +33,9 @@ axios.interceptors.request.use((config) => {
         }, 1500)
         break;
       case 403:
-        localStorage.clear()
+        if(localStorage.getItem('token')){
+          localStorage.clear()
+        }
         url = document.location.toString();
         arr = url.split("//");
         last = arr[1].substring(arr[1].indexOf("/"));
@@ -60,7 +64,9 @@ axios.interceptors.response.use((res) => {
   if (error.response) {
     switch (error.response.status) {
       case 401:
-        localStorage.clear()
+        if(localStorage.getItem('token')){
+          localStorage.clear()
+        }
         let url = document.location.toString();
         let arr = url.split("//");
         let last = arr[1].substring(arr[1].indexOf("/"));
@@ -77,7 +83,9 @@ axios.interceptors.response.use((res) => {
         }, 1500)
         break;
       case 403:
-        localStorage.clear()
+        if(localStorage.getItem('token')){
+          localStorage.clear()
+        }
         url = document.location.toString();
         arr = url.split("//");
         last = arr[1].substring(arr[1].indexOf("/"));
@@ -97,7 +105,9 @@ axios.interceptors.response.use((res) => {
         break;
     }
   } else {
-    localStorage.clear();
+    if(localStorage.getItem('token')){
+      localStorage.clear()
+    }
     let url = document.location.toString();
     let arr = url.split("//");
     let last = '/' + arr[1].substring(arr[1].indexOf("/"));
