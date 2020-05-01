@@ -240,7 +240,7 @@
                         this.$Message.success("取消申请成功！");
                         this.loading_delete = false;
                         this.modal_delete = false
-                        this.init("刷新成功！", '')
+                        this.init("刷新成功！", '', 0)
                     }else{
                         this.$Message.error(res.data.message)
                         this.loading_delete = false;
