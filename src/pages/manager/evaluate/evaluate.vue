@@ -110,14 +110,14 @@
                         title: '大楼名称',
                         key: 'building',
                         align: 'center',
-                        width: 150,
+                      width: 110,
                         tooltip: true
                     },
                     {
                         title: '房间号',
                         key: 'conferenceName',
                         align: 'center',
-                        width: 150,
+                      width: 110,
                         tooltip: true
                     },
                     {
@@ -137,32 +137,35 @@
                         title: '身份',
                         key: 'identity',
                         align: 'center',
-                        width: 80,
+                      width: 70,
                         tooltip: true,
                     },
                     {
                         title: '使用时间',
                         key: 'needdate',
                         align: 'center',
+                      width: 130,
                         tooltip: true,
                     },
                     {
                         title: '时间段',
                         key: 'time',
                         align: 'center',
+                      width: 130,
                         tooltip: true,
                     },
                     {
                         title: '状态',
                         key: 'progress',
                         align: 'center',
+                      width: 100,
                         tooltip: true,
                     },
                     {
                         title: '操作',
                         key: 'operation',
                         align: 'center',
-                        width: 150,
+                      width: 140,
                         render: (h, params) => {
                             if(this.data[params.index].progress == '待评价')
                             {

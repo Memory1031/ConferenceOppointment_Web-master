@@ -86,14 +86,14 @@
                       title: '大楼名称',
                       key: 'building',
                       align: 'center',
-                      width: 150,
+                    width: 120,
                       tooltip: true
                   },
                   {
                       title: '房间号',
                       key: 'conferenceName',
                       align: 'center',
-                      width: 120,
+                    width: 80,
                       tooltip: true
                   },
                   {
@@ -120,19 +120,21 @@
                       title: '使用时间',
                       key: 'needdate',
                       align: 'center',
+                    width: 130,
                       tooltip: true,
                   },
                   {
                       title: '时间段',
                       key: 'time',
                       align: 'center',
+                    width: 130,
                       tooltip: true,
                   },
                   {
                       title: '操作',
                       key: 'operation',
                       align: 'center',
-                      width: 250,
+                    width: 200,
                       render: (h, params) => {
                           return h('div', [
                               h('Button', {
