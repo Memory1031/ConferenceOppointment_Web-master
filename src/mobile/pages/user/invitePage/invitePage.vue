@@ -156,9 +156,7 @@
                     method: 'get'
                 }).then((res) => {
                     if(res.data.code == 200){
-                        this.$route.push({
-                            name: 'myHistoryMobile'
-                        })
+                        this.$router.push("/mobile/userMobile/myHistoryMobile")
                         this.$Message.success("成功参与该会议！")
                         this.attend = false
                     }else{
