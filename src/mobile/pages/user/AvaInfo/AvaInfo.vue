@@ -98,7 +98,7 @@
              timeStatus: [0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0],
              isChoose: [true, true, true, true, true,
-                          true, true, true, true, true],
+                          true, true, true, true, true, true, true, true, true],
              chosenTime: [],
              isConstant: true,
              chosenDate: this.$route.params.chosenDate,
@@ -188,7 +188,7 @@
              }).then((res) => {
                  if(res.data.code == 200){
                      this.isChoose = [true, true, true, true, true,
-                         true, true, true, true, true]
+                         true, true, true, true, true,true, true, true, true, true]
                          this.chosenTime = []
                      for(let i = 0; i < 14; i++){
                          this.$set(this.timeStatus, i, res.data.data[i])
@@ -208,7 +208,15 @@
          },
          confirm(){
              this.showTime = false;
-             this.chosenDate = this.nowDate.toLocaleDateString().replace('/', '-').replace('/', '-');
+             this.chosenDate = this.nowDate.getFullYear() +
+                 "-" +
+                 (this.nowDate.getMonth() > 9
+                     ? this.nowDate.getMonth() + 1
+                     : "0" + (this.nowDate.getMonth() + 1)) +
+                 "-" +
+                 (this.nowDate.getDate() > 9
+                     ? this.nowDate.getDate()
+                     : "0" + this.nowDate.getDate());
              this.initDate()
          },
          chooseTime(item, index){
@@ -216,6 +224,7 @@
                  return;
              }else if(item === 0 || item === 2){
                  if(this.isChoose[index] === true){
+                     console.log(this.isChoose)
                      this.chosenTime.push(index);
                      // this.isChoose[index] = false;
                      this.$set(this.isChoose, index, false)
