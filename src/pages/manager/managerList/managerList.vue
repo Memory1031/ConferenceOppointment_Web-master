@@ -129,29 +129,32 @@
                         align: 'center',
                         width: 150,
                         render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                    },
-                                    style: {
-                                        height: '30px',
-                                        // backgroundColor: '#FF7F50',
-                                        // borderColor: 'white',
-                                        fontSize: '15px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.modal_delete = true;
-                                            console.log(params.index)
-                                            this.deletingManager = params.index
-                                            this.$nextTick(()=>{
-                                                document.querySelector("#manager-name").innerHTML = this.data[this.deletingManager].name;
-                                            })
+                            if(this.data[params.index].userId != localStorage.getItem("userid")){
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            type: 'error',
+                                        },
+                                        style: {
+                                            height: '30px',
+                                            // backgroundColor: '#FF7F50',
+                                            // borderColor: 'white',
+                                            fontSize: '15px'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.modal_delete = true;
+                                                console.log(params.index)
+                                                this.deletingManager = params.index
+                                                this.$nextTick(()=>{
+                                                    document.querySelector("#manager-name").innerHTML = this.data[this.deletingManager].name;
+                                                })
+                                            }
                                         }
-                                    }
-                                }, '删除')
-                            ])
+                                    }, '删除')
+                                ])
+                            }
+
                         }
                     }
                 ],

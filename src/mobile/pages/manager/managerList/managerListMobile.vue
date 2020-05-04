@@ -41,7 +41,7 @@
             </div>
             <div class="check-list-mobile-second">
               <div style="float: right; margin-right: 5vw;">
-                <van-button style="color: #FFC197;border: solid 0.5px; border-radius: 10px;margin-top: 2vh"
+                <van-button style="color: #FFC197;border: solid 0.5px; border-radius: 10px;margin-top: 2vh" :disabled="item.userId==userId" :style="item.userId==userId?{color: 'grey'}: {color:'#FFC197'}"
                     @click="openDeleteModal(index)">删除</van-button>
               </div>
               <span>
@@ -76,6 +76,7 @@
       name: 'managerListMobile',
       data(){
           return{
+              userId: localStorage.getItem('userid'),
               loading: false,
               loading_delete: false,
               loading_add: false,
