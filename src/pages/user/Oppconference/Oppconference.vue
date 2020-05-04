@@ -2,14 +2,14 @@
   <div>
     <Row>
       <div class="button">
-        <Select clearable placeholder="请选择校区" size="large" style="width:6vw" v-model="data_search.campus">
+        <Select clearable placeholder="请选择校区" size="large" style="width:10vw" v-model="data_search.campus">
           <Option v-for="item in campusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
         <AutoComplete v-model="data_search.departmentName" placeholder="请填写部门(选填)"
                       :data="data3" clearable :filter-method="filterMethod"
-                      size="large" style="width: 9vw"></AutoComplete>
+                      size="large" style="width: 15vw"></AutoComplete>
         <Input v-model="data_search.building" placeholder="请输入大楼名称(选填)"
-               clearable size="large" style="width: 9vw"></Input>
+               clearable size="large" style="width: 14vw"></Input>
         <InputNumber v-model="data_search.minSeats" placeholder="请输入最小座位数(默认0)" :min="0"
                      clearable size="large" style="width: 6vw"></InputNumber>
         <Checkbox v-model='data_search.isMultifunc' size="large">
@@ -57,14 +57,12 @@
                           <br/>
                           <p style="text-align: center;font-size: 130%">注意：您只能选择连续的时间段进行预约</p>
                           <br/>
-                          <p style="text-align: center;font-size: 100%">由于周末值班老师不在，预约周六/周日任意一天即预约整个周末</p>
-                          <br/>
                           <p >
                             <span style="color:orange">橘色指该时间段已有人预约，成功概率会下降</span>
                           </p>
                           <br/>
                           <p>
-                            <span>无法选中状态指该会议室已被预约</span>
+                            <span>无法选中状态指该会议室已被预约或未到可预约时间</span>
                           </p>
                           <br/>
                         </div>

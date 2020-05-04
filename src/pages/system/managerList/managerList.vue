@@ -3,7 +3,7 @@
     <Row>
       <div class="button">
         <span style="font-size: 16px;user-select: none">部门：</span>
-        <AutoComplete v-model="department_search" placeholder="不填写将会返回所有普通管理员..."
+        <AutoComplete placeholder="不填写将会返回所有普通管理员" v-model="department_search"
                       :data="data3" clearable :filter-method="filterMethod"
                       style="width: 250px" size="large"></AutoComplete>
         <Button type="success" class="refresh_button" @click="searchManager">搜索</Button>
