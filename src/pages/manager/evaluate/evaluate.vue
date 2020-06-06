@@ -466,7 +466,7 @@
                         this.$Message.success("修改评价成功！")
                         this.loading_update = false;
                         this.modal_update = false;
-                        this.init("刷新成功！", '')
+                        this.init("刷新成功！", '', 0)
                     }else{
                         this.$Message.error(res.data.message)
                         this.loading_update = false;

@@ -120,23 +120,25 @@
           initIdentity(){
               this.identityString = localStorage.getItem("identity");
               if(!this.identityString){
-                  this.$router.push('/login');
-                  localStorage.clear();
+                  // this.$router.push('/login');
+                  // localStorage.clear();
+              }else{
+                  if(this.identityString.indexOf("student")!= -1){
+                      this.identity.student = true;
+                  }
+                  if(this.identityString.indexOf("teacher")!= -1){
+                      this.identity.teacher = true;
+                  }
+                  if(this.identityString.indexOf("manager")!= -1){
+                      this.identity.manager = true;
+                      this.identity.show = true;
+                  }
+                  if(this.identityString.indexOf("system")!= -1){
+                      this.identity.system = true;
+                      this.identity.show = true;
+                  }
               }
-              if(this.identityString.indexOf("student")!= -1){
-                  this.identity.student = true;
-              }
-              if(this.identityString.indexOf("teacher")!= -1){
-                  this.identity.teacher = true;
-              }
-              if(this.identityString.indexOf("manager")!= -1){
-                  this.identity.manager = true;
-                  this.identity.show = true;
-              }
-              if(this.identityString.indexOf("system")!= -1){
-                  this.identity.system = true;
-                  this.identity.show = true;
-              }
+
           },
           logout(){
               this.$router.push("/login");

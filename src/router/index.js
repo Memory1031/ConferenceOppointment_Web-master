@@ -40,9 +40,15 @@ import ManagerListMobile from '@/mobile/pages/manager/managerList/managerListMob
 import CheckHistoryMobile from '@/mobile/pages/manager/checkHistory/checkHistoryMobile'
 import CheckInfo from '@/mobile/pages/manager/checkInfo/checkInfo'
 
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+return routerPush.call(this, location).catch(error=> error)
+}
 Vue.use(Router)
 
-export default new Router({
+
+
+  export default new Router({
   mode: 'history',
   routes: [
     {
