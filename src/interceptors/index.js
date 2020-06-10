@@ -76,10 +76,12 @@ axios.interceptors.response.use((res) => {
           console.log(last)
           if (last != '/login' && last != '/mobile/loginMobile') {
             localStorage.setItem('last', last)
+            localStorage.setItem("logout", "comfirm")
           }
           Router.replace({ path: '/login'});
         } else{
           localStorage.clear();
+          localStorage.setItem("logout", "comfirm")
           Router.replace({ path: '/login'});
         }
         setTimeout(() => {
@@ -101,10 +103,12 @@ axios.interceptors.response.use((res) => {
           let last = arr[1].substring(arr[1].indexOf("/"));
           if (last != '/login' && last != '/mobile/loginMobile') {
             localStorage.setItem('last', last)
+            localStorage.setItem("logout", "comfirm")
           }
           Router.replace({ path: '/login'});
         } else{
           localStorage.clear();
+          localStorage.setItem("logout", "comfirm")
           Router.replace({ path: '/login'});
         }
         setTimeout(() => {
@@ -128,10 +132,12 @@ axios.interceptors.response.use((res) => {
       console.log(last)
       if(last != '/login' && last != '/mobile/loginMobile'){
         localStorage.setItem('last', last)
+        localStorage.setItem("logout", "comfirm")
       }
       Router.replace({ path: '/login'});
     } else{
       localStorage.clear();
+      localStorage.setItem("logout", "comfirm")
       Router.replace({ path: '/login'});
     }
     setTimeout(() => {

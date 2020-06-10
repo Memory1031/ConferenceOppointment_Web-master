@@ -168,8 +168,9 @@
 
             },
             logout(){
-                this.$router.push("/login");
-                localStorage.clear();
+              this.$router.push("/login");
+              localStorage.clear();
+              localStorage.setItem("logout", "comfirm");
             }
         }
     }

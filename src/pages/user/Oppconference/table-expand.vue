@@ -110,7 +110,7 @@
                         this.conference_info = res.data.data;
                         if(this.conference_info.picture){
                             this.picture_exist = true;
-                            this.conference_info.picture = 'http://www.songcm.cn' + this.conference_info.picture
+                            this.conference_info.picture = 'http://10.10.10.81' + this.conference_info.picture
                         }
                         if(this.conference_info.roomfunction == '兼有'){
                             this.conference_info.roomfunction = '会议，培训'
