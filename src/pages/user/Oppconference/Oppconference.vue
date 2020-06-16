@@ -685,7 +685,7 @@
                             this.chosenTime = []
                           this.timeStatus.fill(1);
                             this.requestReason = ''
-                            this.participate = []
+                            this.initUserInfo()
                         }else{
                             this.$Message.error(res.data.message)
                             this.loading_submit = false
